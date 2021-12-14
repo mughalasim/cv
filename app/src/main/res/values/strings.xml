@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Asim Mughal - CV</string>
+    <string name="area_code">(+%s)</string>
 </resources>
