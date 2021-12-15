@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_marginBottom="@dimen/padding_medium"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -17,21 +18,24 @@
         style="@style/TextLarge"
         android:layout_marginTop="@dimen/padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Asim Mughal" />
+        tools:text="Full name" />
 
     <TextView
         android:id="@+id/txt_position_title"
         style="@style/TextNormal"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_full_name"
-        tools:text="Software Engineer" />
+        tools:text="Job title" />
 
     <mughalasim.my.cv.ui.widgets.BannerWidget
         android:id="@+id/banner"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/padding_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_position_title"
         android:layout_width="match_parent"
@@ -44,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/banner"
-        android:text="Address" />
+        android:text="@string/address" />
 
     <TextView
         android:id="@+id/txt_address"
@@ -53,7 +57,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_address"
-        tools:text="82 East Road, West drayton, UB79HA, London" />
+        tools:text="123 Sample lane, London UK" />
 
     <TextView
         android:id="@+id/label_phone"
@@ -63,7 +67,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/txt_address"
-        android:text="Telephone / Mobile" />
+        android:text="@string/telephone_mobile" />
 
     <TextView
         android:id="@+id/txt_phone"
@@ -72,7 +76,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_phone"
-        tools:text="+44 1234 567 890" />
+        tools:text="(44) 0123 456 789" />
 
     <TextView
         android:id="@+id/label_email"
@@ -82,7 +86,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/txt_phone"
-        android:text="Email" />
+        android:text="@string/email" />
 
     <TextView
         android:id="@+id/txt_email"
@@ -91,8 +95,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_email"
-        tools:text="asimkenya@gmail.com" />
-
+        tools:text="test@gmail.com" />
 
     <TextView
         android:id="@+id/label_links"
@@ -102,19 +105,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/txt_email"
-        android:text="Links" />
+        android:text="@string/links" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/padding_small"
+        android:layout_marginEnd="@dimen/padding_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_links">
 
     </com.google.android.material.chip.ChipGroup>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

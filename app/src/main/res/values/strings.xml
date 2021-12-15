@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Asim Mughal - CV</string>
-    <string name="area_code">(+%s)</string>
+    <string name="app_name">Personal CV</string>
+    <string name="links">Links</string>
+    <string name="email">Email</string>
+    <string name="telephone_mobile">Telephone / Mobile</string>
+    <string name="address">Address</string>
 </resources>

@@ -24,9 +24,17 @@
         android:id="@+id/widget_skill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/widget_banner" />
+
+    <mughalasim.my.cv.ui.widgets.ExperienceWidget
+        android:id="@+id/widget_experience"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/widget_skill" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

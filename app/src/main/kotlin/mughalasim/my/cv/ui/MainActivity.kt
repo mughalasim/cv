@@ -27,12 +27,25 @@ class MainActivity : AppCompatActivity() {
             val recyclerData: MutableList<RecyclerData> = mutableListOf()
             recyclerData.add(RecyclerData(description = response!!.description, type = AdapterType.DESCRIPTION))
 
-            if (response.skills.size > 0){
+            if (response.skills.isNotEmpty()){
                 recyclerData.add(RecyclerData(title = "Skills", type = AdapterType.TITLE))
                 for (skill in response.skills){
                     recyclerData.add(RecyclerData(skill = skill, type = AdapterType.SKILL))
                 }
+            }
 
+            if (response.works.isNotEmpty()){
+                recyclerData.add(RecyclerData(title = "Work experience", type = AdapterType.TITLE))
+                for (work in response.works){
+                    recyclerData.add(RecyclerData(work = work, type = AdapterType.WORK))
+                }
+            }
+
+            if (response.educations.isNotEmpty()){
+                recyclerData.add(RecyclerData(title = "Education", type = AdapterType.TITLE))
+                for (education in response.educations){
+                    recyclerData.add(RecyclerData(education = education, type = AdapterType.EDUCATION))
+                }
             }
 
             binding.recycler.adapter = CustomAdapter(recyclerData)

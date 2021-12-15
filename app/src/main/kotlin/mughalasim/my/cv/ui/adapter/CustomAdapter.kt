@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.widgets.BannerWidget
 import mughalasim.my.cv.ui.widgets.DescriptionWidget
+import mughalasim.my.cv.ui.widgets.ExperienceWidget
 import mughalasim.my.cv.ui.widgets.SkillWidget
 
 class CustomAdapter(private val dataSet: List<RecyclerData>) :
@@ -16,7 +17,7 @@ class CustomAdapter(private val dataSet: List<RecyclerData>) :
         val description: DescriptionWidget = view.findViewById(R.id.widget_description)
         val banner: BannerWidget = view.findViewById(R.id.widget_banner)
         val skill: SkillWidget = view.findViewById(R.id.widget_skill)
-
+        val experience: ExperienceWidget = view.findViewById(R.id.widget_experience)
     }
 
     override fun onCreateViewHolder(vg: ViewGroup, viewType: Int): ViewHolder {
@@ -29,6 +30,7 @@ class CustomAdapter(private val dataSet: List<RecyclerData>) :
         vh.description.visibility = View.GONE
         vh.banner.visibility = View.GONE
         vh.skill.visibility = View.GONE
+        vh.experience.visibility = View.GONE
 
 
         when(dataSet[position].type){
@@ -47,9 +49,15 @@ class CustomAdapter(private val dataSet: List<RecyclerData>) :
                 vh.skill.visibility = View.VISIBLE
             }
 
-            AdapterType.WORK -> {}
+            AdapterType.WORK -> {
+                vh.experience.setUp(dataSet[position].work!!)
+                vh.experience.visibility = View.VISIBLE
+            }
 
-            AdapterType.EDUCATION -> {}
+            AdapterType.EDUCATION -> {
+                vh.experience.setUp(dataSet[position].education!!)
+                vh.experience.visibility = View.VISIBLE
+            }
 
             AdapterType.REFERENCE -> {}
         }

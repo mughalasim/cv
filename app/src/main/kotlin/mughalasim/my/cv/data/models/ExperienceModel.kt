@@ -4,12 +4,13 @@ import org.joda.time.DateTime
 
 data class ExperienceModel(
     val title: String,
-    val start_date: DateTime,
-    val end_date: DateTime?,
+    val start_date: String,
+    val end_date: String,
     val position_title: String,
     val location: String,
     val description: String,
-    val links: List<LinksModel>
+    val links: List<LinksModel>,
+    val is_ongoing: Boolean
     ){
-    constructor() : this("", DateTime.now(), DateTime.now(), "", "", "", listOf()) {}
+    constructor() : this("", "", "", "", "", "", listOf(), false) {}
 }
