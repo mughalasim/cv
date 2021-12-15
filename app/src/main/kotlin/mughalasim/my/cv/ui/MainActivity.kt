@@ -3,7 +3,6 @@ package mughalasim.my.cv.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.database.FirebaseDatabase
-import mughalasim.my.cv.data.models.DescriptionModel
 import mughalasim.my.cv.data.models.ResponseModel
 import mughalasim.my.cv.databinding.ActivityMainBinding
 import mughalasim.my.cv.ui.adapter.AdapterType
@@ -45,6 +44,13 @@ class MainActivity : AppCompatActivity() {
                 recyclerData.add(RecyclerData(title = "Education", type = AdapterType.TITLE))
                 for (education in response.educations){
                     recyclerData.add(RecyclerData(education = education, type = AdapterType.EDUCATION))
+                }
+            }
+
+            if (response.references.isNotEmpty()){
+                recyclerData.add(RecyclerData(title = "References", type = AdapterType.TITLE))
+                for (reference in response.references){
+                    recyclerData.add(RecyclerData(reference = reference, type = AdapterType.REFERENCE))
                 }
             }
 

@@ -1,9 +1,12 @@
 package mughalasim.my.cv.ui.widgets
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.google.android.material.chip.Chip
 import mughalasim.my.cv.data.models.DescriptionModel
@@ -28,11 +31,8 @@ class DescriptionWidget @JvmOverloads constructor(
         binding.txtPhone.text = fullNumber
         binding.txtPositionTitle.text = model.position_title
 
-        for (link in model.links){
-            val chip = Chip(context)
-            chip.text = link.text
-            binding.chipGroup.addView(chip)
-        }
+        LinkObject.setUp(context, model.links, binding.labelLinks, binding.chipGroup)
+
     }
 
 }

@@ -5,7 +5,7 @@ data class ResponseModel (
     val skills: List<SkillModel>,
     val works: List<ExperienceModel>,
     val educations: List<ExperienceModel>,
-    val references: List<ExperienceModel>,
+    val references: List<ReferenceModel>,
     ){
     constructor() : this(DescriptionModel(), listOf(), listOf(), listOf(), listOf()) {}
 }

@@ -5,6 +5,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release_signing {
+            storeFile file('../app_signing_key.jks')
+            storePassword 'mughalasim'
+            keyAlias 'mughalasim'
+            keyPassword 'mughalasim'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
@@ -22,6 +30,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release_signing
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,6 +41,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Peronal CV APP.apk"
+        }
+    }
+
 }
 
 dependencies {
