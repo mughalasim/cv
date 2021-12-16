@@ -38,9 +38,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
+    kotlinOptions.jvmTarget = '1.8'
+
 
     applicationVariants.all { variant ->
         variant.outputs.all {
@@ -69,6 +69,16 @@ dependencies {
 
     // Swipe to refresh library
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // KOIN Dependency Injection
+    implementation "io.insert-koin:koin-android:3.0.2"
+    implementation "io.insert-koin:koin-android-ext:3.0.2"
+
+    // Kotlin coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
+
+    // ViewModel LifeCycle
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

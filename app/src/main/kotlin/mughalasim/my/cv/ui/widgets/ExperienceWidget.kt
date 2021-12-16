@@ -5,17 +5,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import com.google.android.material.chip.Chip
 import mughalasim.my.cv.data.models.ExperienceModel
 import mughalasim.my.cv.databinding.WidgetExperienceBinding
-import mughalasim.my.cv.ui.toMonthYearDuration
-import mughalasim.my.cv.ui.toMonthYearString
+import mughalasim.my.cv.utils.toMonthYearDuration
+import mughalasim.my.cv.utils.toMonthYearString
 import org.joda.time.DateTime
-import androidx.core.content.ContextCompat.startActivity
-
-import android.content.Intent
-import android.net.Uri
-import androidx.core.content.ContextCompat
 
 
 class ExperienceWidget @JvmOverloads constructor(

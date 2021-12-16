@@ -7,12 +7,8 @@ import android.view.View
 import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import mughalasim.my.cv.R
 import mughalasim.my.cv.data.models.LinksModel
-import mughalasim.my.cv.ui.DateTimeExtensions.dateFormatDayFullMonthYear
 import org.joda.time.*
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.DateTimeFormatter
 
 object LinkObject {
 

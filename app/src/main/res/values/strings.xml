@@ -4,6 +4,7 @@
     <string name="email">Email</string>
     <string name="telephone_mobile">Telephone / Mobile</string>
     <string name="address">Address</string>
+    <string name="error">Attempting to fetch data from the server</string>
 
     <plurals name="plural_year">
         <item quantity="one">%d yr</item>
