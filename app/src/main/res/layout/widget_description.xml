@@ -11,7 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/page_guide_left" />
+        app:layout_constraintGuide_begin="@dimen/page_guide_line" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_guide_line" />
 
     <TextView
         android:id="@+id/txt_full_name"
@@ -44,16 +51,16 @@
     <TextView
         android:id="@+id/label_address"
         style="@style/TextSmallBold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/address"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
-        android:text="@string/address" />
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
 
     <TextView
         android:id="@+id/txt_address"
         style="@style/TextNormal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_address"
@@ -63,16 +70,16 @@
         android:id="@+id/label_phone"
         style="@style/TextSmallBold"
         android:layout_marginTop="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/telephone_mobile"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/txt_address"
-        android:text="@string/telephone_mobile" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_address" />
 
     <TextView
         android:id="@+id/txt_phone"
         style="@style/TextNormal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_phone"
@@ -82,16 +89,16 @@
         android:id="@+id/label_email"
         style="@style/TextSmallBold"
         android:layout_marginTop="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/email"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/txt_phone"
-        android:text="@string/email" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_phone" />
 
     <TextView
         android:id="@+id/txt_email"
         style="@style/TextNormal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_email"
@@ -101,18 +108,17 @@
         android:id="@+id/label_links"
         style="@style/TextSmallBold"
         android:layout_marginTop="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/links"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email"
-        android:text="@string/links" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_email" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_links">
 

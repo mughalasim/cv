@@ -41,6 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/page_guide_left" />
+        app:layout_constraintGuide_begin="@dimen/page_guide_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.widgets.*
 
-class CustomAdapter(private val dataSet: List<RecyclerData>) :
+class CustomAdapter(private val dataSet: MutableList<RecyclerData>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -65,5 +65,13 @@ class CustomAdapter(private val dataSet: List<RecyclerData>) :
     }
 
     override fun getItemCount() = dataSet.size
+
+    fun updateData(dataSet: List<RecyclerData>){
+        this.dataSet.clear()
+        for(data in dataSet){
+            this.dataSet.add(data)
+            notifyItemChanged(itemCount)
+        }
+    }
 
 }

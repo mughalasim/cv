@@ -1,16 +1,13 @@
 package mughalasim.my.cv.ui.widgets
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
-import com.google.android.material.chip.Chip
 import mughalasim.my.cv.data.models.DescriptionModel
 import mughalasim.my.cv.databinding.WidgetDescriptionBinding
+import mughalasim.my.cv.utils.LinkObject
 
 class DescriptionWidget @JvmOverloads constructor(
     context: Context,

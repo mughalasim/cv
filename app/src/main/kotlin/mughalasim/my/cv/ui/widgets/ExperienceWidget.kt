@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.LinearLayout
 import mughalasim.my.cv.data.models.ExperienceModel
 import mughalasim.my.cv.databinding.WidgetExperienceBinding
+import mughalasim.my.cv.utils.LinkObject
 import mughalasim.my.cv.utils.toMonthYearDuration
 import mughalasim.my.cv.utils.toMonthYearString
 import org.joda.time.DateTime
-
 
 class ExperienceWidget @JvmOverloads constructor(
     context: Context,
@@ -33,7 +33,11 @@ class ExperienceWidget @JvmOverloads constructor(
             "${model.getStartDate().toMonthYearString()} - Present, ${model.location}"
 
         binding.txtDateLocation.text = dateLocationString
-        val timeSpentString = DateTime.now().toMonthYearDuration(context, model.getStartDate())
+        val timeSpentString = if (model.ongoing)
+            DateTime.now().toMonthYearDuration(context, model.getStartDate())
+        else
+            model.getEndDate().toMonthYearDuration(context, model.getStartDate())
+
         binding.txtTimeSpent.visibility = if(timeSpentString.isEmpty()) View.GONE else View.VISIBLE
         binding.txtTimeSpent.text = timeSpentString
 

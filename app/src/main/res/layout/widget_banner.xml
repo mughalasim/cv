@@ -2,11 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/grey"
-    android:layout_marginBottom="@dimen/padding_medium"
-    android:orientation="vertical">
+    style="@style/Banner">
 
     <TextView
         android:id="@+id/txt_title"
@@ -23,6 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/page_guide_left" />
+        app:layout_constraintGuide_begin="@dimen/page_guide_line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

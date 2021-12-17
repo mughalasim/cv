@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: GeneralViewModel by viewModel()
-
+    private val adapter =  CustomAdapter(mutableListOf())
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,15 +19,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.recycler.adapter = adapter
+
         viewModel.getRecyclerData()
 
         binding.swipeRefresh.setOnRefreshListener {
-            binding.swipeRefresh.isRefreshing = false
             viewModel.getRecyclerData()
+            binding.swipeRefresh.isRefreshing = false
         }
 
         viewModel.data.observe(this, {
-            binding.recycler.adapter = CustomAdapter(it)
+            adapter.updateData(it)
         })
 
         viewModel.showMessage.observe(this, {

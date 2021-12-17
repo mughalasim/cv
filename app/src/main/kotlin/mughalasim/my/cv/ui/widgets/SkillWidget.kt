@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import mughalasim.my.cv.data.models.SkillModel
-import mughalasim.my.cv.databinding.WidgetBannerBinding
 import mughalasim.my.cv.databinding.WidgetSkillBinding
 
 class SkillWidget @JvmOverloads constructor(

@@ -11,16 +11,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/page_guide_left" />
+        app:layout_constraintGuide_begin="@dimen/page_guide_line" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/txt_time_spent"
-        android:layout_marginEnd="@dimen/padding_medium"
-        tools:text="@string/app_name"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/page_guide_line" />
+
+    <TextView
+        android:id="@+id/txt_time_spent"
+        style="@style/TextSmallBold"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2 yrs 3 ms" />
 
     <TextView
         android:id="@+id/txt_title"
@@ -41,7 +47,7 @@
     <TextView
         android:id="@+id/txt_date_location"
         style="@style/TextSmall"
-        app:layout_constraintEnd_toStartOf="@+id/txt_time_spent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/txt_subtitle"
@@ -51,28 +57,27 @@
         android:id="@+id/txt_description"
         style="@style/TextNormal"
         android:layout_marginTop="@dimen/padding_medium"
-        android:layout_marginEnd="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/txt_date_location"
         tools:text="Long description of the work or the course work done here and more info" />
 
     <TextView
         android:id="@+id/label_links"
-        style="@style/TextSmallBold"
+        style="@style/TextSmall"
         android:layout_marginTop="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/links"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/txt_description"
-        android:text="@string/links" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_description" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/padding_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/label_links">
 
