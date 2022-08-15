@@ -1,6 +1,6 @@
 package mughalasim.my.cv.data.models
 
-import mughalasim.my.cv.utils.DateTimeExtensions.dateFormat
+import mughalasim.my.cv.ui.utils.DateTimeConstants.dateFormat
 import org.joda.time.DateTime
 
 data class ExperienceModel(

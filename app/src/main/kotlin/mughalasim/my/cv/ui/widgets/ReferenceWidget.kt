@@ -13,7 +13,7 @@ class ReferenceWidget @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    internal val binding: WidgetReferenceBinding =
+    private val binding: WidgetReferenceBinding =
         WidgetReferenceBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setUp(model: ReferenceModel) {

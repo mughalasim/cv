@@ -13,7 +13,7 @@ class SkillWidget @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    internal val binding: WidgetSkillBinding =
+    private val binding: WidgetSkillBinding =
         WidgetSkillBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setUp(model: SkillModel) {

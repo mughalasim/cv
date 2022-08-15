@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import mughalasim.my.cv.ui.adapter.RecyclerData
-import mughalasim.my.cv.data.usecase.DataUseCase
+import mughalasim.my.cv.domain.usecase.DataUseCase
 
 class GeneralViewModel(
     private val dataUseCase: DataUseCase
@@ -20,7 +20,7 @@ class GeneralViewModel(
     fun getRecyclerData() {
         dataUseCase.invoke(viewModelScope) {
             it.result(onSuccess = { response ->
-                _data.postValue((response as DataUseCase.Output.Data).recyclerData)
+                _data.postValue((response))
                 _showMessage.postValue(false)
             }, onFailure = {
                 _showMessage.postValue(true)

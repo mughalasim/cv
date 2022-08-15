@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.LinearLayout
 import mughalasim.my.cv.data.models.ExperienceModel
 import mughalasim.my.cv.databinding.WidgetExperienceBinding
-import mughalasim.my.cv.utils.LinkObject
-import mughalasim.my.cv.utils.toMonthYearDuration
-import mughalasim.my.cv.utils.toMonthYearString
+import mughalasim.my.cv.ui.utils.LinkObject
+import mughalasim.my.cv.ui.utils.toMonthYearDuration
+import mughalasim.my.cv.ui.utils.toMonthYearString
 import org.joda.time.DateTime
 
 class ExperienceWidget @JvmOverloads constructor(
@@ -18,7 +18,7 @@ class ExperienceWidget @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    internal val binding: WidgetExperienceBinding =
+    private val binding: WidgetExperienceBinding =
         WidgetExperienceBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setUp(model: ExperienceModel) {

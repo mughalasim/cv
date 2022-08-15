@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: GeneralViewModel by viewModel()
     private val adapter =  CustomAdapter(mutableListOf())
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +28,13 @@ class MainActivity : AppCompatActivity() {
             binding.swipeRefresh.isRefreshing = false
         }
 
-        viewModel.data.observe(this, {
+        viewModel.data.observe(this) {
             adapter.updateData(it)
-        })
+        }
 
-        viewModel.showMessage.observe(this, {
+        viewModel.showMessage.observe(this) {
             binding.txtMessage.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
     }
 }

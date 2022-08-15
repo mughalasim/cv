@@ -13,14 +13,14 @@ android {
             keyPassword 'mughalasim'
         }
     }
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "mughalasim.my.cv"
         minSdk 23
-        targetSdk 31
+        targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -52,10 +52,10 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:29.0.2')
@@ -65,7 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
 
     // DateTime library
-    implementation 'net.danlew:android.joda:2.10.12.2'
+    implementation 'net.danlew:android.joda:2.10.14'
 
     // Swipe to refresh library
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -75,10 +75,10 @@ dependencies {
     implementation "io.insert-koin:koin-android-ext:3.0.2"
 
     // Kotlin coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
     // ViewModel LifeCycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

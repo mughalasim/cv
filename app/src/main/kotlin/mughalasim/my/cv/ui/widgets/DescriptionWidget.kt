@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import mughalasim.my.cv.data.models.DescriptionModel
 import mughalasim.my.cv.databinding.WidgetDescriptionBinding
-import mughalasim.my.cv.utils.LinkObject
+import mughalasim.my.cv.ui.utils.LinkObject
 
 class DescriptionWidget @JvmOverloads constructor(
     context: Context,
@@ -15,7 +15,7 @@ class DescriptionWidget @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    internal val binding: WidgetDescriptionBinding =
+    private val binding: WidgetDescriptionBinding =
         WidgetDescriptionBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setUp(model: DescriptionModel) {

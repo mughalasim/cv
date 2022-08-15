@@ -14,7 +14,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Full name of the referece" />
+        tools:text="Full name of the reference" />
 
     <TextView
         android:id="@+id/txt_company"

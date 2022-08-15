@@ -12,7 +12,7 @@ class BannerWidget @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    internal val binding: WidgetBannerBinding =
+    private val binding: WidgetBannerBinding =
         WidgetBannerBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setUp(title: String) {
