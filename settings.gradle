@@ -7,3 +7,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "cv"
 include ':app'
+include ':domain'
+include ':data'

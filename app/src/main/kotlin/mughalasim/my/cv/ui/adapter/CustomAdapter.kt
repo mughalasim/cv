@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import cv.domain.entities.AdapterType
+import cv.domain.entities.RecyclerEntity
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.widgets.*
 
-class CustomAdapter(private val dataSet: MutableList<RecyclerData>) :
+class CustomAdapter(private val dataSet: MutableList<RecyclerEntity>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -66,7 +68,7 @@ class CustomAdapter(private val dataSet: MutableList<RecyclerData>) :
 
     override fun getItemCount() = dataSet.size
 
-    fun updateData(dataSet: List<RecyclerData>){
+    fun updateData(dataSet: List<RecyclerEntity>){
         this.dataSet.clear()
         for(data in dataSet){
             this.dataSet.add(data)

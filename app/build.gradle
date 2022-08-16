@@ -13,14 +13,14 @@ android {
             keyPassword 'mughalasim'
         }
     }
-    compileSdk 32
+    compileSdk sdk_compile
 
     defaultConfig {
         applicationId "mughalasim.my.cv"
-        minSdk 23
-        targetSdk 32
-        versionCode 1
-        versionName "2.0"
+        minSdk sdk_min
+        targetSdk sdk_target
+        versionCode app_version_code
+        versionName app_version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,7 +39,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions.jvmTarget = '1.8'
+    kotlinOptions.jvmTarget = jvm_target
 
 
     applicationVariants.all { variant ->
@@ -52,17 +52,12 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
+
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
-    // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:29.0.2')
-
-    // Declare the dependency for the Realtime Database library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-database-ktx'
 
     // DateTime library
     implementation 'net.danlew:android.joda:2.10.14'

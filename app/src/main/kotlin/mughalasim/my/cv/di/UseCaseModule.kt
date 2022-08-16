@@ -1,6 +1,6 @@
 package mughalasim.my.cv.di
 
-import mughalasim.my.cv.domain.usecase.DataUseCase
+import cv.domain.usecase.DataUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {

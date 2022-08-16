@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import mughalasim.my.cv.ui.adapter.RecyclerData
-import mughalasim.my.cv.domain.usecase.DataUseCase
+import cv.domain.entities.RecyclerEntity
+import cv.domain.usecase.DataUseCase
 
 class GeneralViewModel(
     private val dataUseCase: DataUseCase
 ) : ViewModel() {
 
-    private val _data = MutableLiveData<List<RecyclerData>>()
-    val data: LiveData<List<RecyclerData>> = _data
+    private val _data = MutableLiveData<List<RecyclerEntity>>()
+    val data: LiveData<List<RecyclerEntity>> = _data
 
     private val _showMessage = MutableLiveData<Boolean>()
     val showMessage: LiveData<Boolean> = _showMessage

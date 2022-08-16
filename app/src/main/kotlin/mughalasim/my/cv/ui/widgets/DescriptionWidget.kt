@@ -5,7 +5,7 @@ import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import mughalasim.my.cv.data.models.DescriptionModel
+import cv.domain.entities.DescriptionEntity
 import mughalasim.my.cv.databinding.WidgetDescriptionBinding
 import mughalasim.my.cv.ui.utils.LinkObject
 
@@ -18,7 +18,7 @@ class DescriptionWidget @JvmOverloads constructor(
     private val binding: WidgetDescriptionBinding =
         WidgetDescriptionBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setUp(model: DescriptionModel) {
+    fun setUp(model: DescriptionEntity) {
         binding.banner.setUp("Contact information")
         binding.txtFullName.text = model.full_name
         binding.txtAddress.text = model.address

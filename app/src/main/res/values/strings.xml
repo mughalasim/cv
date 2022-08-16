@@ -5,15 +5,4 @@
     <string name="telephone_mobile">Telephone / Mobile</string>
     <string name="address">Address</string>
     <string name="error">Attempting to fetch data from the server</string>
-
-    <plurals name="plural_year">
-        <item quantity="one">%d yr</item>
-        <item quantity="other">%d yrs</item>
-    </plurals>
-
-    <plurals name="plural_month">
-        <item quantity="one">%d mth</item>
-        <item quantity="other">%d mths</item>
-    </plurals>
-
 </resources>

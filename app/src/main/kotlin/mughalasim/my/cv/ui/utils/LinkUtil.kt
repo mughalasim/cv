@@ -7,11 +7,11 @@ import android.view.View
 import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import mughalasim.my.cv.data.models.LinksModel
+import cv.domain.entities.LinksEntity
 
 object LinkObject {
 
-    fun setUp (context: Context, links: List<LinksModel>, txt: TextView, chipGroup: ChipGroup){
+    fun setUp (context: Context, links: List<LinksEntity>, txt: TextView, chipGroup: ChipGroup){
         chipGroup.removeAllViews()
         txt.visibility = if(links.isEmpty()) View.GONE else View.VISIBLE
 

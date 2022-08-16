@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import mughalasim.my.cv.data.models.SkillModel
+import cv.domain.entities.SkillEntity
 import mughalasim.my.cv.databinding.WidgetSkillBinding
 
 class SkillWidget @JvmOverloads constructor(
@@ -16,7 +16,7 @@ class SkillWidget @JvmOverloads constructor(
     private val binding: WidgetSkillBinding =
         WidgetSkillBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setUp(model: SkillModel) {
+    fun setUp(model: SkillEntity) {
         binding.txtSkill.text = model.title
         binding.txtDescription.text = model.description
     }

@@ -1,0 +1,25 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+
+dependencies {
+    // Kotlin helper functions
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    // Kotlin coroutines
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    // Arrow - Functional programming
+    api "io.arrow-kt:arrow-core:1.0.1"
+
+    // Joda time
+    api "net.danlew:android.joda:2.10.3"
+}

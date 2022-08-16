@@ -5,11 +5,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import mughalasim.my.cv.data.models.ExperienceModel
+import cv.data.extensions.toMonthYearDuration
+import cv.data.extensions.toMonthYearString
+import cv.domain.entities.ExperienceEntity
 import mughalasim.my.cv.databinding.WidgetExperienceBinding
 import mughalasim.my.cv.ui.utils.LinkObject
-import mughalasim.my.cv.ui.utils.toMonthYearDuration
-import mughalasim.my.cv.ui.utils.toMonthYearString
 import org.joda.time.DateTime
 
 class ExperienceWidget @JvmOverloads constructor(
@@ -21,7 +21,7 @@ class ExperienceWidget @JvmOverloads constructor(
     private val binding: WidgetExperienceBinding =
         WidgetExperienceBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setUp(model: ExperienceModel) {
+    fun setUp(model: ExperienceEntity) {
 
         binding.txtTitle.text = model.title
         binding.txtSubtitle.text = model.position_title

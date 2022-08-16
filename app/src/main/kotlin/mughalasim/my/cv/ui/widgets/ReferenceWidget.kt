@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import mughalasim.my.cv.data.models.ReferenceModel
+import cv.domain.entities.ReferenceEntity
 import mughalasim.my.cv.databinding.WidgetReferenceBinding
 
 class ReferenceWidget @JvmOverloads constructor(
@@ -16,7 +16,7 @@ class ReferenceWidget @JvmOverloads constructor(
     private val binding: WidgetReferenceBinding =
         WidgetReferenceBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setUp(model: ReferenceModel) {
+    fun setUp(model: ReferenceEntity) {
         binding.txtFullName.text = model.name
         binding.txtContact.text = model.contact
         binding.txtCompany.text = model.company
