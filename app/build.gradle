@@ -1,18 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.google.gms.google-services'
 }
 
 android {
-    signingConfigs {
-        release_signing {
-            storeFile file('../app_signing_key.jks')
-            storePassword 'mughalasim'
-            keyAlias 'mughalasim'
-            keyPassword 'mughalasim'
-        }
-    }
     compileSdk sdk_compile
 
     defaultConfig {
@@ -21,26 +12,58 @@ android {
         targetSdk sdk_target
         versionCode app_version_code
         versionName app_version_name
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
 
-    buildFeatures.viewBinding = true
+    signingConfigs {
+        release_signing {
+            storeFile file('../app_signing_key.jks')
+            storePassword 'mughalasim'
+            keyAlias 'mughalasim'
+            keyPassword 'mughalasim'
+        }
+    }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.release_signing
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
         }
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions.jvmTarget = jvm_target
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose
+        kotlinCompilerVersion '1.6.21'
+    }
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
 
     applicationVariants.all { variant ->
         variant.outputs.all {
@@ -55,27 +78,32 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
 
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.core:core-ktx:$kotlin_core"
 
-    // DateTime library
-    implementation 'net.danlew:android.joda:2.10.14'
+    implementation "androidx.compose.ui:ui:$compose"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose"
+    implementation "androidx.compose.material:material:$compose"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose"
 
-    // Swipe to refresh library
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation "androidx.activity:activity-compose:$compose_activity"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_live_data"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
 
-    // KOIN Dependency Injection
-    implementation "io.insert-koin:koin-android:3.0.2"
-    implementation "io.insert-koin:koin-android-ext:3.0.2"
+    // Dependency Injection
+    implementation "io.insert-koin:koin-android:$koin"
+    implementation "io.insert-koin:koin-android-ext:$koin"
 
-    // Kotlin coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
-    // ViewModel LifeCycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    // TESTING -------------------------------------------------------------------------------------
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test.ext:junit:$junit_extension"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose"
 }

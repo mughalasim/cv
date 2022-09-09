@@ -8,18 +8,17 @@ java {
     targetCompatibility JavaVersion.VERSION_1_8
 }
 
-
 dependencies {
     // Kotlin helper functions
-    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_reflect"
 
     // Kotlin coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
 
     // Arrow - Functional programming
-    api "io.arrow-kt:arrow-core:1.0.1"
+    api "io.arrow-kt:arrow-core:$arrow"
 
     // Joda time
-    api "net.danlew:android.joda:2.10.3"
+    api "net.danlew:android.joda:$joda_time"
 }

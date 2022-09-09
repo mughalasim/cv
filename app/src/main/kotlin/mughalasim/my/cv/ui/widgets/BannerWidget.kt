@@ -1,22 +1,27 @@
 package mughalasim.my.cv.ui.widgets
 
-import android.content.Context
-import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.widget.LinearLayout
-import mughalasim.my.cv.databinding.WidgetBannerBinding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import mughalasim.my.cv.ui.theme.AppTheme
 
-class BannerWidget @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+@Composable
+fun BannerWidget(title: String){
+    TextRegular(
+        text = title,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 5.dp, bottom = 5.dp, start = 0.dp, end = 0.dp)
+            .background(AppTheme.colors.secondary)
+    )
+}
 
-    private val binding: WidgetBannerBinding =
-        WidgetBannerBinding.inflate(LayoutInflater.from(context), this, true)
-
-    fun setUp(title: String) {
-        binding.txtTitle.text = title
-    }
-
+@Preview
+@Composable
+fun PreviewBannerWidget(){
+    BannerWidget("Text title")
 }
