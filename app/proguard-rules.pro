@@ -20,4 +20,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepclassmembers class mughalasim.my.cv.data.models.** { *; }
+#-keepclassmembers class mughalasim.my.cv.domain.entities.** { *; }
+-keep,allowoptimization,allowobfuscation class mughalasim.my.cv.domain.** { *; }

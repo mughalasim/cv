@@ -26,13 +26,11 @@ fun LinksWidget(
     links: List<LinkEntity> = getFakeLinks()
 ){
     Column(modifier = Modifier.fillMaxWidth()){
-        TextSmall("Links", modifier = Modifier.padding(start = padding_screen))
+        if (links.isNotEmpty())
+            TextSmall("Links", modifier = Modifier.padding(start = padding_screen))
         LazyRow {
             items(items = links) {
-                Chip(
-                    entity = it,
-                    isSelected = false
-                )
+                Chip (entity = it)
             }
         }
     }
@@ -41,18 +39,17 @@ fun LinksWidget(
 @Preview(showBackground = true)
 @Composable
 fun Chip(
-    entity: LinkEntity = getFakeLinks()[0],
-    isSelected: Boolean = false
+    entity: LinkEntity = getFakeLinks()[0]
 ) {
     Surface(
         modifier = Modifier.padding(padding_screen),
         elevation = elevation,
         shape = shapes.small,
-        color = if (isSelected) AppTheme.colors.primary else AppTheme.colors.secondary
+        color = AppTheme.colors.secondary
     ) {
         Row (modifier = Modifier
             .toggleable(
-                value = isSelected,
+                value = false,
                 onValueChange = {
                     openLink(entity)
                 }

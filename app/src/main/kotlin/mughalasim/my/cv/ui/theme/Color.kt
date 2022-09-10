@@ -2,7 +2,11 @@ package mughalasim.my.cv.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+// Light Colors
+val LightBlue = Color(0xFFCBD0D8)
+val LightGrey = Color(0xFF8D939C)
+val White = Color(0xFFFFFFFF)
+
+// Dark Colors
+val DarkBlue = Color(0xFF31078F)
+val DarkGrey = Color(0xFF3B3A3C)

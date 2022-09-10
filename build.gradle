@@ -16,6 +16,7 @@ buildscript {
         lifecycle = "2.6.0-alpha02"
         lifecycle_live_data = "2.5.1"
         lifecycle_extensions = "2.2.0"
+        accompanist = "0.26.3-beta"
 
         okHttp3 = "4.9.3"
         retrofit = "2.9.0"

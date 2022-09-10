@@ -31,7 +31,7 @@ fun TextSmall(
     if (text.isNotEmpty())
         Text(
             text = text,
-            style = getTypography(AppTheme.colors.error).body2,
+            style = getTypography(AppTheme.colors.primaryVariant).body2,
             modifier = modifier
         )
 }

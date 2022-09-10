@@ -32,7 +32,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             signingConfig signingConfigs.release_signing
         }
 
@@ -91,6 +91,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_live_data"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist"
 
     // Dependency Injection
     implementation "io.insert-koin:koin-android:$koin"
