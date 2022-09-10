@@ -1,22 +1,20 @@
 package mughalasim.my.cv.ui.utils
 
-//object LinkObject {
-//
-//    fun setUp (context: Context, links: List<LinksEntity>, txt: TextView, chipGroup: ChipGroup){
-//        chipGroup.removeAllViews()
-//        txt.visibility = if(links.isEmpty()) View.GONE else View.VISIBLE
-//
-//        for (link in links){
-//            val chip = Chip(context)
-//            chip.text = link.text
-//            chip.contentDescription = link.url
-//            chip.setOnClickListener {
-//                val url = (it as Chip).contentDescription.toString()
-//                if (url.startsWith("http://") || !url.startsWith("https://")) return@setOnClickListener
-//                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-//                context.startActivity(browserIntent)
-//            }
-//            chipGroup.addView(chip)
-//        }
-//    }
-//}
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.net.Uri
+import android.widget.Toast
+import cv.domain.entities.LinkEntity
+import org.koin.mp.KoinPlatformTools
+
+fun openLink(linkEntity: LinkEntity){
+    val context = KoinPlatformTools.defaultContext().get().get<IAppContext>().fetchAppContext()
+    val url = linkEntity.url
+    if (url.startsWith("http://") || !url.startsWith("https://")) {
+        Toast.makeText(context, "Invalid Link Url", Toast.LENGTH_LONG).show()
+        return
+    }
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    browserIntent.flags = FLAG_ACTIVITY_NEW_TASK
+    context.startActivity(browserIntent)
+}

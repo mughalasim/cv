@@ -1,62 +1,48 @@
 package mughalasim.my.cv.ui.widgets
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import mughalasim.my.cv.ui.theme.AppTheme
+import cv.domain.entities.ExperienceEntity
+import cv.domain.entities.getFakeExperience
+import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.utils.toMonthYearString
+import mughalasim.my.cv.ui.utils.toYearMonthDuration
 
-//class ExperienceWidget @JvmOverloads constructor(
-//    context: Context,
-//    attrs: AttributeSet? = null,
-//    defStyleAttr: Int = 0
-//) : LinearLayout(context, attrs, defStyleAttr) {
-//
-//    private val binding: WidgetExperienceBinding =
-//        WidgetExperienceBinding.inflate(LayoutInflater.from(context), this, true)
-//
-//    fun setUp(model: ExperienceEntity) {
-//
-//        binding.txtTitle.text = model.title
-//        binding.txtSubtitle.text = model.position_title
-//        binding.txtDescription.text = model.description
-//
-//        val dateLocationString = if (!model.ongoing)
-//            "${model.getStartDate().toMonthYearString()} - ${model.getEndDate().toMonthYearString()}, ${model.location}"
-//        else
-//            "${model.getStartDate().toMonthYearString()} - Present, ${model.location}"
-//
-//        binding.txtDateLocation.text = dateLocationString
-//        val timeSpentString = if (model.ongoing)
-//            DateTime.now().toMonthYearDuration(context, model.getStartDate())
-//        else
-//            model.getEndDate().toMonthYearDuration(context, model.getStartDate())
-//
-//        binding.txtTimeSpent.visibility = if(timeSpentString.isEmpty()) View.GONE else View.VISIBLE
-//        binding.txtTimeSpent.text = timeSpentString
-//
-//        LinkObject.setUp(context, model.links, binding.labelLinks, binding.chipGroup)
-//
-//    }
-//
-//}
-
+@Preview(showBackground = true)
 @Composable
-fun ExperienceWidget(title: String){
-    TextRegular(
-        text = title,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 5.dp, bottom = 5.dp, start = 0.dp, end = 0.dp)
-            .background(AppTheme.colors.secondary)
-    )
-}
-
-@Preview
-@Composable
-fun PreviewExperienceWidget(){
-    ExperienceWidget("Text title")
+fun ExperienceWidget(
+    experiences: List<ExperienceEntity> = getFakeExperience()
+) {
+    repeat(experiences.size) {
+        val entity = experiences[it]
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = padding_screen, end = padding_screen)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                TextSmall(entity.title)
+                val timeSpentString = if (entity.ongoing) {
+                    "Present"
+                } else {
+                    entity.start_date.toYearMonthDuration(entity.end_date)
+                }
+                TextSmall(timeSpentString)
+            }
+            TextRegular(entity.position_title)
+            val timeAndLocationString = if (entity.ongoing) {
+                "${entity.start_date.toMonthYearString()} - Present, ${entity.location}"
+            } else {
+                "${entity.start_date.toMonthYearString()} - ${entity.end_date.toMonthYearString()}, ${entity.location}"
+            }
+            TextRegular(timeAndLocationString, Modifier.padding(bottom = padding_screen))
+            TextRegular(entity.description, Modifier.padding(bottom = padding_screen))
+        }
+        LinksWidget(entity.links)
+    }
 }

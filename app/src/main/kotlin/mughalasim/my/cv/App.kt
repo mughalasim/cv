@@ -1,6 +1,7 @@
 package mughalasim.my.cv
 
 import android.app.Application
+import mughalasim.my.cv.di.applicationModule
 import mughalasim.my.cv.di.repositoryModule
 import mughalasim.my.cv.di.useCaseModule
 import mughalasim.my.cv.di.viewModelModule
@@ -15,6 +16,7 @@ class App: Application() {
             androidContext(this@App)
             modules(
                 listOf(
+                    applicationModule,
                     repositoryModule,
                     useCaseModule,
                     viewModelModule

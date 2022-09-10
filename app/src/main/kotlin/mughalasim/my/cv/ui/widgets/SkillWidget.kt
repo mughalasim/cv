@@ -1,44 +1,24 @@
 package mughalasim.my.cv.ui.widgets
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import mughalasim.my.cv.ui.theme.AppTheme
+import cv.domain.entities.SkillEntity
+import cv.domain.entities.getFakeSkills
+import mughalasim.my.cv.ui.theme.padding_screen
 
-//class SkillWidget @JvmOverloads constructor(
-//    context: Context,
-//    attrs: AttributeSet? = null,
-//    defStyleAttr: Int = 0
-//) : LinearLayout(context, attrs, defStyleAttr) {
-//
-//    private val binding: WidgetSkillBinding =
-//        WidgetSkillBinding.inflate(LayoutInflater.from(context), this, true)
-//
-//    fun setUp(model: SkillEntity) {
-//        binding.txtSkill.text = model.title
-//        binding.txtDescription.text = model.description
-//    }
-//
-//}
-
-
+@Preview(showBackground = true)
 @Composable
-fun SkillWidget(title: String){
-    TextRegular(
-        text = title,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 5.dp, bottom = 5.dp, start = 0.dp, end = 0.dp)
-            .background(AppTheme.colors.secondary)
-    )
-}
-
-@Preview
-@Composable
-fun PreviewSkillWidget(){
-    SkillWidget("Text title")
+fun SkillWidget(
+    skills: List<SkillEntity> = getFakeSkills()
+){
+    repeat(skills.size){
+        Column(Modifier.fillMaxWidth().padding(start = padding_screen, end = padding_screen)) {
+            TextSmall(skills[it].title)
+            TextRegular(skills[it].description, Modifier.padding(bottom = padding_screen))
+        }
+    }
 }

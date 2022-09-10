@@ -42,11 +42,11 @@ dependencies {
     implementation "androidx.core:core-ktx:$kotlin_core"
 
     // Import the BoM for the Firebase platform
-    implementation platform("com.google.firebase:firebase-bom:$firebase")
+    api platform("com.google.firebase:firebase-bom:$firebase")
 
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-database-ktx'
+    api 'com.google.firebase:firebase-database-ktx'
 
     // Testing -------------------------------------------------------------------------------------
     testImplementation "junit:junit:$junit"

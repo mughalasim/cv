@@ -8,7 +8,6 @@ class DataUseCase(
 ) : BaseUseCase<ResponseEntity>() {
 
     override suspend fun run(): BaseResult<ResponseEntity, Exception> {
-
         return try {
             when (val result = dataRepository.getDataFromServer()){
                 is BaseResult.Success -> {

@@ -1,53 +1,35 @@
 package mughalasim.my.cv.ui.widgets
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import mughalasim.my.cv.ui.theme.AppTheme
+import cv.domain.entities.DescriptionEntity
+import cv.domain.entities.getFakeDescription
+import mughalasim.my.cv.ui.theme.padding_screen
 
-//class DescriptionWidget @JvmOverloads constructor(
-//    context: Context,
-//    attrs: AttributeSet? = null,
-//    defStyleAttr: Int = 0
-//) : LinearLayout(context, attrs, defStyleAttr) {
-//
-//    private val binding: WidgetDescriptionBinding =
-//        WidgetDescriptionBinding.inflate(LayoutInflater.from(context), this, true)
-//
-//    fun setUp(model: DescriptionEntity) {
-//        binding.banner.setUp("Contact information")
-//        binding.txtFullName.text = model.full_name
-//        binding.txtAddress.text = model.address
-//        binding.txtEmail.text = model.email
-//        binding.txtPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
-//        val fullNumber = "+${model.area_code}${model.phone}"
-//        binding.txtPhone.text = fullNumber
-//        binding.txtPositionTitle.text = model.position_title
-//
-//        LinkObject.setUp(context, model.links, binding.labelLinks, binding.chipGroup)
-//
-//    }
-//
-//}
-
-
+@Preview(showBackground = true)
 @Composable
-fun DescriptionWidget(title: String){
-    TextRegular(
-        text = title,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 5.dp, bottom = 5.dp, start = 0.dp, end = 0.dp)
-            .background(AppTheme.colors.secondary)
-    )
-}
+fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
+    Column(
+        modifier = Modifier.padding(start = padding_screen, end = padding_screen).fillMaxWidth()
+    ) {
 
-@Preview
-@Composable
-fun PreviewDescriptionWidget(){
-    DescriptionWidget("Text title")
+        Spacer(modifier = Modifier.padding(top = padding_screen))
+
+        TextSmall("Address")
+        TextRegular(entity.address, modifier = Modifier.padding(bottom = padding_screen))
+
+        TextSmall("Telephone/Mobile")
+        TextRegular(
+            "+${entity.area_code} ${entity.phone}",
+            modifier = Modifier.padding(bottom = padding_screen)
+        )
+
+        TextSmall("Email")
+        TextRegular(entity.email, modifier = Modifier.padding(bottom = padding_screen))
+    }
 }

@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import cv.domain.entities.ResponseEntity
 import cv.domain.usecase.DataUseCase
 
-class MainScreenViewModel(
+class MainActivityViewModel(
     private val dataUseCase: DataUseCase
 ) : ViewModel() {
 
     data class VmData (
         val state: State = State.LOADING,
-        val data: ResponseEntity = ResponseEntity(),
+        val response: ResponseEntity = ResponseEntity(),
         val errorMessage: String = ""
     )
 
@@ -38,7 +38,7 @@ class MainScreenViewModel(
                 onSuccess = {
                     currentVmData = currentVmData.copy(
                         state = State.LIST,
-                        data = it
+                        response = it
                     )
                     _vmData.value = currentVmData
                 },

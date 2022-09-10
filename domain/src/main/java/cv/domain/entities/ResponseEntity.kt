@@ -9,3 +9,11 @@ data class ResponseEntity (
     ){
     constructor() : this(DescriptionEntity(), listOf(), listOf(), listOf(), listOf()) {}
 }
+
+fun getFakeResponse() = ResponseEntity(
+    description = getFakeDescription(),
+    skills = getFakeSkills(),
+    works = getFakeExperience(),
+    educations = listOf(),
+    references = listOf()
+)

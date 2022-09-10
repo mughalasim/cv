@@ -18,7 +18,7 @@ fun getTypography (color: Color) = Typography(
     body2 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp,
+        fontSize = 8.sp,
         color = color
     ),
     h1 = TextStyle(
