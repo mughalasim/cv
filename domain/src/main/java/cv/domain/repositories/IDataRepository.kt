@@ -1,8 +1,9 @@
 package cv.domain.repositories
 
+import cv.domain.State
 import cv.domain.entities.ResponseEntity
-import cv.domain.usecase.BaseResult
+import kotlinx.coroutines.flow.Flow
 
 interface IDataRepository {
-    suspend fun getDataFromServer(): BaseResult<ResponseEntity, Exception>
+    fun fetchDataFromFirebase(): Flow<State<ResponseEntity>>
 }

@@ -8,15 +8,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import cv.domain.ConnectionState
+import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.utils.currentConnectivityState
+import mughalasim.my.cv.ui.utils.observeConnectivityAsFlow
 import mughalasim.my.cv.ui.widgets.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,29 +39,34 @@ class MainActivity : ComponentActivity() {
                 MainActivityScreen(viewModel)
             }
         }
-
-        viewModel.fetchData()
     }
 }
 
 @Composable
 fun MainActivityScreen(vm: MainActivityViewModel) {
 
-    val vmData by vm.vmData.observeAsState(initial = MainActivityViewModel.VmData())
+    val context = LocalContext.current
+
+    val state = vm.getData().collectAsState(initial = State.Loading())
+
+    val connectionState = context.observeConnectivityAsFlow().collectAsState(initial = context.currentConnectivityState)
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        when(vmData.state){
-            MainActivityViewModel.State.LOADING  ->
+        if (connectionState.value == ConnectionState.Unavailable){
+            TextLarge(text = "NO NETWORK")
+        }
+        when(state.value){
+            is State.Loading  ->
                 WidgetLoading()
 
-            MainActivityViewModel.State.LIST  ->
-                ListScreen(response = vmData.response)
+            is State.Success ->
+                ListScreen(response = (state.value as State.Success<ResponseEntity>).data)
 
-            MainActivityViewModel.State.ERROR ->
-                TextRegular(text = vmData.errorMessage, modifier = Modifier.fillMaxSize())
+            is State.Failed ->
+                TextRegular(text = (state.value as State.Failed<ResponseEntity>).message, modifier = Modifier.fillMaxSize())
         }
     }
 }

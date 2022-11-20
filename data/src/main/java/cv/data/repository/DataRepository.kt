@@ -1,24 +1,45 @@
 package cv.data.repository
 
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.repositories.IDataRepository
-import cv.domain.usecase.BaseResult
-import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOn
 
 class DataRepository: IDataRepository {
 
-    override suspend fun getDataFromServer(): BaseResult<ResponseEntity, Exception> {
-        val def = CompletableDeferred<BaseResult<ResponseEntity, Exception>>()
-        FirebaseDatabase.getInstance().reference.get().addOnSuccessListener{
-            try {
-                def.complete(BaseResult.Success(it.getValue(ResponseEntity::class.java)!!))
-            }catch (e: Exception){
-                def.complete(BaseResult.Failure(e))
+    private val reference = FirebaseDatabase.getInstance().reference
+
+    override fun fetchDataFromFirebase(): Flow<State<ResponseEntity>> = callbackFlow<State<ResponseEntity>> {
+
+        val valueEventListener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot){
+                println("DataRepository: Data received")
+                trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
             }
-        }.addOnFailureListener {
-            def.complete(BaseResult.Failure(Exception()))
+            override fun onCancelled(error: DatabaseError){
+                println("DataRepository: Cancelled data received")
+                trySendBlocking(State.Failed(error.message))
+            }
         }
-        return def.await()
-    }
+
+        reference.get().addOnFailureListener { error ->
+            println("DataRepository: Internet issues")
+            trySendBlocking(State.Failed(message = error.message ?: "Failed to fetch data from Server"))
+        }
+
+        reference.addValueEventListener(valueEventListener)
+
+        awaitClose {
+            reference.removeEventListener(valueEventListener)
+        }
+    }.flowOn(Dispatchers.IO)
 }
