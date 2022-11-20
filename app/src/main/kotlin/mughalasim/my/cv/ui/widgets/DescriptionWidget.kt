@@ -20,16 +20,22 @@ fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
 
         Spacer(modifier = Modifier.padding(top = padding_screen))
 
-        TextSmall("Address")
-        TextRegular(entity.address, modifier = Modifier.padding(bottom = padding_screen))
-
-        TextSmall("Telephone/Mobile")
+        TextSmall(text = "Address")
         TextRegular(
-            "+${entity.area_code} ${entity.phone}",
-            modifier = Modifier.padding(bottom = padding_screen)
+            modifier = Modifier.padding(bottom = padding_screen),
+            text = entity.address
         )
 
-        TextSmall("Email")
-        TextRegular(entity.email, modifier = Modifier.padding(bottom = padding_screen))
+        TextSmall(text = "Telephone/Mobile")
+        TextRegular(
+            modifier = Modifier.padding(bottom = padding_screen),
+            text = "+${entity.area_code} ${entity.phone}"
+        )
+
+        TextSmall(text = "Email")
+        TextRegular(
+            modifier = Modifier.padding(bottom = padding_screen),
+            text = entity.email
+        )
     }
 }

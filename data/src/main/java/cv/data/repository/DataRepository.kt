@@ -30,11 +30,8 @@ class DataRepository: IDataRepository {
                 trySendBlocking(State.Failed(error.message))
             }
         }
-
-        reference.get().addOnFailureListener { error ->
-            println("DataRepository: Internet issues")
-            trySendBlocking(State.Failed(message = error.message ?: "Failed to fetch data from Server"))
-        }
+        
+        reference.get()
 
         reference.addValueEventListener(valueEventListener)
 

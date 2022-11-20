@@ -26,22 +26,28 @@ fun ExperienceWidget(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                TextSmall(entity.title)
+                TextSmall(text = entity.title)
                 val timeSpentString = if (entity.ongoing) {
                     "Present"
                 } else {
                     entity.start_date.toYearMonthDuration(entity.end_date)
                 }
-                TextSmall(timeSpentString)
+                TextSmall(text = timeSpentString)
             }
-            TextRegular(entity.position_title)
+            TextRegular(text = entity.position_title)
             val timeAndLocationString = if (entity.ongoing) {
                 "${entity.start_date.toMonthYearString()} - Present, ${entity.location}"
             } else {
                 "${entity.start_date.toMonthYearString()} - ${entity.end_date.toMonthYearString()}, ${entity.location}"
             }
-            TextRegular(timeAndLocationString, Modifier.padding(bottom = padding_screen))
-            TextRegular(entity.description, Modifier.padding(bottom = padding_screen))
+            TextRegular(
+                modifier = Modifier.padding(bottom = padding_screen),
+                text = timeAndLocationString
+            )
+            TextRegular(
+                modifier = Modifier.padding(bottom = padding_screen),
+                text = entity.description
+            )
         }
         LinksWidget(entity.links)
     }

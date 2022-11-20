@@ -56,17 +56,17 @@ fun MainActivityScreen(vm: MainActivityViewModel) {
         modifier = Modifier.fillMaxSize()
     ) {
         if (connectionState.value == ConnectionState.Unavailable){
-            TextLarge(text = "NO NETWORK")
+            BannerWidget(title = "Please check your internet connection", isWarning = true)
         }
         when(state.value){
             is State.Loading  ->
-                WidgetLoading()
+                LoadingWidget()
 
             is State.Success ->
                 ListScreen(response = (state.value as State.Success<ResponseEntity>).data)
 
             is State.Failed ->
-                TextRegular(text = (state.value as State.Failed<ResponseEntity>).message, modifier = Modifier.fillMaxSize())
+                BannerWidget(title = (state.value as State.Failed<ResponseEntity>).message, isWarning = true)
         }
     }
 }

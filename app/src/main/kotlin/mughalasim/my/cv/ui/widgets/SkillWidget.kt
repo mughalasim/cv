@@ -17,8 +17,11 @@ fun SkillWidget(
 ){
     repeat(skills.size){
         Column(Modifier.fillMaxWidth().padding(start = padding_screen, end = padding_screen)) {
-            TextSmall(skills[it].title)
-            TextRegular(skills[it].description, Modifier.padding(bottom = padding_screen))
+            TextSmall(text = skills[it].title)
+            TextRegular(
+                modifier = Modifier.padding(bottom = padding_screen),
+                text = skills[it].description
+            )
         }
     }
 }

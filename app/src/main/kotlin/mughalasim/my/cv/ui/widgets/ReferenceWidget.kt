@@ -16,9 +16,12 @@ fun ReferenceWidget(references: List<ReferenceEntity> = getFakeReferences()) {
     repeat(references.size) {
         val entity = references[it]
         Column(modifier = Modifier.padding(start = padding_screen, end = padding_screen).fillMaxWidth()) {
-            TextSmall(entity.name)
-            TextRegular(entity.company)
-            TextRegular(entity.contact, modifier = Modifier.padding(bottom = padding_screen))
+            TextSmall(text = entity.name)
+            TextRegular(text = entity.company)
+            TextRegular(
+                modifier = Modifier.padding(bottom = padding_screen),
+                text = entity.contact
+            )
         }
     }
 }

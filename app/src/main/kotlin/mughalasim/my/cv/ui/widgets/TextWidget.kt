@@ -3,6 +3,7 @@ package mughalasim.my.cv.ui.widgets
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.getTypography
@@ -11,13 +12,14 @@ import mughalasim.my.cv.ui.theme.getTypography
 @Preview(showBackground = true)
 @Composable
 fun TextRegular(
+    modifier: Modifier = Modifier,
     text: String = "Test String",
-    modifier: Modifier = Modifier
+    color: Color = AppTheme.colors.primary
 ) {
     if (text.isNotEmpty())
         Text(
             text = text,
-            style = getTypography(AppTheme.colors.primary).body1,
+            style = getTypography(color).body1,
             modifier = modifier
         )
 }
@@ -25,8 +27,8 @@ fun TextRegular(
 @Preview(showBackground = true)
 @Composable
 fun TextSmall(
-    text: String = "Test String",
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    text: String = "Test String"
 ) {
     if (text.isNotEmpty())
         Text(
@@ -40,8 +42,8 @@ fun TextSmall(
 @Preview(showBackground = true)
 @Composable
 fun TextLarge(
-    text: String = "Test String",
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    text: String = "Test String"
 ) {
     if (text.isNotEmpty())
         Text(

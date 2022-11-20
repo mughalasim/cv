@@ -12,12 +12,16 @@ private val DarkColorPalette = darkColors(
     primary = White,
     primaryVariant = LightGrey,
     secondary = DarkGrey,
+    error = Red,
+    surface = White
 )
 
 private val LightColorPalette = lightColors(
     primary = DarkBlue, // Text and statusBar
     primaryVariant = DarkGrey, // Subheading
     secondary = LightBlue, // Banner colors
+    error = Red,
+    surface = White
 
     /* Other default colors to override
     background = Color.White,

@@ -27,7 +27,10 @@ fun LinksWidget(
 ){
     Column(modifier = Modifier.fillMaxWidth()){
         if (links.isNotEmpty())
-            TextSmall("Links", modifier = Modifier.padding(start = padding_screen))
+            TextSmall(
+                modifier = Modifier.padding(start = padding_screen),
+                text = "Links"
+            )
         LazyRow {
             items(items = links) {
                 Chip (entity = it)
