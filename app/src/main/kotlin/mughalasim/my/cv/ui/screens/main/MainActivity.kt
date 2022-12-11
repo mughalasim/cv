@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -58,7 +57,7 @@ fun MainActivityScreen(vm: MainActivityViewModel) {
         modifier = Modifier.fillMaxSize()
     ) {
         if (connectionState.value == ConnectionState.Unavailable){
-            BannerWidget(title = stringResource(R.string.error_internet_connection), isWarning = true)
+            WarningWidget(title = stringResource(R.string.error_internet_connection))
         }
         when(state.value){
             is State.Loading  ->
@@ -68,7 +67,7 @@ fun MainActivityScreen(vm: MainActivityViewModel) {
                 ListScreen(response = (state.value as State.Success<ResponseEntity>).data)
 
             is State.Failed ->
-                BannerWidget(title = (state.value as State.Failed<ResponseEntity>).message, isWarning = true)
+                WarningWidget(title = (state.value as State.Failed<ResponseEntity>).message)
         }
     }
 }
@@ -84,40 +83,88 @@ fun ListScreen(
             .verticalScroll(rememberScrollState())
     ) {
 
+        var isExpandedContacts by remember { mutableStateOf(false) }
+        var isExpandedSkills by remember { mutableStateOf(false) }
+        var isExpandedWork by remember { mutableStateOf(false) }
+        var isExpandedEducation by remember { mutableStateOf(false) }
+        var isExpandedReference by remember { mutableStateOf(false) }
+
+        Spacer(modifier = Modifier.padding(top = padding_screen))
+
         // Name and Job title
         TextLarge(text = response.description.full_name)
         TextRegular(text = response.description.position_title)
 
+
         // [Banner] Contact information ------------------------------------------------------------
-        BannerWidget(title = stringResource(R.string.txt_contact_info))
-        // Basic information
-        DescriptionWidget(response.description)
-        // Links
-        LinksWidget(response.description.links)
+        BannerWidget(
+            title = stringResource(R.string.txt_contact_info),
+            isExpanded = isExpandedContacts,
+            onExpandedClicked = { isExpandedContacts = !isExpandedContacts }
+        )
+
+        Spacer(modifier = Modifier.padding(top = padding_screen))
+        if (isExpandedContacts){
+            // Basic information
+            DescriptionWidget(response.description)
+            // Links
+            LinksWidget(response.description.links)
+        }
+
 
         // [Banner] Skills--------------------------------------------------------------------------
-        BannerWidget(title = stringResource(R.string.txt_skills))
+        BannerWidget(
+            title = stringResource(R.string.txt_skills),
+            isExpanded = isExpandedSkills,
+            onExpandedClicked = { isExpandedSkills = !isExpandedSkills }
+        )
         // SKill list
         Spacer(modifier = Modifier.padding(top = padding_screen))
-        SkillWidget(response.skills)
+        if (isExpandedSkills)
+            SkillWidget(response.skills)
+
+
 
         // [Banner] Work experience ----------------------------------------------------------------
-        BannerWidget(title = stringResource(R.string.txt_work_experience))
-        // work list and links for each experience list
+        var sortAscending by remember { mutableStateOf(false) }
+        BannerWidget(
+            title = stringResource(R.string.txt_work_experience),
+            hasFilter = isExpandedWork,
+            sortAscending = sortAscending,
+            onFilterClicked = { sortAscending = !sortAscending },
+            isExpanded = isExpandedWork,
+            onExpandedClicked = { isExpandedWork = !isExpandedWork }
+        )
+        // Work list and links for each experience list
         Spacer(modifier = Modifier.padding(top = padding_screen))
-        ExperienceWidget(response.works)
+        if (isExpandedWork)
+            ExperienceWidget(response.getOrderedWork(sortAscending))
+
+
 
         // [Banner] Education ----------------------------------------------------------------------
-        BannerWidget(title = stringResource(R.string.txt_education))
+        BannerWidget(
+            title = stringResource(R.string.txt_education),
+            isExpanded = isExpandedEducation,
+            onExpandedClicked = { isExpandedEducation = !isExpandedEducation }
+        )
         // Education list
         Spacer(modifier = Modifier.padding(top = padding_screen))
-        ExperienceWidget(response.educations)
+        if (isExpandedEducation)
+            ExperienceWidget(response.educations)
+
+
 
         // [Banner] References ---------------------------------------------------------------------
-        BannerWidget(title = stringResource(R.string.txt_references))
+        BannerWidget(
+            title = stringResource(R.string.txt_references),
+            isExpanded = isExpandedReference,
+            onExpandedClicked = { isExpandedReference = !isExpandedReference }
+        )
         // Reference list
         Spacer(modifier = Modifier.padding(top = padding_screen))
-        ReferenceWidget(response.references)
+        if (isExpandedReference)
+            ReferenceWidget(response.references)
 
     }
 }

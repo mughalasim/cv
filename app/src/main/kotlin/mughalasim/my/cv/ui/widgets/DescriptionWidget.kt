@@ -1,7 +1,6 @@
 package mughalasim.my.cv.ui.widgets
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -17,9 +16,6 @@ fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
     Column(
         modifier = Modifier.padding(start = padding_screen, end = padding_screen).fillMaxWidth()
     ) {
-
-        Spacer(modifier = Modifier.padding(top = padding_screen))
-
         TextSmall(text = "Address")
         TextRegular(
             modifier = Modifier.padding(bottom = padding_screen),

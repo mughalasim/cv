@@ -9,6 +9,14 @@ data class ResponseEntity (
     val references: List<ReferenceEntity>,
     ){
     constructor() : this(DescriptionEntity(), listOf(), listOf(), listOf(), listOf())
+
+    fun getOrderedWork(isAscending: Boolean): List<ExperienceEntity>{
+        return if(isAscending){
+            works.sortedBy { it.start_date }
+        } else {
+            works.sortedByDescending { it.start_date }
+        }
+    }
 }
 
 fun getFakeResponse() = ResponseEntity(
