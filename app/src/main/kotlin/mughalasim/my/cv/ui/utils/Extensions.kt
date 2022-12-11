@@ -1,5 +1,7 @@
 package mughalasim.my.cv.ui.utils
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.utils.DateConstants.formatMonthYear
 import mughalasim.my.cv.ui.utils.DateConstants.formatYearMonthDay
@@ -8,7 +10,6 @@ import org.joda.time.Months
 import org.joda.time.Years
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
-import org.koin.mp.KoinPlatformTools
 
 fun String.toMonthYearString(): String{
     val date = DateTime.parse(this, formatYearMonthDay)
@@ -19,8 +20,9 @@ fun String.toYearMonthDayDate(): DateTime{
     return DateTime.parse(this, formatYearMonthDay)
 }
 
+@Composable
 fun String.toYearMonthDuration(endDateString :String): String{
-    val context = KoinPlatformTools.defaultContext().get().get<IAppContext>().fetchResources()
+    val context = LocalContext.current.resources
     val startDate = this.toYearMonthDayDate()
     val endDate = endDateString.toYearMonthDayDate()
 

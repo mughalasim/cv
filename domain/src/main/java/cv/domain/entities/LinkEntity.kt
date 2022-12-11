@@ -1,10 +1,11 @@
 package cv.domain.entities
 
+@Suppress("unused")
 data class LinkEntity(
     val text: String,
     val url: String
 ){
-    constructor() : this("", "") {}
+    constructor() : this("", "")
 }
 
 fun getFakeLinks() = listOf(

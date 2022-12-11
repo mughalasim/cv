@@ -22,11 +22,9 @@ class DataRepository: IDataRepository {
 
         val valueEventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot){
-                println("DataRepository: Data received")
                 trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
             }
             override fun onCancelled(error: DatabaseError){
-                println("DataRepository: Cancelled data received")
                 trySendBlocking(State.Failed(error.message))
             }
         }

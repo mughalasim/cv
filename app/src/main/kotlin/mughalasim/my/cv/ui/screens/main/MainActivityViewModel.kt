@@ -1,4 +1,4 @@
-package mughalasim.my.cv.ui
+package mughalasim.my.cv.ui.screens.main
 
 import androidx.lifecycle.ViewModel
 import cv.domain.usecase.DataUseCase

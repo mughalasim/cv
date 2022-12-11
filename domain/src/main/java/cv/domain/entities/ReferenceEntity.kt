@@ -1,11 +1,12 @@
 package cv.domain.entities
 
+@Suppress("unused")
 data class ReferenceEntity(
     val name: String,
     val company: String,
     val contact: String
 ){
-    constructor() : this("", "", "") {}
+    constructor() : this("", "", "")
 }
 
 fun getFakeReferences() = listOf(

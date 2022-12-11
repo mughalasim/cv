@@ -1,5 +1,10 @@
 package mughalasim.my.cv.ui.widgets
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.webkit.URLUtil
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,14 +16,16 @@ import androidx.compose.material.MaterialTheme.shapes
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
+import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.elevation
 import mughalasim.my.cv.ui.theme.padding_chips
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.utils.openLink
 
 @Preview(showBackground = true)
 @Composable
@@ -29,7 +36,7 @@ fun LinksWidget(
         if (links.isNotEmpty())
             TextSmall(
                 modifier = Modifier.padding(start = padding_screen),
-                text = "Links"
+                text = stringResource(R.string.txt_links)
             )
         LazyRow {
             items(items = links) {
@@ -42,7 +49,8 @@ fun LinksWidget(
 @Preview(showBackground = true)
 @Composable
 fun Chip(
-    entity: LinkEntity = getFakeLinks()[0]
+    entity: LinkEntity = getFakeLinks()[0],
+    context: Context = LocalContext.current
 ) {
     Surface(
         modifier = Modifier.padding(padding_screen),
@@ -54,7 +62,14 @@ fun Chip(
             .toggleable(
                 value = false,
                 onValueChange = {
-                    openLink(entity)
+                    val url = entity.url
+                    if (URLUtil.isValidUrl(url)) {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        context.startActivity(browserIntent)
+                    } else {
+                        Toast.makeText(context, context.resources.getString(R.string.error_invalid_link), Toast.LENGTH_LONG).show()
+                    }
                 }
             )
         ) {

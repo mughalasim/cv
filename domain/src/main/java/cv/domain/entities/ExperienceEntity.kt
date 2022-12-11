@@ -1,5 +1,6 @@
 package cv.domain.entities
 
+@Suppress("unused")
 data class ExperienceEntity(
     val title: String,
     val start_date: String,
@@ -10,7 +11,7 @@ data class ExperienceEntity(
     val links: List<LinkEntity>,
     val ongoing: Boolean = false
     ){
-    constructor() : this("", "", "", "", "", "", listOf()) {}
+    constructor() : this("", "", "", "", "", "", listOf())
 }
 
 fun getFakeExperience() = listOf(

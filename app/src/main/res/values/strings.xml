@@ -1,19 +1,24 @@
 <resources>
     <string name="app_name">Personal CV</string>
-    <string name="links">Links</string>
-    <string name="email">Email</string>
-    <string name="telephone_mobile">Telephone / Mobile</string>
-    <string name="address">Address</string>
-    <string name="error">Attempting to fetch data from the server</string>
+
+    <string name="txt_contact_info">Contact information</string>
+    <string name="txt_skills">Skills</string>
+    <string name="txt_work_experience">Work experience</string>
+    <string name="txt_education">Education</string>
+    <string name="txt_references">References</string>
+    <string name="error_internet_connection">Please check your internet connection</string>
+    <string name="txt_present">Present</string>
+    <string name="txt_links">Links</string>
+    <string name="error_invalid_link">Invalid Link Url</string>
 
     <plurals name="plural_year">
-        <item quantity="one">%d yr</item>
-        <item quantity="other">%d yrs</item>
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
     </plurals>
 
     <plurals name="plural_month">
-        <item quantity="one">%d mth</item>
-        <item quantity="other">%d mths</item>
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
     </plurals>
 
 </resources>

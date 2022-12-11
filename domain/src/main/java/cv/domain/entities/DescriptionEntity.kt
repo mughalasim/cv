@@ -1,5 +1,6 @@
 package cv.domain.entities
 
+@Suppress("unused")
 data class DescriptionEntity (
     val address: String,
     val full_name: String,
@@ -9,7 +10,7 @@ data class DescriptionEntity (
     val phone: Long,
     val position_title: String
 ){
-    constructor() : this("", "", listOf(), 0, "", 0, "") {}
+    constructor() : this("", "", listOf(), 0, "", 0, "")
 }
 
 fun getFakeDescription() = DescriptionEntity(

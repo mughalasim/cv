@@ -1,4 +1,4 @@
-package mughalasim.my.cv.ui
+package mughalasim.my.cv.ui.screens.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,11 +12,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.ConnectionState
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
+import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.utils.currentConnectivityState
@@ -56,7 +58,7 @@ fun MainActivityScreen(vm: MainActivityViewModel) {
         modifier = Modifier.fillMaxSize()
     ) {
         if (connectionState.value == ConnectionState.Unavailable){
-            BannerWidget(title = "Please check your internet connection", isWarning = true)
+            BannerWidget(title = stringResource(R.string.error_internet_connection), isWarning = true)
         }
         when(state.value){
             is State.Loading  ->
@@ -87,32 +89,32 @@ fun ListScreen(
         TextRegular(text = response.description.position_title)
 
         // [Banner] Contact information ------------------------------------------------------------
-        BannerWidget(title = "Contact information")
+        BannerWidget(title = stringResource(R.string.txt_contact_info))
         // Basic information
         DescriptionWidget(response.description)
         // Links
         LinksWidget(response.description.links)
 
         // [Banner] Skills--------------------------------------------------------------------------
-        BannerWidget(title = "Skills")
+        BannerWidget(title = stringResource(R.string.txt_skills))
         // SKill list
         Spacer(modifier = Modifier.padding(top = padding_screen))
         SkillWidget(response.skills)
 
         // [Banner] Work experience ----------------------------------------------------------------
-        BannerWidget(title = "Work experience")
+        BannerWidget(title = stringResource(R.string.txt_work_experience))
         // work list and links for each experience list
         Spacer(modifier = Modifier.padding(top = padding_screen))
         ExperienceWidget(response.works)
 
         // [Banner] Education ----------------------------------------------------------------------
-        BannerWidget(title = "Education")
+        BannerWidget(title = stringResource(R.string.txt_education))
         // Education list
         Spacer(modifier = Modifier.padding(top = padding_screen))
         ExperienceWidget(response.educations)
 
         // [Banner] References ---------------------------------------------------------------------
-        BannerWidget(title = "References")
+        BannerWidget(title = stringResource(R.string.txt_references))
         // Reference list
         Spacer(modifier = Modifier.padding(top = padding_screen))
         ReferenceWidget(response.references)
