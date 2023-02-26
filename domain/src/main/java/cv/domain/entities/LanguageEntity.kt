@@ -12,6 +12,7 @@ data class LanguageEntity(
     val txt_skills: String,
     val txt_telephone: String,
     val txt_email: String,
+    val txt_version: String,
 
     val error_internet_connection: String,
     val error_invalid_link: String,
@@ -20,6 +21,7 @@ data class LanguageEntity(
     val plural_month: List<String>
 ){
     constructor(): this(
+        "",
         "",
         "",
         "",
