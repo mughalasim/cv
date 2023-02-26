@@ -1,40 +1,40 @@
 package cv.data.repository
 
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.repositories.IDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 
-class DataRepository: IDataRepository {
+class DataRepository(firebaseInstance: FirebaseDatabase): IDataRepository {
 
-    private val reference = FirebaseDatabase.getInstance().reference
+    private var dbReference: DatabaseReference = firebaseInstance.getReference("/data")
 
-    override fun fetchDataFromFirebase(): Flow<State<ResponseEntity>> = callbackFlow<State<ResponseEntity>> {
-
-        val valueEventListener = object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot){
-                trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
+    override fun fetchDataFromFirebase() = callbackFlow<State<ResponseEntity>> {
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                try {
+                    trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
+                } catch (e: Exception) {
+                    trySendBlocking(State.Failed("FAILED"))
+                }
             }
-            override fun onCancelled(error: DatabaseError){
+
+            override fun onCancelled(error: DatabaseError) {
                 trySendBlocking(State.Failed(error.message))
             }
         }
-        
-        reference.get()
 
-        reference.addValueEventListener(valueEventListener)
+        dbReference.addValueEventListener(valueEventListener)
+
+        dbReference.get()
 
         awaitClose {
-            reference.removeEventListener(valueEventListener)
+            dbReference.removeEventListener(valueEventListener)
         }
     }.flowOn(Dispatchers.IO)
 }

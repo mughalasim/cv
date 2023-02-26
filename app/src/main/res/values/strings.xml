@@ -1,14 +1,21 @@
 <resources>
-    <string name="app_name">Personal CV</string>
+    <string name="app_name" translatable="false">Personal CV</string>
 
-    <string name="txt_contact_info">Contact information</string>
-    <string name="txt_skills">Skills</string>
-    <string name="txt_work_experience">Work experience</string>
+    <!-- Labels-->
     <string name="txt_education">Education</string>
     <string name="txt_references">References</string>
-    <string name="error_internet_connection">Please check your internet connection</string>
     <string name="txt_present">Present</string>
+    <string name="txt_address">Address</string>
+    <string name="txt_contact_info">Contact information</string>
+    <string name="txt_work_experience">Work experience</string>
     <string name="txt_links">Links</string>
+    <string name="txt_skills">Skills</string>
+    <string name="txt_telephone">Telephone/Mobile</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_version">App version: %1$s</string>
+
+    <!-- Error messages-->
+    <string name="error_internet_connection">Please check your internet connection</string>
     <string name="error_invalid_link">Invalid Link Url</string>
 
     <plurals name="plural_year">

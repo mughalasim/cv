@@ -12,6 +12,10 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+//        Restring.init(this)
+//        ViewPump.init(RewordInterceptor)
+
         startKoin {
             androidContext(this@App)
             modules(
@@ -24,5 +28,9 @@ class App: Application() {
             )
         }
     }
+
+//    override fun getResources(): Resources {
+//        return AppLocale.wrapResources(applicationContext, super.getResources())
+//    }
 
 }

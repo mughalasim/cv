@@ -17,6 +17,7 @@ import cv.domain.ConnectionState
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
+import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.padding_screen
@@ -165,6 +166,12 @@ fun ListScreen(
         Spacer(modifier = Modifier.padding(top = padding_screen))
         if (isExpandedReference)
             ReferenceWidget(response.references)
+
+
+        // [App version] ---------------------------------------------------------------------------
+        Spacer(modifier = Modifier.padding(top = padding_screen))
+        TextSmall(text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME))
+        Spacer(modifier = Modifier.padding(top = padding_screen))
 
     }
 }

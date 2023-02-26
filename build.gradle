@@ -1,9 +1,9 @@
 buildscript {
     ext {
-        app_version_code = 6
-        app_version_name = "6.0"
+        app_version_code = 7
+        app_version_name = "7.0"
 
-        sdk_min = 23
+        sdk_min = 24
         sdk_target = 33
         sdk_compile = 33
 

@@ -99,6 +99,12 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
+    // Restring for Dynamic languages
+//    implementation 'dev.b3nedikt.restring:restring:5.2.2'
+//    implementation 'dev.b3nedikt.viewpump:viewpump:4.0.10'
+//    implementation 'dev.b3nedikt.reword:reword:4.0.4'
+//    implementation 'dev.b3nedikt.applocale:applocale:3.1.0'
+
     // TESTING -------------------------------------------------------------------------------------
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$junit_extension"
