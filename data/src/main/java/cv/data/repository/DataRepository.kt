@@ -1,5 +1,6 @@
 package cv.data.repository
 
+import android.util.Log
 import com.google.firebase.database.*
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
@@ -10,7 +11,7 @@ import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 
-class DataRepository(firebaseInstance: FirebaseDatabase): IDataRepository {
+class DataRepository(firebaseInstance: FirebaseDatabase) : IDataRepository {
 
     private var dbReference: DatabaseReference = firebaseInstance.getReference("/data")
 
@@ -20,12 +21,14 @@ class DataRepository(firebaseInstance: FirebaseDatabase): IDataRepository {
                 try {
                     trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
                 } catch (e: Exception) {
-                    trySendBlocking(State.Failed("FAILED"))
+                    Log.e(javaClass.name, e.localizedMessage!!)
+                    trySendBlocking(State.Failed())
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                trySendBlocking(State.Failed(error.message))
+                Log.e(javaClass.name, error.message)
+                trySendBlocking(State.Failed())
             }
         }
 
