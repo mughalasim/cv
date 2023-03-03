@@ -2,6 +2,7 @@ package mughalasim.my.cv.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.utils.DateConstants.formatMonthYear
 import mughalasim.my.cv.ui.utils.DateConstants.formatYearMonthDay
@@ -36,6 +37,7 @@ fun String.toYearMonthDuration(endDateString :String): String{
 }
 
 object DateConstants {
-    val formatYearMonthDay: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
-    val formatMonthYear: DateTimeFormatter = DateTimeFormat.forPattern("MMM yyyy")
+    val formatYearMonthDay: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(
+        Restring.locale)
+    val formatMonthYear: DateTimeFormatter = DateTimeFormat.forPattern("MMM yyyy").withLocale(Restring.locale)
 }
