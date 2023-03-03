@@ -20,13 +20,10 @@ fun Context.observeConnectivityAsFlow() = callbackFlow {
 
     connectivityManager.registerNetworkCallback(networkRequest, callback)
 
-    // Set current state
     val currentState = getCurrentConnectivityState(connectivityManager)
     trySend(currentState)
 
-    // Remove callback when not used
     awaitClose {
-        // Remove listeners
         connectivityManager.unregisterNetworkCallback(callback)
     }
 }
@@ -53,11 +50,17 @@ val Context.currentConnectivityState: ConnectionState
 private fun getCurrentConnectivityState(
     connectivityManager: ConnectivityManager
 ): ConnectionState {
-    val connected = connectivityManager.allNetworks.any { network ->
-        connectivityManager.getNetworkCapabilities(network)
-            ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            ?: false
+    val actNetwork =
+        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) ?: return ConnectionState.Unavailable
+    return when {
+        actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+            ConnectionState.Available
+        }
+        actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+            ConnectionState.Unavailable
+        }
+        else -> {
+            ConnectionState.Unavailable
+        }
     }
-
-    return if (connected) ConnectionState.Available else ConnectionState.Unavailable
 }

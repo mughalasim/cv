@@ -20,6 +20,7 @@ class App: Application() {
 
         Restring.init(this)
         ViewPump.init(RewordInterceptor)
+        Restring.locale = this.resources.configuration.locales.get(0)
 
         startKoin {
             androidContext(this@App)

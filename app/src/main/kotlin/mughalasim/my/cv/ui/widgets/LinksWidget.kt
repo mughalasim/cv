@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
@@ -38,7 +39,7 @@ fun LinksWidget(
                 modifier = Modifier.padding(start = padding_screen),
                 text = stringResource(R.string.txt_links)
             )
-        LazyRow {
+        LazyRow(modifier = Modifier.padding(start = padding_screen, end = padding_screen)) {
             items(items = links) {
                 Chip (entity = it)
             }
@@ -53,7 +54,7 @@ fun Chip(
     context: Context = LocalContext.current
 ) {
     Surface(
-        modifier = Modifier.padding(padding_screen),
+        modifier = Modifier.padding(start = 0.dp, end = padding_chips, top = padding_chips, bottom = padding_screen),
         elevation = elevation,
         shape = shapes.small,
         color = AppTheme.colors.secondary
