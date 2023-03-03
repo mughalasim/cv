@@ -16,13 +16,14 @@
 
     <!-- Error messages-->
     <string name="error_internet_connection">Please check your internet connection</string>
+    <string name="error_server">There seems to be an error with the server, please contact your administrator</string>
     <string name="error_invalid_link">Invalid Link Url</string>
 
+    <!-- Plurals-->
     <plurals name="plural_year">
         <item quantity="one">%d year</item>
         <item quantity="other">%d years</item>
     </plurals>
-
     <plurals name="plural_month">
         <item quantity="one">%d month</item>
         <item quantity="other">%d months</item>

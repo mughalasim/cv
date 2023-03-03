@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        app_version_code = 7
-        app_version_name = "7.0"
+        app_version_code = 8
+        app_version_name = "8.0"
 
         sdk_min = 24
         sdk_target = 33
@@ -11,7 +11,7 @@ buildscript {
         kotlin_reflect = "1.7.10"
 
         compose = "1.4.0-alpha01"
-        compose_activity = "1.7.0-alpha02"
+        compose_activity = "1.8.0-alpha01"
         coroutines = "1.6.4"
         lifecycle = "2.6.0-alpha03"
         lifecycle_live_data = "2.5.1"
@@ -23,13 +23,14 @@ buildscript {
         joda_time = "2.10.3"
         firebase = "29.0.2"
         arrow = "1.0.1"
-        koin = "3.0.2"
+        koin = "3.2.2"
+        koin_ext = "3.0.2"
 
         mockwebserver_version = "4.9.3"
         mockk_version = "1.12.3"
         junit = "4.13.2"
         junit_extension = "1.1.4"
-        espresso = "3.5.0"
+        espresso = "3.5.1"
     }
 }
 

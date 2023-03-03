@@ -5,5 +5,5 @@ import cv.domain.entities.LanguageEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ILanguageRepository {
-    fun fetchDataFromFirebase(): Flow<State<LanguageEntity>>
+    fun fetchLanguageFromFirebase(): Flow<State<LanguageEntity>>
 }

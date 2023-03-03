@@ -1,12 +1,18 @@
 package mughalasim.my.cv.ui.screens.main
 
 import androidx.lifecycle.ViewModel
-import cv.domain.usecase.DataUseCase
+import androidx.lifecycle.viewModelScope
+import cv.domain.usecase.MainActivityUseCase
+import dev.b3nedikt.restring.Restring
+import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivityViewModel(
-    private val dataUseCase: DataUseCase
+    private val useCase: MainActivityUseCase,
 ) : ViewModel() {
 
-    fun getData() = dataUseCase.getData()
+    fun getData() = useCase.getData()
+
+    fun getLanguage() = useCase.getLanguage()
 
 }
