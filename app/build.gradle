@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'mughalasim.my.cv'
     compileSdk sdk_compile
 
     defaultConfig {
@@ -32,7 +33,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.release_signing
         }
 
@@ -41,6 +42,9 @@ android {
         }
     }
 
+    buildFeatures {
+        compose true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -49,14 +53,6 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion compose
     }
 
     packagingOptions {
@@ -80,6 +76,7 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$kotlin_core"
 
+    implementation "androidx.compose.compiler:compiler:$kotlin_compiler_version"
     implementation "androidx.compose.ui:ui:$compose"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose"
     implementation "androidx.compose.material:material:$compose"
@@ -106,12 +103,13 @@ dependencies {
     implementation 'dev.b3nedikt.applocale:applocale:3.1.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
+    // DEBUGGING -----------------------------------------------------------------------------------
+    debugImplementation "androidx.compose.ui:ui-tooling-preview:$compose_debug"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_debug"
+
     // TESTING -------------------------------------------------------------------------------------
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$junit_extension"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose"
 }
