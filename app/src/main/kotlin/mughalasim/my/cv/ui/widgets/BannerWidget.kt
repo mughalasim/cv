@@ -34,10 +34,15 @@ fun BannerWidget(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = padding_chips, end = padding_chips, top = padding_screen, bottom = padding_screen)
+            .padding(
+                start = padding_chips,
+                end = padding_chips,
+                top = padding_screen,
+                bottom = padding_screen
+            )
             .clip(RoundedCornerShape(border_radius)),
         elevation = elevation,
-        color = AppTheme.colors.secondary
+        color = AppTheme.colors.backgroundBanner
     ) {
         Row(
             modifier = Modifier
@@ -49,8 +54,7 @@ fun BannerWidget(
             TextRegular(
                 modifier = Modifier
                     .padding(start = padding_chips, end = padding_chips, top = padding_screen, bottom = padding_screen),
-                text = title,
-                color = AppTheme.colors.primary
+                text = title
             )
             Spacer(modifier = Modifier.weight(1f))
             if (hasFilter){
@@ -64,7 +68,7 @@ fun BannerWidget(
                                mughalasim.my.cv.R.drawable.ic_sort_ascending
                            else mughalasim.my.cv.R.drawable.ic_sort_descending),
                        contentDescription = null,
-                       tint = AppTheme.colors.primary,
+                       tint = AppTheme.colors.textRegular,
                        modifier = Modifier.padding(padding_chips)
                    )
                }
@@ -75,7 +79,7 @@ fun BannerWidget(
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = false)
 @Composable
 fun PreviewBanners(){
     Column(verticalArrangement = Arrangement.Top) {

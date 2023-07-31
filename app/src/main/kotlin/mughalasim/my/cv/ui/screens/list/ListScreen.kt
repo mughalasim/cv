@@ -1,5 +1,6 @@
-package mughalasim.my.cv.ui.widgets
+package mughalasim.my.cv.ui.screens.list
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -9,71 +10,104 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import cv.domain.State
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
 import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
+import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_chips
 import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.widgets.BannerWidget
+import mughalasim.my.cv.ui.widgets.Chip
+import mughalasim.my.cv.ui.widgets.DescriptionWidget
+import mughalasim.my.cv.ui.widgets.ExperienceWidget
+import mughalasim.my.cv.ui.widgets.LinksWidget
+import mughalasim.my.cv.ui.widgets.LoadingWidget
+import mughalasim.my.cv.ui.widgets.ReferenceWidget
+import mughalasim.my.cv.ui.widgets.SkillWidget
+import mughalasim.my.cv.ui.widgets.TextLarge
+import mughalasim.my.cv.ui.widgets.TextRegular
+import mughalasim.my.cv.ui.widgets.WarningWidget
+import org.koin.androidx.compose.koinViewModel
 
-
-@Preview(showBackground = true)
 @Composable
-fun ListWidget(
-    response: ResponseEntity = getFakeResponse(),
+fun ListScreen() {
+    val vm = koinViewModel<ListScreenViewModel>()
+    val stateData = vm.getData().collectAsState(initial = State.Loading())
+    when (val response = stateData.value) {
+        is State.Loading -> LoadingWidget()
+
+        is State.Failed -> WarningWidget(title = LocalContext.current.getString(R.string.error_server))
+
+        is State.Success<*> -> {
+            response as State.Success<ResponseEntity>
+            ListScreenItems(response = response.data) {
+                vm.openSettings()
+            }
+        }
+    }
+}
+
+@Composable
+fun ListScreenItems(
+    response: ResponseEntity,
     onOpenSettingsClicked: () -> Unit = {}
 ) {
+    val initialExpandedState = true
+    val enterAnimation = slideInVertically() + fadeIn()
+    val exitAnimation = fadeOut()
+
+    var isExpandedContacts by remember { mutableStateOf(initialExpandedState) }
+    var isExpandedSkills by remember { mutableStateOf(initialExpandedState) }
+    var isExpandedWork by remember { mutableStateOf(initialExpandedState) }
+    var isExpandedEducation by remember { mutableStateOf(initialExpandedState) }
+    var isExpandedReference by remember { mutableStateOf(initialExpandedState) }
+
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val initialExpandedState = true
-        val enterAnimation = slideInVertically() + fadeIn()
-        val exitAnimation = fadeOut()
-
-        var isExpandedContacts by remember { mutableStateOf(initialExpandedState) }
-        var isExpandedSkills by remember { mutableStateOf(initialExpandedState) }
-        var isExpandedWork by remember { mutableStateOf(initialExpandedState) }
-        var isExpandedEducation by remember { mutableStateOf(initialExpandedState) }
-        var isExpandedReference by remember { mutableStateOf(initialExpandedState) }
-
         Spacer(modifier = Modifier.padding(top = padding_screen))
 
-        // Name and Job title
-        Row (
+        // Name and Job title ----------------------------------------------------------------------
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = padding_screen, end = padding_screen),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){ Column {
-                TextLarge(text = response.description.full_name)
+        ) {
+            Column {
+                TextLarge(text = AppTheme.colors.mode)
                 TextRegular(text = response.description.position_title)
             }
-            Column (verticalArrangement = Arrangement.Center) {
+            Column(verticalArrangement = Arrangement.Center) {
                 Icon(
                     modifier = Modifier
                         .padding(padding_chips)
-                        .clickable {
-                            onOpenSettingsClicked()
-                        },
+                        .clickable { onOpenSettingsClicked() },
                     painter = painterResource(id = R.drawable.ic_settings),
                     tint = AppTheme.colors.textRegular,
                     contentDescription = null
@@ -93,7 +127,7 @@ fun ListWidget(
             enter = enterAnimation,
             exit = exitAnimation
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally){
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 // Basic information
                 DescriptionWidget(response.description)
                 // Links
@@ -176,8 +210,34 @@ fun ListWidget(
                 .align(Alignment.Start),
             entity = LinkEntity(
                 text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
-                url = "https://github.com/mughalasim/cv/releases")
+                url = "https://github.com/mughalasim/cv/releases"
+            )
         )
         Spacer(modifier = Modifier.padding(top = padding_chips))
+    }
+}
+
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun ListScreenPreviewNight(){
+    AppThemeComposable {
+        ListScreenItems(getFakeResponse())
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun ListScreenPreview(){
+    AppThemeComposable {
+        ListScreenItems(getFakeResponse())
     }
 }

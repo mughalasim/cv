@@ -1,5 +1,6 @@
 package mughalasim.my.cv.ui.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,13 +11,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.DescriptionEntity
 import cv.domain.entities.getFakeDescription
 import mughalasim.my.cv.R
+import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen
 
-@Preview(showBackground = true)
 @Composable
 fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
     Column(
-        modifier = Modifier.padding(start = padding_screen, end = padding_screen).fillMaxWidth()
+        modifier = Modifier
+            .padding(start = padding_screen, end = padding_screen)
+            .fillMaxWidth()
     ) {
         TextSmall(text = stringResource(R.string.txt_address))
         TextRegular(
@@ -35,5 +38,29 @@ fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
             modifier = Modifier.padding(bottom = padding_screen),
             text = entity.email
         )
+    }
+}
+
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+)
+@Composable
+fun DescriptionWidgetPreviewNight(){
+    AppThemeComposable {
+        DescriptionWidget()
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun DescriptionWidgetPreview(){
+    AppThemeComposable {
+        DescriptionWidget()
     }
 }

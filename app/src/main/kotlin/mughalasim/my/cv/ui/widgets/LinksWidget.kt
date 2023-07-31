@@ -5,17 +5,20 @@ import android.content.Intent
 import android.net.Uri
 import android.webkit.URLUtil
 import android.widget.Toast
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,9 +27,11 @@ import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.border_radius
+import mughalasim.my.cv.ui.theme.line_thickness
 import mughalasim.my.cv.ui.theme.padding_chips
 import mughalasim.my.cv.ui.theme.padding_screen
 
+@OptIn(ExperimentalLayoutApi::class)
 @Preview(showBackground = true)
 @Composable
 fun LinksWidget(
@@ -34,15 +39,14 @@ fun LinksWidget(
 ){
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = padding_screen, end = padding_screen)
+        .padding(start = padding_screen, end = padding_screen, bottom = padding_screen)
     ) {
-        if (links.isNotEmpty())
-            TextSmall(
-                text = stringResource(R.string.txt_links)
-            )
-        LazyRow() {
-            items(items = links) {
-                Chip (entity = it)
+        if (links.isNotEmpty()){
+            TextSmall(text = stringResource(R.string.txt_links))
+            FlowRow (horizontalArrangement = Arrangement.Start){
+                repeat(links.size){
+                    Chip (entity = links[it])
+                }
             }
         }
     }
@@ -57,9 +61,13 @@ fun Chip(
 ) {
     Surface(
         modifier = modifier
-            .padding(end = padding_chips, top = padding_chips, bottom = padding_screen),
-        shape = RoundedCornerShape(border_radius),
-        color = AppTheme.colors.secondary
+            .padding(end = padding_chips, top = padding_chips)
+            .border(
+                width = line_thickness,
+                color = AppTheme.colors.backgroundChip,
+                shape = RoundedCornerShape(border_radius)
+            ),
+        color = Color.Transparent
     ) {
         Row (
             modifier = Modifier

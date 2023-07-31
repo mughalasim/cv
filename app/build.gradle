@@ -14,7 +14,6 @@ android {
         targetSdk sdk_target
         versionCode app_version_code
         versionName app_version_name
-        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -35,10 +34,12 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.release_signing
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
             minifyEnabled false
+            debuggable true
         }
     }
 
@@ -74,6 +75,7 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
 
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_reflect"
     implementation "androidx.core:core-ktx:$kotlin_core"
 
     implementation "androidx.compose.compiler:compiler:$kotlin_compiler_version"
@@ -89,9 +91,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist"
 
-    // Dependency Injection
-    implementation "io.insert-koin:koin-android:$koin"
-    implementation "io.insert-koin:koin-android-ext:$koin_ext"
+    // Navigation
+    implementation "androidx.navigation:navigation-compose:$compose_nav"
+
+    // Koin Dependency Injection
+    implementation "io.insert-koin:koin-android:$koin_android"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_compose"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
@@ -104,8 +109,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
     // DEBUGGING -----------------------------------------------------------------------------------
-    debugImplementation "androidx.compose.ui:ui-tooling-preview:$compose_debug"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_debug"
+    debugImplementation "androidx.compose.ui:ui-tooling-preview:$compose"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose"
 
     // TESTING -------------------------------------------------------------------------------------
     testImplementation "junit:junit:$junit"
