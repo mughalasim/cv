@@ -53,8 +53,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ListScreen() {
-    val vm = koinViewModel<ListScreenViewModel>()
-    val stateData = vm.getData().collectAsState(initial = State.Loading())
+    val viewModel = koinViewModel<ListScreenViewModel>()
+    val stateData = viewModel.getData().collectAsState(initial = State.Loading())
     when (val response = stateData.value) {
         is State.Loading -> LoadingWidget()
 
@@ -62,8 +62,11 @@ fun ListScreen() {
 
         is State.Success<*> -> {
             response as State.Success<ResponseEntity>
-            ListScreenItems(response = response.data) {
-                vm.openSettings()
+            ListScreenItems(
+                response = response.data,
+                initialListExpandedState = viewModel.getInitialListExpandedState()
+            ) {
+                viewModel.openSettings()
             }
         }
     }
@@ -72,17 +75,17 @@ fun ListScreen() {
 @Composable
 fun ListScreenItems(
     response: ResponseEntity,
+    initialListExpandedState: Boolean,
     onOpenSettingsClicked: () -> Unit = {}
 ) {
-    val initialExpandedState = true
     val enterAnimation = slideInVertically() + fadeIn()
     val exitAnimation = fadeOut()
 
-    var isExpandedContacts by remember { mutableStateOf(initialExpandedState) }
-    var isExpandedSkills by remember { mutableStateOf(initialExpandedState) }
-    var isExpandedWork by remember { mutableStateOf(initialExpandedState) }
-    var isExpandedEducation by remember { mutableStateOf(initialExpandedState) }
-    var isExpandedReference by remember { mutableStateOf(initialExpandedState) }
+    var isExpandedContacts by remember { mutableStateOf(initialListExpandedState) }
+    var isExpandedSkills by remember { mutableStateOf(initialListExpandedState) }
+    var isExpandedWork by remember { mutableStateOf(initialListExpandedState) }
+    var isExpandedEducation by remember { mutableStateOf(initialListExpandedState) }
+    var isExpandedReference by remember { mutableStateOf(initialListExpandedState) }
 
     Column(
         modifier = Modifier
@@ -100,7 +103,7 @@ fun ListScreenItems(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
-                TextLarge(text = AppTheme.colors.mode)
+                TextLarge(text = response.description.full_name)
                 TextRegular(text = response.description.position_title)
             }
             Column(verticalArrangement = Arrangement.Center) {
@@ -226,7 +229,7 @@ fun ListScreenItems(
 @Composable
 fun ListScreenPreviewNight(){
     AppThemeComposable {
-        ListScreenItems(getFakeResponse())
+        ListScreenItems(getFakeResponse(), true)
     }
 }
 
@@ -238,6 +241,6 @@ fun ListScreenPreviewNight(){
 @Composable
 fun ListScreenPreview(){
     AppThemeComposable {
-        ListScreenItems(getFakeResponse())
+        ListScreenItems(getFakeResponse(), true)
     }
 }

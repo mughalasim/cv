@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
+import mughalasim.my.cv.services.Route
 import mughalasim.my.cv.ui.utils.DateConstants.formatMonthYear
 import mughalasim.my.cv.ui.utils.DateConstants.formatYearMonthDay
 import org.joda.time.DateTime
@@ -20,6 +21,12 @@ fun String.toMonthYearString(): String{
 fun String.toYearMonthDayDate(): DateTime{
     return DateTime.parse(this, formatYearMonthDay)
 }
+
+fun String.toRoute(): Route =
+    Route::class.sealedSubclasses
+        .firstOrNull { it.objectInstance?.routeName == this }
+        ?.objectInstance
+        ?: Route.ListScreen
 
 @Composable
 fun String.toYearMonthDuration(endDateString :String): String{

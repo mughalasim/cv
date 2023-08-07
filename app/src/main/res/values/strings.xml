@@ -12,6 +12,7 @@
     <string name="txt_skills">Skills</string>
     <string name="txt_telephone">Telephone/Mobile</string>
     <string name="txt_email">Email</string>
+    <string name="txt_settings">Settings</string>
     <string name="txt_version">App version: %1$s</string>
 
     <!-- Error messages-->

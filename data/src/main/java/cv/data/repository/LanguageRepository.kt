@@ -16,9 +16,9 @@ class LanguageRepository(application: Application, firebaseInstance: FirebaseDat
     ILanguageRepository {
 
     private val locale = application.resources.configuration.locales.get(0).language
-    private var dbReference: DatabaseReference = firebaseInstance.getReference("/language/$locale")
+    private var firebaseReference: DatabaseReference = firebaseInstance.getReference("/language/$locale")
 
-    override fun fetchLanguageFromFirebase() = callbackFlow<State<LanguageEntity>> {
+    override fun getLanguageFromFirebase() = callbackFlow<State<LanguageEntity>> {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 try {
@@ -49,12 +49,12 @@ class LanguageRepository(application: Application, firebaseInstance: FirebaseDat
             }
         }
 
-        dbReference.addValueEventListener(valueEventListener)
+        firebaseReference.addValueEventListener(valueEventListener)
 
-        dbReference.get()
+        firebaseReference.get()
 
         awaitClose {
-            dbReference.removeEventListener(valueEventListener)
+            firebaseReference.removeEventListener(valueEventListener)
         }
     }.flowOn(Dispatchers.IO)
 }

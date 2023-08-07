@@ -2,17 +2,24 @@ package mughalasim.my.cv.ui.screens.list
 
 import androidx.lifecycle.ViewModel
 import cv.domain.usecase.DataUseCase
+import cv.domain.usecase.SettingsUseCase
 import mughalasim.my.cv.services.IServiceNavigation
 import mughalasim.my.cv.services.Route
 
 class ListScreenViewModel(
     private val serviceNavigation: IServiceNavigation,
-    private val useCase: DataUseCase
+    private val dataUseCase: DataUseCase,
+    private val settingsUseCase: SettingsUseCase
 ) : ViewModel() {
 
-    fun getData() = useCase.getData()
+    fun getData() = dataUseCase.getData()
+
+    fun getInitialListExpandedState() = settingsUseCase.getSettings().expandListOnStartUp
 
     fun openSettings() =
-        serviceNavigation.open(Route.SettingsScreen, removeCurrentFromStack = false)
+        serviceNavigation.open(
+            route = Route.SettingsScreen,
+            removeCurrentFromStack = false
+        )
 
 }

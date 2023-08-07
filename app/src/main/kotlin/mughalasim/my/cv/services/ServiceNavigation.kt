@@ -1,10 +1,8 @@
 package mughalasim.my.cv.services
 
 import androidx.navigation.NavController
+import mughalasim.my.cv.ui.utils.toRoute
 
-/**
- * List of possible routes
- */
 sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
     object ListScreen : Route("ListScreen", true)
     object SettingsScreen : Route("SettingsScreen")
@@ -16,49 +14,6 @@ sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
                 ?.objectInstance
                 ?: ListScreen
     }
-}
-
-fun String.toRoute(): Route =
-    Route::class.sealedSubclasses
-        .firstOrNull { it.objectInstance?.routeName == this }
-        ?.objectInstance
-        ?: Route.ListScreen
-
-interface IServiceNavigation {
-    /**
-     * Setup the navigation service with the initial route
-     */
-    fun setNavController(
-        navController: NavController
-    )
-
-    /**
-     * Method use to navigate to a new route
-     */
-    fun open(
-        route: Route,
-        removeCurrentFromStack: Boolean = false,
-    )
-
-    /**
-     * Method to pop back programmatically
-     */
-    fun popBack()
-
-    /**
-     * Returns the current route
-     */
-    fun getCurrentRoute(): Route
-
-    /**
-     * Returns the initial route
-     */
-    fun getInitialRoute(): Route
-
-    /**
-     * Method when the back button is pressed to update the current
-     */
-    fun updateCurrentRoute()
 }
 
 class ServiceNavigation : IServiceNavigation {

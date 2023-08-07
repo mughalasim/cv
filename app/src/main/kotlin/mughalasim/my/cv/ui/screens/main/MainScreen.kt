@@ -38,7 +38,10 @@ class MainScreen : ComponentActivity() {
                 when(val response = stateLanguage.value){
                     is State.Loading -> LoadingWidget()
 
-                    is State.Failed -> WarningWidget(title = LocalContext.current.getString(R.string.error_server))
+                    is State.Failed -> NavigationHost(
+                        navController = navController,
+                        serviceNavigation = vm.getServiceNavigation()
+                    )
 
                     is State.Success<*> -> {
                         response as State.Success<LanguageEntity>

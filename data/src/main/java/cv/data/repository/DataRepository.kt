@@ -1,7 +1,11 @@
 package cv.data.repository
 
 import android.util.Log
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.repositories.IDataRepository
@@ -13,9 +17,9 @@ import kotlinx.coroutines.flow.flowOn
 
 class DataRepository(firebaseInstance: FirebaseDatabase) : IDataRepository {
 
-    private var dbReference: DatabaseReference = firebaseInstance.getReference("/data")
+    private var firebaseReference: DatabaseReference = firebaseInstance.getReference("/data")
 
-    override fun fetchDataFromFirebase() = callbackFlow<State<ResponseEntity>> {
+    override fun getDataFromFirebase() = callbackFlow<State<ResponseEntity>> {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 try {
@@ -32,12 +36,12 @@ class DataRepository(firebaseInstance: FirebaseDatabase) : IDataRepository {
             }
         }
 
-        dbReference.addValueEventListener(valueEventListener)
+        firebaseReference.addValueEventListener(valueEventListener)
 
-        dbReference.get()
+        firebaseReference.get()
 
         awaitClose {
-            dbReference.removeEventListener(valueEventListener)
+            firebaseReference.removeEventListener(valueEventListener)
         }
     }.flowOn(Dispatchers.IO)
 }
