@@ -33,12 +33,14 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.release_signing
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
             minifyEnabled false
+            shrinkResources false
             debuggable true
         }
     }
@@ -80,6 +82,7 @@ dependencies {
 
     implementation "androidx.compose.compiler:compiler:$kotlin_compiler_version"
     implementation "androidx.compose.ui:ui:$compose_ui"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui"
     implementation "androidx.compose.material:material:$compose"
     implementation "androidx.compose.runtime:runtime-livedata:$compose"
 
@@ -106,10 +109,6 @@ dependencies {
     implementation 'dev.b3nedikt.reword:reword:4.0.4'
     implementation 'dev.b3nedikt.applocale:applocale:3.1.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-
-    // DEBUGGING -----------------------------------------------------------------------------------
-    debugImplementation "androidx.compose.ui:ui-tooling-preview:$compose_ui"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui"
 
     // TESTING -------------------------------------------------------------------------------------
     testImplementation "junit:junit:$junit"
