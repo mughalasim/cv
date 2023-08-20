@@ -15,4 +15,4 @@ Download the sample app [here](https://github.com/mughalasim/cv/raw/master/app/r
 Get the release notes [here](https://github.com/mughalasim/cv/releases)
 
 ## Preview
-![](https://github.com/mughalasim/cv/blob/master/images/video.gif)
+<img src="https://github.com/mughalasim/cv/blob/master/images/video.gif" width="180" height="400"/>
