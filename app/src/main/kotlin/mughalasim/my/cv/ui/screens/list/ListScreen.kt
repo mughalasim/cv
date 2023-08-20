@@ -39,7 +39,7 @@ import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_chips
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.widgets.BannerWidget
-import mughalasim.my.cv.ui.widgets.Chip
+import mughalasim.my.cv.ui.widgets.ChipWidget
 import mughalasim.my.cv.ui.widgets.DescriptionWidget
 import mughalasim.my.cv.ui.widgets.ExperienceWidget
 import mughalasim.my.cv.ui.widgets.LinksWidget
@@ -64,7 +64,7 @@ fun ListScreen() {
             response as State.Success<ResponseEntity>
             ListScreenItems(
                 response = response.data,
-                initialListExpandedState = viewModel.getInitialListExpandedState()
+                expandListOnStartUp = viewModel.getExpandListOnStartUp()
             ) {
                 viewModel.openSettings()
             }
@@ -75,17 +75,17 @@ fun ListScreen() {
 @Composable
 fun ListScreenItems(
     response: ResponseEntity,
-    initialListExpandedState: Boolean,
+    expandListOnStartUp: Boolean,
     onOpenSettingsClicked: () -> Unit = {}
 ) {
     val enterAnimation = slideInVertically() + fadeIn()
     val exitAnimation = fadeOut()
 
-    var isExpandedContacts by remember { mutableStateOf(initialListExpandedState) }
-    var isExpandedSkills by remember { mutableStateOf(initialListExpandedState) }
-    var isExpandedWork by remember { mutableStateOf(initialListExpandedState) }
-    var isExpandedEducation by remember { mutableStateOf(initialListExpandedState) }
-    var isExpandedReference by remember { mutableStateOf(initialListExpandedState) }
+    var isExpandedContacts by remember { mutableStateOf(expandListOnStartUp) }
+    var isExpandedSkills by remember { mutableStateOf(expandListOnStartUp) }
+    var isExpandedWork by remember { mutableStateOf(expandListOnStartUp) }
+    var isExpandedEducation by remember { mutableStateOf(expandListOnStartUp) }
+    var isExpandedReference by remember { mutableStateOf(expandListOnStartUp) }
 
     Column(
         modifier = Modifier
@@ -207,7 +207,7 @@ fun ListScreenItems(
 
         // [App version] ---------------------------------------------------------------------------
         Spacer(modifier = Modifier.padding(top = padding_screen))
-        Chip(
+        ChipWidget(
             modifier = Modifier
                 .padding(start = padding_chips)
                 .align(Alignment.Start),

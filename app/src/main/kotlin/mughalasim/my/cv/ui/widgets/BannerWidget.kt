@@ -1,5 +1,6 @@
 package mughalasim.my.cv.ui.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import mughalasim.my.cv.ui.theme.AppTheme
+import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.elevation
 import mughalasim.my.cv.ui.theme.padding_chips
@@ -79,12 +81,34 @@ fun BannerWidget(
 }
 
 
-@Preview(showBackground = false)
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
-fun PreviewBanners(){
-    Column(verticalArrangement = Arrangement.Top) {
-        BannerWidget("Banner")
-        BannerWidget("Banner with filter 1", hasFilter = true, sortAscending = true)
-        BannerWidget("Banner with filter 2", hasFilter = true, sortAscending = false)
+fun BannerWidgetPreviewNight(){
+    AppThemeComposable {
+        Column(verticalArrangement = Arrangement.Top) {
+            BannerWidget("Banner")
+            BannerWidget("Banner with filter 1", hasFilter = true, sortAscending = true)
+            BannerWidget("Banner with filter 2", hasFilter = true, sortAscending = false)
+        }
+    }
+}
+
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun BannerWidgetPreview(){
+    AppThemeComposable {
+        Column(verticalArrangement = Arrangement.Top) {
+            BannerWidget("Banner")
+            BannerWidget("Banner with filter 1", hasFilter = true, sortAscending = true)
+            BannerWidget("Banner with filter 2", hasFilter = true, sortAscending = false)
+        }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import mughalasim.my.cv.ui.theme.AppThemeComposable
 
 @Composable
 fun LoadingWidget() {
@@ -26,19 +27,25 @@ fun LoadingWidget() {
 }
 
 @Preview(
-    showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
-)
-@Composable
-fun PreviewLoadingWidget(){
-    LoadingWidget()
-}
-
-@Preview(
-    showBackground = true,
+    showBackground = false,
+    showSystemUi = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
-fun PreviewLoadingWidget2(){
-    LoadingWidget()
+fun LoadingWidgetPreviewNight(){
+    AppThemeComposable {
+        LoadingWidget()
+    }
+}
+
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun LoadingWidgetPreview(){
+    AppThemeComposable {
+        LoadingWidget()
+    }
 }

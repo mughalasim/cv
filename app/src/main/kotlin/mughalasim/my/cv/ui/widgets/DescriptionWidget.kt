@@ -44,7 +44,7 @@ fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+    uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 fun DescriptionWidgetPreviewNight(){

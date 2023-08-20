@@ -28,13 +28,14 @@ fun TextRegular(
 @Composable
 fun TextSmall(
     modifier: Modifier = Modifier,
-    text: String = "Test String"
+    text: String = "Test String",
+    color: Color = AppTheme.colors.textRegular
 ) {
     if (text.isNotEmpty())
         Text(
             text = text,
             style = AppTheme.textStyles.small,
-            color = AppTheme.colors.textRegular,
+            color = color,
             modifier = modifier
         )
 }

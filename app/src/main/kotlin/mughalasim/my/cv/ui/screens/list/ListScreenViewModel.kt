@@ -14,12 +14,8 @@ class ListScreenViewModel(
 
     fun getData() = dataUseCase.getData()
 
-    fun getInitialListExpandedState() = settingsUseCase.getSettings().expandListOnStartUp
+    fun getExpandListOnStartUp() = settingsUseCase.getExpandListOnStartUp()
 
-    fun openSettings() =
-        serviceNavigation.open(
-            route = Route.SettingsScreen,
-            removeCurrentFromStack = false
-        )
+    fun openSettings() = serviceNavigation.open(route = Route.SettingsScreen)
 
 }

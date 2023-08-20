@@ -19,47 +19,41 @@ sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
 class ServiceNavigation : IServiceNavigation {
 
     private lateinit var navController: NavController
-    private lateinit var currentRoute: Route
     private lateinit var initialRoute: Route
 
     override fun setNavController(navController: NavController) {
         this.navController = navController
         val initialRoute = Route.getInitialRoute()
-        this.currentRoute = initialRoute
         this.initialRoute = initialRoute
     }
 
     override fun open(route: Route, removeCurrentFromStack: Boolean) {
-        if (route == currentRoute) {
+        if (route == getCurrentRoute()) {
             // preventing double tab
             return
         }
         navController.navigate(route.routeName) {
             if (removeCurrentFromStack) {
-                popUpTo(currentRoute.routeName) {
+                popUpTo(getCurrentRoute().routeName) {
                     inclusive = true
                 }
             }
         }
-        currentRoute = route
     }
 
     override fun popBack() {
         val previous = navController.backQueue[navController.backQueue.size - 2].destination.route
-        if (previous == null || previous == currentRoute.routeName) {
+        if (previous == null || previous == getCurrentRoute().routeName) {
             // preventing double tab
             return
         }
 
         navController.popBackStack()
-        updateCurrentRoute()
     }
 
-    override fun getCurrentRoute(): Route = currentRoute
+    override fun getCurrentRoute(): Route = navController.currentDestination?.route?.toRoute() ?: Route.ListScreen
 
     override fun getInitialRoute(): Route = initialRoute
 
-    override fun updateCurrentRoute() {
-        currentRoute = navController.currentDestination?.route?.toRoute() ?: Route.ListScreen
-    }
+
 }

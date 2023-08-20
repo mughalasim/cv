@@ -1,12 +1,11 @@
 package cv.domain.usecase
 
-import cv.domain.entities.SettingsEntity
 import cv.domain.repositories.ISettingsRepository
 
 class SettingsUseCase(
     private val settingsRepository: ISettingsRepository
 ) {
-    fun getSettings() = settingsRepository.getSettings()
+    fun getExpandListOnStartUp() = settingsRepository.getExpandListOnStartUp()
 
-    fun setSettings(settingsEntity: SettingsEntity) = settingsRepository.setSettings(settingsEntity)
+    fun setExpandListOnStartUp(isEnabled: Boolean) = settingsRepository.setExpandListOnStartUp(isEnabled)
 }

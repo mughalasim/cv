@@ -1,6 +1,11 @@
 package mughalasim.my.cv.ui.widgets
 
-import androidx.compose.foundation.layout.*
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -8,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.ExperienceEntity
 import cv.domain.entities.getFakeExperience
 import mughalasim.my.cv.R
+import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.utils.toMonthYearString
 import mughalasim.my.cv.ui.utils.toYearMonthDuration
@@ -52,5 +58,29 @@ fun ExperienceWidget(
             }
             LinksWidget(entity.links)
         }
+    }
+}
+
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun ExperienceWidgetPreviewNight(){
+    AppThemeComposable {
+        ExperienceWidget()
+    }
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun ExperienceWidgetPreview(){
+    AppThemeComposable {
+        ExperienceWidget()
     }
 }

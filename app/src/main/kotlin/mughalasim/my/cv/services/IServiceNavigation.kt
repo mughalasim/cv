@@ -17,6 +17,4 @@ interface IServiceNavigation {
     fun getCurrentRoute(): Route
 
     fun getInitialRoute(): Route
-
-    fun updateCurrentRoute()
 }

@@ -1,5 +1,6 @@
 package mughalasim.my.cv.ui.widgets
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.ReferenceEntity
 import cv.domain.entities.getFakeReferences
+import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen
 
-@Preview(showBackground = true)
 @Composable
-fun ReferenceWidget(references: List<ReferenceEntity> = getFakeReferences()) {
+fun ReferenceWidget(
+    references: List<ReferenceEntity>
+) {
     Column(
         modifier = Modifier
             .padding(start = padding_screen, end = padding_screen)
@@ -29,5 +32,29 @@ fun ReferenceWidget(references: List<ReferenceEntity> = getFakeReferences()) {
                 text = entity.contact
             )
         }
+    }
+}
+
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+fun ReferenceWidgetPreviewNight(){
+    AppThemeComposable {
+        ReferenceWidget(getFakeReferences())
+    }
+}
+
+@Preview(
+    showBackground = false,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun ReferenceWidgetPreview(){
+    AppThemeComposable {
+        ReferenceWidget(getFakeReferences())
     }
 }
