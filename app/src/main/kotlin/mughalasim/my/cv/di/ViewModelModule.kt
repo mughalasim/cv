@@ -8,10 +8,10 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
 
-    viewModel { ListScreenViewModel(get(), get(), get()) }
+    viewModel { ListScreenViewModel(get(), get()) }
 
-    viewModel { MainScreenViewModel(get(), get()) }
+    viewModel { MainScreenViewModel(get()) }
 
-    viewModel { SettingsScreenViewModel(get(), get()) }
+    viewModel { SettingsScreenViewModel(get()) }
 
 }
