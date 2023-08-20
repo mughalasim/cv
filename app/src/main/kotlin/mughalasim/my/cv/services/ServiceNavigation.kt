@@ -1,6 +1,7 @@
 package mughalasim.my.cv.services
 
 import androidx.navigation.NavController
+import cv.domain.usecase.AnalyticsUseCase
 import mughalasim.my.cv.ui.utils.toRoute
 
 sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
@@ -16,7 +17,7 @@ sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
     }
 }
 
-class ServiceNavigation : IServiceNavigation {
+class ServiceNavigation (private val analyticsUseCase: AnalyticsUseCase) : IServiceNavigation {
 
     private lateinit var navController: NavController
     private lateinit var initialRoute: Route
@@ -39,6 +40,12 @@ class ServiceNavigation : IServiceNavigation {
                 }
             }
         }
+        analyticsUseCase.logEvent(
+            AnalyticsUseCase.EVENT_NAME_NAVIGATE,
+            listOf(
+                Pair(AnalyticsUseCase.PARAM_SCREEN_NAME, route.routeName)
+            )
+        )
     }
 
     override fun popBack() {
@@ -49,6 +56,12 @@ class ServiceNavigation : IServiceNavigation {
         }
 
         navController.popBackStack()
+        analyticsUseCase.logEvent(
+            AnalyticsUseCase.EVENT_NAME_NAVIGATE,
+            listOf(
+                Pair(AnalyticsUseCase.PARAM_SCREEN_NAME, getCurrentRoute().routeName)
+            )
+        )
     }
 
     override fun getCurrentRoute(): Route = navController.currentDestination?.route?.toRoute() ?: Route.ListScreen

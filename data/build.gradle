@@ -48,6 +48,7 @@ dependencies {
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     api 'com.google.firebase:firebase-database-ktx'
+    api 'com.google.firebase:firebase-analytics-ktx'
 
     // Testing -------------------------------------------------------------------------------------
     testImplementation "junit:junit:$junit"

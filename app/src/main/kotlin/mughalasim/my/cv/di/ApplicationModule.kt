@@ -14,7 +14,7 @@ val applicationModule = module {
 
     single { FirebaseApp.initializeApp(androidApplication())}
 
-    single <IServiceNavigation> { ServiceNavigation() }
+    single <IServiceNavigation> { ServiceNavigation(get()) }
 
     single <SharedPreferences> {
         androidApplication().getSharedPreferences (
@@ -22,7 +22,5 @@ val applicationModule = module {
             Context.MODE_PRIVATE
         )
     }
-
-    // TODO - Add firebase Analytics for tracking
 
 }
