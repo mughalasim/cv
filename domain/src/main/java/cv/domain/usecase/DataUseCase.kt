@@ -3,11 +3,12 @@ package cv.domain.usecase
 import cv.domain.repositories.IDataRepository
 import cv.domain.repositories.ILanguageRepository
 
-class MainActivityUseCase(
+class DataUseCase(
     private val dataRepository: IDataRepository,
     private val languageRepository: ILanguageRepository
 ) {
-    fun getData() = dataRepository.fetchDataFromFirebase()
+    fun getData() = dataRepository.getDataFromFirebase()
 
-    fun getLanguage() = languageRepository.fetchLanguageFromFirebase()
+    fun getLanguage() = languageRepository.getLanguageFromFirebase()
+
 }

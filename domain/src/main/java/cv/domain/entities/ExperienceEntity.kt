@@ -1,5 +1,8 @@
 package cv.domain.entities
 
+import androidx.annotation.Keep
+
+@Keep
 @Suppress("unused")
 data class ExperienceEntity(
     val title: String,
@@ -11,7 +14,7 @@ data class ExperienceEntity(
     val links: List<LinkEntity>,
     val ongoing: Boolean = false
     ){
-    constructor() : this("", "", "", "", "", "", listOf())
+    constructor() : this("", "", "", "", "", "", listOf(), false)
 }
 
 fun getFakeExperience() = listOf(

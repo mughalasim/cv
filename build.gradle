@@ -1,20 +1,25 @@
 buildscript {
     ext {
-        app_version_code = 9
-        app_version_name = "9.0"
+        app_version_code = 10
+        app_version_name = "10.0"
 
         sdk_min = 24
-        sdk_target = 33
-        sdk_compile = 33
+        sdk_target = 34
+        sdk_compile = 34
 
-        kotlin_core = "1.9.0"
-        kotlin_reflect = "1.7.10"
+        gradle_version = '8.0.2'
 
-        compose = "1.4.0-alpha01"
-        compose_activity = "1.8.0-alpha01"
+        kotlin_core = "1.12.0-alpha05"
+        kotlin_reflect = "1.8.22"
+        kotlin_compiler_version = "1.5.0"
+
+        compose = "1.6.0-alpha02"
+        compose_ui = "1.5.0"
+        compose_activity = "1.8.0-alpha06"
+        compose_nav = "2.5.0"
         coroutines = "1.6.4"
-        lifecycle = "2.6.0-alpha03"
-        lifecycle_live_data = "2.5.1"
+        lifecycle = "2.6.1"
+        lifecycle_live_data = "2.6.1"
         lifecycle_extensions = "2.2.0"
         accompanist = "0.26.3-beta"
 
@@ -23,8 +28,8 @@ buildscript {
         joda_time = "2.10.3"
         firebase = "29.0.2"
         arrow = "1.0.1"
-        koin = "3.2.2"
-        koin_ext = "3.0.2"
+        koin_android = "3.4.3"
+        koin_compose = "3.4.6"
 
         mockwebserver_version = "4.9.3"
         mockk_version = "1.12.3"
@@ -35,8 +40,8 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application' version '7.2.2' apply false
-    id 'com.android.library' version '7.2.2' apply false
+    id 'com.android.application' version "${gradle_version}" apply false
+    id 'com.android.library' version "${gradle_version}" apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
     id 'com.google.gms.google-services' version '4.3.13' apply false
 }

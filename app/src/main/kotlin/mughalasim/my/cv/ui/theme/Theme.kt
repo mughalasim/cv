@@ -1,55 +1,64 @@
 package mughalasim.my.cv.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val DarkColorPalette = darkColors(
-    primary = White,
-    primaryVariant = LightGrey,
-    secondary = DarkGrey,
-    error = Red,
-    surface = White
-)
-
-private val LightColorPalette = lightColors(
-    primary = DarkBlue, // Text and statusBar
-    primaryVariant = DarkGrey, // Subheading
-    secondary = LightBlue, // Banner colors
-    error = Red,
-    surface = White
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
-
 object AppTheme{
-    val colors: Colors
+    val colors: AppColors
         @Composable
-        get() = getColors(isSystemInDarkTheme())
+        get() = getColors()
+
+    val textStyles: AppTextStyles
+        @Composable
+        get() = LocalTextStyles.current
 }
 
 @Composable
-fun getColors(isDarkTheme: Boolean): Colors {
+fun getColors(): AppColors {
     val systemUiController = rememberSystemUiController()
-    DisposableEffect(systemUiController, isDarkTheme){
+    val isDarkMode = isSystemInDarkTheme()
+    val currentColors = remember {if (isDarkMode) DarkAppColors else LightAppColors }
+
+    DisposableEffect(systemUiController, isSystemInDarkTheme()){
         systemUiController.setSystemBarsColor(
-            color = if(isDarkTheme) DarkGrey else LightBlue
+            color = currentColors.backgroundTitleBar
         )
         systemUiController.setStatusBarColor(
-            color = if(isDarkTheme) DarkGrey else LightBlue
+            color = currentColors.backgroundTitleBar
+        )
+        systemUiController.setNavigationBarColor(
+            color = currentColors.backgroundTitleBar
         )
         onDispose {  }
     }
-    return if(isDarkTheme) DarkColorPalette else LightColorPalette
+
+    return currentColors
+}
+
+@Composable
+fun AppThemeComposable(
+    textStyles: AppTextStyles = AppTheme.textStyles,
+    content: @Composable () -> Unit
+) {
+    val currentColors = getColors()
+
+    CompositionLocalProvider {
+        ProvideTextStyle(textStyles.small.copy(color = currentColors.textRegular), content)
+        ProvideTextStyle(textStyles.regular.copy(color = currentColors.textRegular), content)
+        ProvideTextStyle(textStyles.large.copy(color = currentColors.textSecondary), content)
+    }
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = currentColors.backgroundScreen,
+        content = content
+    )
 }

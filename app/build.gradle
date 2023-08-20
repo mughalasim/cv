@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace 'mughalasim.my.cv'
     compileSdk sdk_compile
 
     defaultConfig {
@@ -13,7 +14,6 @@ android {
         targetSdk sdk_target
         versionCode app_version_code
         versionName app_version_name
-        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -32,15 +32,22 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             signingConfig signingConfigs.release_signing
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
             minifyEnabled false
+            shrinkResources false
+            debuggable true
         }
     }
 
+    buildFeatures {
+        compose true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -49,14 +56,6 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion compose
     }
 
     packagingOptions {
@@ -78,10 +77,12 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
 
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_reflect"
     implementation "androidx.core:core-ktx:$kotlin_core"
 
-    implementation "androidx.compose.ui:ui:$compose"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose"
+    implementation "androidx.compose.compiler:compiler:$kotlin_compiler_version"
+    implementation "androidx.compose.ui:ui:$compose_ui"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui"
     implementation "androidx.compose.material:material:$compose"
     implementation "androidx.compose.runtime:runtime-livedata:$compose"
 
@@ -92,9 +93,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist"
 
-    // Dependency Injection
-    implementation "io.insert-koin:koin-android:$koin"
-    implementation "io.insert-koin:koin-android-ext:$koin_ext"
+    // Navigation
+    implementation "androidx.navigation:navigation-compose:$compose_nav"
+
+    // Koin Dependency Injection
+    implementation "io.insert-koin:koin-android:$koin_android"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_compose"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
@@ -110,8 +114,5 @@ dependencies {
     testImplementation "junit:junit:$junit"
     androidTestImplementation "androidx.test.ext:junit:$junit_extension"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose"
 }

@@ -5,5 +5,5 @@ import cv.domain.entities.ResponseEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IDataRepository {
-    fun fetchDataFromFirebase(): Flow<State<ResponseEntity>>
+    fun getDataFromFirebase(): Flow<State<ResponseEntity>>
 }

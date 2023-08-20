@@ -18,4 +18,5 @@ dependencies {
 
     // Joda time
     api "net.danlew:android.joda:$joda_time"
+    implementation 'androidx.annotation:annotation-jvm:1.6.0'
 }
