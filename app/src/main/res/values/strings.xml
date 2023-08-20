@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Personal CV</string>
-
     <!-- Labels-->
     <string name="txt_education">Education</string>
     <string name="txt_references">References</string>
@@ -14,6 +12,9 @@
     <string name="txt_email">Email</string>
     <string name="txt_settings">Settings</string>
     <string name="txt_version">App version: %1$s</string>
+    <string name="txt_default_expanded_list">Default expanded list</string>
+    <string name="txt_default_expanded_list_true">The main screen will expand all items under each category</string>
+    <string name="txt_default_expanded_list_false">The main screen will collapse all items under each category</string>
 
     <!-- Error messages-->
     <string name="error_internet_connection">Please check your internet connection</string>

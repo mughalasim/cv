@@ -91,11 +91,11 @@ fun SettingsScreenItems (
                 }
             )
             Column {
-                TextLarge(text = "Default expanded list")
+                TextLarge(text = stringResource(R.string.txt_default_expanded_list))
                 TextRegular(text = if(settingsEntity.expandListOnStartUp)
-                    "The main screen will expand all items under each category"
+                    stringResource(R.string.txt_default_expanded_list_true)
                 else
-                    "The main screen will collapse all items under each category"
+                    stringResource(R.string.txt_default_expanded_list_false)
                 )
             }
 

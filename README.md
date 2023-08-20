@@ -1,6 +1,6 @@
 # Personal CV App
 
-A Basic kotlin Android application that showcases my resume using the latest development methodologies. Download sample app [here](https://github.com/mughalasim/cv/raw/master/app/release/Peronal%20CV%20APP.apk)
+A Basic kotlin Android application that showcases my resume using the latest development methodologies. Download sample app [here](https://github.com/mughalasim/cv/raw/master/app/release/My%20Resume.apk)
 
 ## Features
 - Fetches and sets language resource files dynamically over firebase realtime database to support multiple languages without publication.
@@ -12,7 +12,4 @@ A Basic kotlin Android application that showcases my resume using the latest dev
 
 ## Preview
 
-<img src="https://github.com/mughalasim/cv/blob/master/images/sc1.png?raw=true" width="180" height="400">
-__
-<img src="https://github.com/mughalasim/cv/blob/master/images/sc2.png?raw=true" width="180" height="400">
-
+<img src="https://github.com/mughalasim/cv/blob/master/images/video.gif" width="180" height="400">

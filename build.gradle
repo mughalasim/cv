@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        app_name = "My Resume"
         app_version_code = 11
         app_version_name = "11.0"
 
@@ -7,13 +8,14 @@ buildscript {
         sdk_target = 34
         sdk_compile = 34
 
-        gradle_version = '8.0.2'
+        gradle_version = '8.1.0'
 
-        kotlin_core = "1.12.0-alpha05"
+        kotlin_core = "1.12.0-rc01"
         kotlin_reflect = "1.8.22"
-        kotlin_compiler_version = "1.5.0"
+        kotlin_compiler_version = "1.5.1"
 
         compose = "1.6.0-alpha02"
+        compose_livedata = "1.6.0-alpha03"
         compose_ui = "1.5.0"
         compose_activity = "1.8.0-alpha06"
         compose_nav = "2.5.0"
@@ -22,6 +24,7 @@ buildscript {
         lifecycle_live_data = "2.6.1"
         lifecycle_extensions = "2.2.0"
         accompanist = "0.26.3-beta"
+        annotation = "1.6.0"
 
         okHttp3 = "4.9.3"
         retrofit = "2.9.0"
@@ -34,7 +37,7 @@ buildscript {
         mockwebserver_version = "4.9.3"
         mockk_version = "1.12.3"
         junit = "4.13.2"
-        junit_extension = "1.1.4"
+        junit_extension = "1.1.5"
         espresso = "3.5.1"
     }
 }
@@ -46,6 +49,6 @@ plugins {
     id 'com.google.gms.google-services' version '4.3.13' apply false
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

@@ -1,7 +1,8 @@
 package mughalasim.my.cv.services
 
 import androidx.navigation.NavController
-import cv.domain.usecase.AnalyticsUseCase
+import cv.data.repository.AnalyticsRepository
+import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.ui.utils.toRoute
 
 sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
@@ -17,7 +18,7 @@ sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
     }
 }
 
-class ServiceNavigation (private val analyticsUseCase: AnalyticsUseCase) : IServiceNavigation {
+class ServiceNavigation : IServiceNavigation {
 
     private lateinit var navController: NavController
     private lateinit var initialRoute: Route
@@ -40,10 +41,10 @@ class ServiceNavigation (private val analyticsUseCase: AnalyticsUseCase) : IServ
                 }
             }
         }
-        analyticsUseCase.logEvent(
-            AnalyticsUseCase.EVENT_NAME_NAVIGATE,
+        DI.analytics.logEvent(
+            AnalyticsRepository.EVENT_NAME_NAVIGATE,
             listOf(
-                Pair(AnalyticsUseCase.PARAM_SCREEN_NAME, route.routeName)
+                Pair(AnalyticsRepository.PARAM_SCREEN_NAME, route.routeName)
             )
         )
     }
@@ -56,10 +57,10 @@ class ServiceNavigation (private val analyticsUseCase: AnalyticsUseCase) : IServ
         }
 
         navController.popBackStack()
-        analyticsUseCase.logEvent(
-            AnalyticsUseCase.EVENT_NAME_NAVIGATE,
+        DI.analytics.logEvent(
+            AnalyticsRepository.EVENT_NAME_NAVIGATE,
             listOf(
-                Pair(AnalyticsUseCase.PARAM_SCREEN_NAME, getCurrentRoute().routeName)
+                Pair(AnalyticsRepository.PARAM_SCREEN_NAME, getCurrentRoute().routeName)
             )
         )
     }
