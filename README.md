@@ -11,5 +11,4 @@ A Basic kotlin Android application that showcases my resume using the latest dev
 - Supports Dark and Light themes.
 
 ## Preview
-
-<img src="https://github.com/mughalasim/cv/blob/master/images/video.gif" width="180" height="400">
+![](https://github.com/mughalasim/cv/blob/master/images/video.gif)
