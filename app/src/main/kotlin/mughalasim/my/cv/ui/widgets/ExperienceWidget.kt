@@ -18,7 +18,6 @@ import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.utils.toMonthYearString
 import mughalasim.my.cv.ui.utils.toYearMonthDuration
 
-@Preview(showBackground = true)
 @Composable
 fun ExperienceWidget(
     experiences: List<ExperienceEntity> = getFakeExperience()

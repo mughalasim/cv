@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id "com.google.gms.google-services"
 }
 
@@ -52,12 +53,16 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 
     packagingOptions {
@@ -72,6 +77,10 @@ android {
         }
     }
 
+    kapt {
+        correctErrorTypes = true
+    }
+
 }
 
 dependencies {
@@ -83,15 +92,17 @@ dependencies {
     implementation "androidx.core:core-ktx:$kotlin_core"
 
     implementation "androidx.compose.compiler:compiler:$kotlin_compiler_version"
-    implementation "androidx.compose.ui:ui:$compose_ui"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose"
     implementation "androidx.compose.material:material:$compose"
-    implementation "androidx.compose.runtime:runtime-livedata:$compose_livedata"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose"
+    implementation "androidx.compose.foundation:foundation-android:$compose"
+
 
     implementation "androidx.activity:activity-compose:$compose_activity"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_live_data"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist"
 

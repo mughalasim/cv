@@ -48,7 +48,7 @@ fun ButtonWidgetPreviewNight() {
     AppThemeComposable {
         Column {
             ButtonWidget(title = "Enabled button", isEnabled = true) {}
-            ButtonWidget(title = "Disabled button", isEnabled = true) {}
+            ButtonWidget(title = "Disabled button", isEnabled = false) {}
         }
     }
 }
@@ -63,7 +63,7 @@ fun ButtonWidgetPreview() {
     AppThemeComposable {
         Column {
             ButtonWidget(title = "Enabled button", isEnabled = true) {}
-            ButtonWidget(title = "Disabled button", isEnabled = true) {}
+            ButtonWidget(title = "Disabled button", isEnabled = false) {}
         }
     }
 }
