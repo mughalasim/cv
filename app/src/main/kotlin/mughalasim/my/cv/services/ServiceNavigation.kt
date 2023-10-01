@@ -6,8 +6,8 @@ import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.ui.utils.toRoute
 
 sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
-    object ListScreen : Route("ListScreen", true)
-    object SettingsScreen : Route("SettingsScreen")
+    data object ListScreen : Route("ListScreen", true)
+    data object SettingsScreen : Route("SettingsScreen")
 
     companion object {
         fun getInitialRoute(): Route =
@@ -50,12 +50,6 @@ class ServiceNavigation : IServiceNavigation {
     }
 
     override fun popBack() {
-        val previous = navController.backQueue[navController.backQueue.size - 2].destination.route
-        if (previous == null || previous == getCurrentRoute().routeName) {
-            // preventing double tab
-            return
-        }
-
         navController.popBackStack()
         DI.analytics.logEvent(
             AnalyticsRepository.EVENT_NAME_NAVIGATE,
