@@ -13,7 +13,7 @@ import mughalasim.my.cv.ui.theme.AppTheme
 fun TextRegular(
     modifier: Modifier = Modifier,
     text: String = "Test String",
-    color: Color = AppTheme.colors.textRegular
+    color: Color = AppTheme.colors.textPrimary
 ) {
     if (text.isNotEmpty())
         Text(
@@ -29,7 +29,7 @@ fun TextRegular(
 fun TextSmall(
     modifier: Modifier = Modifier,
     text: String = "Test String",
-    color: Color = AppTheme.colors.textRegular
+    color: Color = AppTheme.colors.textPrimary
 ) {
     if (text.isNotEmpty())
         Text(
@@ -45,13 +45,14 @@ fun TextSmall(
 @Composable
 fun TextLarge(
     modifier: Modifier = Modifier,
-    text: String = "Test String"
+    text: String = "Test String",
+    color: Color = AppTheme.colors.textPrimary
 ) {
     if (text.isNotEmpty())
         Text(
             text = text,
             style = AppTheme.textStyles.large,
-            color = AppTheme.colors.textRegular,
+            color = color,
             modifier = modifier
         )
 }

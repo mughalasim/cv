@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,9 +22,9 @@ import cv.domain.entities.getFakeSettingsEntity
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.widgets.ButtonWidget
 import mughalasim.my.cv.ui.widgets.TextLarge
 import mughalasim.my.cv.ui.widgets.TextRegular
+import mughalasim.my.cv.ui.widgets.ToolBarWidget
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -54,51 +55,45 @@ fun SettingsScreenItems (
     onSettingsChanged: (OnSettingsChanged) -> Unit,
     onNavigateBack: () -> Unit
 ){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+    Column (
+        modifier = Modifier.fillMaxSize()
     ) {
-        Row (
-            modifier = Modifier
-                .padding(padding_screen)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ){
-            TextLarge(
-                text = stringResource(R.string.txt_settings)
-            )
-            ButtonWidget(
-                modifier = Modifier.padding(start = padding_screen),
-                title = "Save",
-                isEnabled = true
-            ){
-                onNavigateBack()
-            }
+        // Toolbar ---------------------------------------------------------------------------------
+        ToolBarWidget(
+            title = stringResource(id = R.string.txt_settings),
+            buttonTitle = stringResource(id = R.string.txt_save)
+        ) {
+            onNavigateBack()
         }
 
-        Row(modifier = Modifier
-            .padding(start = padding_screen, end = padding_screen)
-            .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Switch(
-                checked = settingsEntity.expandListOnStartUp,
-                onCheckedChange = {
-                    onSettingsChanged(OnSettingsChanged.ExpandListOnStartUp(it))
-                }
-            )
-            Column {
-                TextLarge(text = stringResource(R.string.txt_default_expanded_list))
-                TextRegular(text = if(settingsEntity.expandListOnStartUp)
-                    stringResource(R.string.txt_default_expanded_list_true)
-                else
-                    stringResource(R.string.txt_default_expanded_list_false)
-                )
-            }
+        Spacer(modifier = Modifier.padding(top = padding_screen))
 
+        // Scrollable Settings list ----------------------------------------------------------------
+        Column (
+            modifier = Modifier.verticalScroll(rememberScrollState())
+        ) {
+            Row(modifier = Modifier
+                .padding(start = padding_screen, end = padding_screen)
+                .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Switch(
+                    checked = settingsEntity.expandListOnStartUp,
+                    onCheckedChange = {
+                        onSettingsChanged(OnSettingsChanged.ExpandListOnStartUp(it))
+                    }
+                )
+                Column {
+                    TextLarge(text = stringResource(R.string.txt_default_expanded_list))
+                    TextRegular(text = if(settingsEntity.expandListOnStartUp)
+                        stringResource(R.string.txt_default_expanded_list_true)
+                    else
+                        stringResource(R.string.txt_default_expanded_list_false)
+                    )
+                }
+
+            }
         }
     }
 }

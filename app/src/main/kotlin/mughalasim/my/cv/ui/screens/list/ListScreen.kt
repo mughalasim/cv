@@ -5,13 +5,17 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -30,11 +34,11 @@ import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
 import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
+import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
-import mughalasim.my.cv.ui.theme.padding_chips
 import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.theme.padding_screen_small
 import mughalasim.my.cv.ui.widgets.BannerWidget
-import mughalasim.my.cv.ui.widgets.ButtonWidget
 import mughalasim.my.cv.ui.widgets.ChipWidget
 import mughalasim.my.cv.ui.widgets.DescriptionWidget
 import mughalasim.my.cv.ui.widgets.ExperienceWidget
@@ -44,6 +48,7 @@ import mughalasim.my.cv.ui.widgets.ReferenceWidget
 import mughalasim.my.cv.ui.widgets.SkillWidget
 import mughalasim.my.cv.ui.widgets.TextLarge
 import mughalasim.my.cv.ui.widgets.TextRegular
+import mughalasim.my.cv.ui.widgets.ToolBarWidget
 import mughalasim.my.cv.ui.widgets.WarningWidget
 import org.koin.androidx.compose.koinViewModel
 
@@ -89,148 +94,170 @@ fun ListScreenItems(
     var isExpandedReference by remember { mutableStateOf(expandListOnStartUp) }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
     ) {
-        Spacer(modifier = Modifier.padding(top = padding_screen))
-
-        // Name and Job title ----------------------------------------------------------------------
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = padding_screen, end = padding_screen),
-            horizontalArrangement = Arrangement.SpaceBetween
+        // Toolbar ---------------------------------------------------------------------------------
+        ToolBarWidget(title = stringResource(id = R.string.app_name),
+            buttonTitle = stringResource(id = R.string.txt_settings)
         ) {
-            Column {
+            onOpenSettingsTapped()
+        }
+
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Spacer(modifier = Modifier.padding(top = padding_screen))
+
+            // Name and Job title ----------------------------------------------------------------------
+            Column (modifier = Modifier
+                .align(Alignment.Start)
+                .padding(start = padding_screen, end = padding_screen)
+            ){
                 TextLarge(text = response.description.full_name)
                 TextRegular(text = response.description.position_title)
             }
-            ButtonWidget(title = stringResource(id = R.string.txt_settings), isEnabled = true) {
-                onOpenSettingsTapped()
-            }
-        }
 
 
-        // [Banner] Contact information ------------------------------------------------------------
-        val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
-        BannerWidget(
-            title = contactInfoTitle,
-            onExpandedClicked = {
-                isExpandedContacts = !isExpandedContacts
-                onBannerTapped(contactInfoTitle)
-            }
-        )
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
-            visible = isExpandedContacts,
-            enter = enterAnimation,
-            exit = exitAnimation
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                // Basic information
-                DescriptionWidget(response.description)
-                // Links
-                LinksWidget(response.description.links)
-            }
-        }
-
-        // [Banner] Skills--------------------------------------------------------------------------
-        val skillsTitle = stringResource(R.string.txt_skills)
-        BannerWidget(
-            title = skillsTitle,
-            onExpandedClicked = {
-                isExpandedSkills = !isExpandedSkills
-                onBannerTapped(skillsTitle)
-            }
-        )
-        // SKill list
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
-            visible = isExpandedSkills,
-            enter = enterAnimation,
-            exit = exitAnimation
-        ) {
-            SkillWidget(response.skills)
-        }
-
-
-        // [Banner] Work experience ----------------------------------------------------------------
-        val workExperienceTitle = stringResource(R.string.txt_work_experience)
-        var sortAscending by remember { mutableStateOf(false) }
-        BannerWidget(
-            title = workExperienceTitle,
-            hasFilter = isExpandedWork,
-            sortAscending = sortAscending,
-            onFilterClicked = { sortAscending = !sortAscending },
-            onExpandedClicked = {
-                isExpandedWork = !isExpandedWork
-                onBannerTapped(workExperienceTitle)
-            }
-        )
-        // Work list and links for each experience list
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
-            visible = isExpandedWork,
-            enter = enterAnimation,
-            exit = exitAnimation
-        ) {
-            ExperienceWidget(response.getOrderedWork(sortAscending))
-        }
-
-
-        // [Banner] Education ----------------------------------------------------------------------
-        val educationalExperienceTitle = stringResource(R.string.txt_education)
-        BannerWidget(
-            title = stringResource(R.string.txt_education),
-            onExpandedClicked = {
-                isExpandedEducation = !isExpandedEducation
-                onBannerTapped(educationalExperienceTitle)
-            }
-        )
-        // Education list
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
-            visible = isExpandedEducation,
-            enter = enterAnimation,
-            exit = exitAnimation
-        ) {
-            ExperienceWidget(response.educations)
-        }
-
-
-        // [Banner] References ---------------------------------------------------------------------
-        val referencesTitle = stringResource(R.string.txt_references)
-        BannerWidget(
-            title = referencesTitle,
-            onExpandedClicked = {
-                isExpandedReference = !isExpandedReference
-                onBannerTapped(referencesTitle)
-            }
-        )
-        // Reference list
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth(),
-            visible = isExpandedReference,
-            enter = enterAnimation,
-            exit = exitAnimation
-        ) {
-            ReferenceWidget(response.references)
-        }
-
-        // [App version] ---------------------------------------------------------------------------
-        Spacer(modifier = Modifier.padding(top = padding_screen))
-        ChipWidget(
-            modifier = Modifier
-                .padding(start = padding_chips)
-                .align(Alignment.Start),
-            entity = LinkEntity(
-                text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
-                url = "https://github.com/mughalasim/cv/releases"
+            // [Banner] Contact information ------------------------------------------------------------
+            val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
+            BannerWidget(
+                title = contactInfoTitle,
+                onExpandedClicked = {
+                    isExpandedContacts = !isExpandedContacts
+                    onBannerTapped(contactInfoTitle)
+                }
             )
-        )
-        Spacer(modifier = Modifier.padding(top = padding_chips))
+            AnimatedVisibility(
+                modifier = Modifier.fillMaxWidth(),
+                visible = isExpandedContacts,
+                enter = enterAnimation,
+                exit = exitAnimation
+            ) {
+
+                Row(modifier = Modifier
+                    .padding(start = padding_screen, end = padding_screen)
+                    .height(IntrinsicSize.Min))
+                {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(padding_screen_small)
+                            .background(color = AppTheme.colors.highLight)
+                    ) {}
+                    Column(
+                        modifier = Modifier.padding(start = padding_screen_small),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Basic information
+                        DescriptionWidget(response.description)
+                        // Links
+                        LinksWidget(response.description.links)
+                    }
+                }
+            }
+
+            // [Banner] Skills--------------------------------------------------------------------------
+            val skillsTitle = stringResource(R.string.txt_skills)
+            BannerWidget(
+                title = skillsTitle,
+                onExpandedClicked = {
+                    isExpandedSkills = !isExpandedSkills
+                    onBannerTapped(skillsTitle)
+                }
+            )
+            // SKill list
+            AnimatedVisibility(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = padding_screen, end = padding_screen),
+                visible = isExpandedSkills,
+                enter = enterAnimation,
+                exit = exitAnimation
+            ) {
+                SkillWidget(response.skills)
+            }
+
+
+            // [Banner] Work experience ----------------------------------------------------------------
+            val workExperienceTitle = stringResource(R.string.txt_work_experience)
+            var sortAscending by remember { mutableStateOf(false) }
+            BannerWidget(
+                title = workExperienceTitle,
+                hasFilter = isExpandedWork,
+                sortAscending = sortAscending,
+                onFilterClicked = { sortAscending = !sortAscending },
+                onExpandedClicked = {
+                    isExpandedWork = !isExpandedWork
+                    onBannerTapped(workExperienceTitle)
+                }
+            )
+            // Work list and links for each experience list
+            AnimatedVisibility(
+                modifier = Modifier.fillMaxWidth(),
+                visible = isExpandedWork,
+                enter = enterAnimation,
+                exit = exitAnimation
+            ) {
+                ExperienceWidget(response.getOrderedWork(sortAscending))
+            }
+
+
+            // [Banner] Education ----------------------------------------------------------------------
+            val educationalExperienceTitle = stringResource(R.string.txt_education)
+            BannerWidget(
+                title = stringResource(R.string.txt_education),
+                onExpandedClicked = {
+                    isExpandedEducation = !isExpandedEducation
+                    onBannerTapped(educationalExperienceTitle)
+                }
+            )
+            // Education list
+            AnimatedVisibility(
+                modifier = Modifier.fillMaxWidth(),
+                visible = isExpandedEducation,
+                enter = enterAnimation,
+                exit = exitAnimation
+            ) {
+                ExperienceWidget(response.educations)
+            }
+
+
+            // [Banner] References ---------------------------------------------------------------------
+            val referencesTitle = stringResource(R.string.txt_references)
+            BannerWidget(
+                title = referencesTitle,
+                onExpandedClicked = {
+                    isExpandedReference = !isExpandedReference
+                    onBannerTapped(referencesTitle)
+                }
+            )
+            // Reference list
+            AnimatedVisibility(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = padding_screen, end = padding_screen),
+                visible = isExpandedReference,
+                enter = enterAnimation,
+                exit = exitAnimation
+            ) {
+                ReferenceWidget(response.references)
+            }
+
+            // [App version] ---------------------------------------------------------------------------
+            Spacer(modifier = Modifier.padding(top = padding_screen))
+            ChipWidget(
+                modifier = Modifier
+                    .padding(start = padding_screen)
+                    .align(Alignment.CenterHorizontally),
+                entity = LinkEntity(
+                    text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
+                    url = "https://github.com/mughalasim/cv/releases"
+                )
+            )
+            Spacer(modifier = Modifier.padding(top = padding_screen_small))
+        }
     }
 }
 

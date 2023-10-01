@@ -51,8 +51,8 @@ fun AppThemeComposable(
     val currentColors = getColors()
 
     CompositionLocalProvider {
-        ProvideTextStyle(textStyles.small.copy(color = currentColors.textRegular), content)
-        ProvideTextStyle(textStyles.regular.copy(color = currentColors.textRegular), content)
+        ProvideTextStyle(textStyles.small.copy(color = currentColors.textPrimary), content)
+        ProvideTextStyle(textStyles.regular.copy(color = currentColors.textPrimary), content)
         ProvideTextStyle(textStyles.large.copy(color = currentColors.textSecondary), content)
     }
 

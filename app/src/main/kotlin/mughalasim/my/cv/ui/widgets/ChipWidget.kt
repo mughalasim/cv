@@ -26,7 +26,7 @@ import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.line_thickness
-import mughalasim.my.cv.ui.theme.padding_chips
+import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
 fun ChipWidget(
@@ -36,7 +36,7 @@ fun ChipWidget(
 ) {
     Surface(
         modifier = modifier
-            .padding(end = padding_chips, top = padding_chips)
+            .padding(end = padding_screen_small, top = padding_screen_small)
             .border(
                 width = line_thickness,
                 color = AppTheme.colors.backgroundChip,
@@ -69,7 +69,7 @@ fun ChipWidget(
                 )
         ) {
             TextRegular(
-                modifier = Modifier.padding(padding_chips),
+                modifier = Modifier.padding(padding_screen_small),
                 text = entity.text
             )
         }

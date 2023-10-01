@@ -6,7 +6,8 @@ import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.ui.utils.toRoute
 
 sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
-    data object ListScreen : Route("ListScreen", true)
+    data object HorizontalPagerScreen : Route("HorizontalPagerScreen", true)
+    data object ListScreen : Route("ListScreen")
     data object SettingsScreen : Route("SettingsScreen")
 
     companion object {
@@ -14,7 +15,7 @@ sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
             Route::class.sealedSubclasses
                 .firstOrNull { it.objectInstance?.isInitialRoute == true }
                 ?.objectInstance
-                ?: ListScreen
+                ?: HorizontalPagerScreen
     }
 }
 

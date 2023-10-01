@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import mughalasim.my.cv.services.IServiceNavigation
 import mughalasim.my.cv.services.Route
+import mughalasim.my.cv.ui.screens.horizontalPager.HorizontalPagerScreen
 import mughalasim.my.cv.ui.screens.list.ListScreen
 import mughalasim.my.cv.ui.screens.settings.SettingsScreen
 
@@ -18,6 +19,7 @@ fun NavigationHost(
         navController = navController,
         startDestination = serviceNavigation.getInitialRoute().routeName,
     ) {
+        composable(route = Route.HorizontalPagerScreen.routeName) { HorizontalPagerScreen() }
         composable(route = Route.ListScreen.routeName) { ListScreen() }
         composable(route = Route.SettingsScreen.routeName) { SettingsScreen() }
     }

@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
-import mughalasim.my.cv.ui.theme.padding_chips
+import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
 fun ButtonWidget(modifier: Modifier = Modifier, title: String, isEnabled: Boolean, onButtonClicked: ()-> Unit) {
@@ -22,7 +22,7 @@ fun ButtonWidget(modifier: Modifier = Modifier, title: String, isEnabled: Boolea
         modifier = modifier
             .wrapContentWidth(align = Alignment.CenterHorizontally)
             .background(
-                color = if (isEnabled) AppTheme.colors.textRegular else AppTheme.colors.backgroundBanner,
+                color = if (isEnabled) AppTheme.colors.backgroundButtonEnabled else AppTheme.colors.backgroundButtonDisabled,
                 shape = RoundedCornerShape(border_radius)
             )
             .clickable {
@@ -31,9 +31,9 @@ fun ButtonWidget(modifier: Modifier = Modifier, title: String, isEnabled: Boolea
     ) {
         TextSmall(
             modifier = Modifier
-                .padding(padding_chips),
+                .padding(padding_screen_small),
             text = title.uppercase(),
-            color = if (isEnabled) AppTheme.colors.backgroundScreen else AppTheme.colors.textRegular
+            color = if (isEnabled) AppTheme.colors.backgroundScreen else AppTheme.colors.textSecondary
         )
     }
 }

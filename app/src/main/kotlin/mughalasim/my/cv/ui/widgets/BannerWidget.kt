@@ -22,8 +22,8 @@ import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.elevation
-import mughalasim.my.cv.ui.theme.padding_chips
 import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
 fun BannerWidget(
@@ -37,14 +37,14 @@ fun BannerWidget(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = padding_chips,
-                end = padding_chips,
+                start = padding_screen_small,
+                end = padding_screen_small,
                 top = padding_screen,
                 bottom = padding_screen
             )
             .clip(RoundedCornerShape(border_radius)),
         elevation = elevation,
-        color = AppTheme.colors.backgroundBanner
+        color = AppTheme.colors.highLight
     ) {
         Row(
             modifier = Modifier
@@ -55,13 +55,14 @@ fun BannerWidget(
         ) {
             TextRegular(
                 modifier = Modifier
-                    .padding(start = padding_chips, end = padding_chips, top = padding_screen, bottom = padding_screen),
-                text = title
+                    .padding(start = padding_screen_small, end = padding_screen_small, top = padding_screen, bottom = padding_screen),
+                text = title,
+                color = AppTheme.colors.black
             )
             Spacer(modifier = Modifier.weight(1f))
             if (hasFilter){
                IconButton(
-                   modifier = Modifier.padding(end = padding_chips),
+                   modifier = Modifier.padding(end = padding_screen_small),
                    onClick = { onFilterClicked() }
                ) {
                    Icon(
@@ -70,8 +71,8 @@ fun BannerWidget(
                                mughalasim.my.cv.R.drawable.ic_sort_ascending
                            else mughalasim.my.cv.R.drawable.ic_sort_descending),
                        contentDescription = null,
-                       tint = AppTheme.colors.textRegular,
-                       modifier = Modifier.padding(padding_chips)
+                       tint = AppTheme.colors.black,
+                       modifier = Modifier.padding(padding_screen_small)
                    )
                }
             }
