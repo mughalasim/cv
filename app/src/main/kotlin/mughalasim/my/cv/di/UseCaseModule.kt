@@ -6,8 +6,8 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
 
-    single { DataUseCase(get(), get()) }
+    single { DataUseCase(get(), get(), get()) }
 
-    single { SettingsUseCase(get()) }
+    single { SettingsUseCase(get(), get()) }
 
 }

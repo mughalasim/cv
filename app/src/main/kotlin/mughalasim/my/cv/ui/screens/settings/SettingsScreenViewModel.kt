@@ -16,7 +16,8 @@ class SettingsScreenViewModel(
     val settings: LiveData<SettingsEntity> = _settings
 
     fun getState() = SettingsEntity(
-        expandListOnStartUp = settingsUseCase.getExpandListOnStartUp()
+        expandListOnStartUp = settingsUseCase.getExpandListOnStartUp(),
+        isVerticalScreen =  settingsUseCase.getListOrientation()
     )
 
     fun navigateBack(){
@@ -24,11 +25,12 @@ class SettingsScreenViewModel(
     }
 
     fun setExpandListOnStartUp(isEnabled: Boolean){
-        DI.analytics.logEvent(
-            AnalyticsRepository.EVENT_NAME_SETTING,
-            listOf(Pair(AnalyticsRepository.PARAM_EXPAND_LIST_ON_START_UP, isEnabled.toString()))
-        )
         settingsUseCase.setExpandListOnStartUp(isEnabled)
+        _settings.value = getState()
+    }
+
+    fun setListOrientation(isVertical: Boolean){
+        settingsUseCase.setListOrientation(isVertical)
         _settings.value = getState()
     }
 

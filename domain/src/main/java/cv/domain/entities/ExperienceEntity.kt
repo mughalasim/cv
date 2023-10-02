@@ -25,7 +25,7 @@ fun getFakeExperience() = listOf(
         position_title =  "Test position",
         location = "Test Location",
         description = "Sample description",
-        links = getFakeLinks(),
+        links = getFakeLinks().take(3),
         ongoing = true
     ),
     ExperienceEntity(
@@ -35,7 +35,7 @@ fun getFakeExperience() = listOf(
         position_title =  "Test position",
         location = "Test Location",
         description = "Sample description",
-        links = getFakeLinks(),
+        links = getFakeLinks().take(4),
         ongoing = false
     ),
     ExperienceEntity(
@@ -45,7 +45,7 @@ fun getFakeExperience() = listOf(
         position_title =  "Test position",
         location = "Test Location",
         description = "Sample description",
-        links = getFakeLinks(),
+        links = getFakeLinks().take(8),
         ongoing = false
     )
 )

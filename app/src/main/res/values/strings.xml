@@ -11,10 +11,16 @@
     <string name="txt_telephone">Telephone/Mobile</string>
     <string name="txt_email">Email</string>
     <string name="txt_settings">Settings</string>
+    <string name="txt_back">Back</string>
     <string name="txt_version">App version: %1$s</string>
-    <string name="txt_default_expanded_list">Default expanded list</string>
-    <string name="txt_default_expanded_list_true">The main screen will expand all items under each category</string>
-    <string name="txt_default_expanded_list_false">The main screen will collapse all items under each category</string>
+
+    <!-- Settings texts  -->
+    <string name="txt_setting_expanded_list">Default expanded list</string>
+    <string name="txt_setting_expanded_list_true">The main screen will expand all items under each category</string>
+    <string name="txt_setting_expanded_list_false">The main screen will collapse all items under each category</string>
+    <string name="txt_setting_is_vertical">Vertically list categories</string>
+    <string name="txt_setting_is_vertical_true">The main screen will list all items vertically under each category</string>
+    <string name="txt_setting_is_vertical_false">The main screen will list all items with a horizontal view pager for each category</string>
 
     <!-- Error messages-->
     <string name="error_internet_connection">Please check your internet connection</string>

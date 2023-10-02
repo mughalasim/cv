@@ -15,6 +15,7 @@ import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
 fun WarningWidget(title: String) {
@@ -22,13 +23,11 @@ fun WarningWidget(title: String) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(Alignment.Top)
-            .padding(padding_screen)
-            .background(color = AppTheme.colors.backgroundError,
-                shape = RoundedCornerShape(border_radius)),
+            .background(color = AppTheme.colors.backgroundError),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextRegular(
-            modifier = Modifier.padding(padding_screen),
+            modifier = Modifier.padding(padding_screen_small),
             text = title,
             color = AppTheme.colors.backgroundScreen
         )

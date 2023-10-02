@@ -43,6 +43,21 @@ fun String.toYearMonthDuration(endDateString :String): String{
     )
 }
 
+@Composable
+fun DateTime.toYearMonthDuration(startDateString :String): String{
+    val context = LocalContext.current.resources
+    val startDate = startDateString.toYearMonthDayDate()
+    val endDate = this
+
+    val years = Years.yearsBetween(startDate.withTime(0, 0, 0, 0), endDate.withTime(0, 0, 0, 0)).years
+    val months = Months.monthsBetween(startDate.withTime(0, 0, 0, 0), endDate.withTime(0, 0, 0, 0)).months % 12
+    return (
+            (if (years > 0) String.format(context.getQuantityString(R.plurals.plural_year, years), years) else "") +
+            (if (years > 0 && months > 0) " " else "") +
+            if (months > 0) String.format(context.getQuantityString(R.plurals.plural_month, months), months) else ""
+    )
+}
+
 object DateConstants {
     val formatYearMonthDay: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd").withLocale(
         Restring.locale)

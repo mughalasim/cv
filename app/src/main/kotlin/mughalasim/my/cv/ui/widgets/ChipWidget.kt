@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import cv.data.repository.AnalyticsRepository
+import cv.domain.Variables.EVENT_NAME_LINK
+import cv.domain.Variables.PARAM_LINK
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
@@ -26,7 +28,7 @@ import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.line_thickness
-import mughalasim.my.cv.ui.theme.padding_chips
+import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
 fun ChipWidget(
@@ -36,7 +38,7 @@ fun ChipWidget(
 ) {
     Surface(
         modifier = modifier
-            .padding(end = padding_chips, top = padding_chips)
+            .padding(end = padding_screen_small, top = padding_screen_small)
             .border(
                 width = line_thickness,
                 color = AppTheme.colors.backgroundChip,
@@ -55,8 +57,8 @@ fun ChipWidget(
                             browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             context.startActivity(browserIntent)
                             DI.analytics.logEvent(
-                                AnalyticsRepository.EVENT_NAME_LINK,
-                                listOf(Pair(AnalyticsRepository.PARAM_LINK, url))
+                                EVENT_NAME_LINK,
+                                listOf(Pair(PARAM_LINK, url))
                             )
                         } else {
                             Toast.makeText(
@@ -69,7 +71,7 @@ fun ChipWidget(
                 )
         ) {
             TextRegular(
-                modifier = Modifier.padding(padding_chips),
+                modifier = Modifier.padding(padding_screen_small),
                 text = entity.text
             )
         }

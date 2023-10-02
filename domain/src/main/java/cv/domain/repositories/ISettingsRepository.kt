@@ -2,8 +2,8 @@ package cv.domain.repositories
 
 interface ISettingsRepository {
 
-    fun getExpandListOnStartUp(): Boolean
+    fun setBool(settingName: String, value: Boolean)
 
-    fun setExpandListOnStartUp(isEnabled: Boolean)
+    fun getBool(settingName: String): Boolean
 
 }

@@ -1,12 +1,13 @@
 package mughalasim.my.cv.ui.widgets
 
 import android.content.res.Configuration
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,23 +16,19 @@ import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
-import mughalasim.my.cv.ui.theme.padding_screen
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LinksWidget(
     links: List<LinkEntity>
 ){
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = padding_screen, end = padding_screen, bottom = padding_screen)
-    ) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         if (links.isNotEmpty()){
             TextSmall(text = stringResource(R.string.txt_links))
-            FlowRow (horizontalArrangement = Arrangement.Start){
-                repeat(links.size){
-                    ChipWidget (entity = links[it])
-                }
+            Row (
+                horizontalArrangement = Arrangement.Start, modifier = Modifier.horizontalScroll(rememberScrollState())
+            ){
+                repeat(links.size){ ChipWidget (entity = links[it]) }
             }
         }
     }

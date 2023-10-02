@@ -18,7 +18,6 @@ import mughalasim.my.cv.ui.theme.padding_screen
 fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
     Column(
         modifier = Modifier
-            .padding(start = padding_screen, end = padding_screen)
             .fillMaxWidth()
     ) {
         TextSmall(text = stringResource(R.string.txt_address))
