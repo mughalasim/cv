@@ -35,7 +35,7 @@ fun ExperienceWidget(
             val entity = experiences[it]
             Row (
                 modifier = Modifier
-                    .padding(start = padding_screen, end = padding_screen, bottom = padding_screen_large)
+                    .padding(bottom = padding_screen_large)
                     .height(IntrinsicSize.Min),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
@@ -46,7 +46,7 @@ fun ExperienceWidget(
                         .background(color = AppTheme.colors.highLight)
                 ){}
                 Column(modifier = Modifier
-                    .padding(start = padding_screen)
+                    .padding(start = padding_screen_small)
                 ) {
                     Column {
                         val timeSpentString = if (entity.ongoing)

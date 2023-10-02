@@ -2,11 +2,12 @@ package mughalasim.my.cv.services
 
 import androidx.navigation.NavController
 import cv.data.repository.AnalyticsRepository
+import cv.domain.Variables.EVENT_NAME_NAVIGATE
+import cv.domain.Variables.PARAM_SCREEN_NAME
 import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.ui.utils.toRoute
 
 sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
-    data object HorizontalPagerScreen : Route("HorizontalPagerScreen", true)
     data object ListScreen : Route("ListScreen")
     data object SettingsScreen : Route("SettingsScreen")
 
@@ -15,7 +16,7 @@ sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
             Route::class.sealedSubclasses
                 .firstOrNull { it.objectInstance?.isInitialRoute == true }
                 ?.objectInstance
-                ?: HorizontalPagerScreen
+                ?: ListScreen
     }
 }
 
@@ -43,9 +44,9 @@ class ServiceNavigation : IServiceNavigation {
             }
         }
         DI.analytics.logEvent(
-            AnalyticsRepository.EVENT_NAME_NAVIGATE,
+            EVENT_NAME_NAVIGATE,
             listOf(
-                Pair(AnalyticsRepository.PARAM_SCREEN_NAME, route.routeName)
+                Pair(PARAM_SCREEN_NAME, route.routeName)
             )
         )
     }
@@ -53,9 +54,9 @@ class ServiceNavigation : IServiceNavigation {
     override fun popBack() {
         navController.popBackStack()
         DI.analytics.logEvent(
-            AnalyticsRepository.EVENT_NAME_NAVIGATE,
+            EVENT_NAME_NAVIGATE,
             listOf(
-                Pair(AnalyticsRepository.PARAM_SCREEN_NAME, getCurrentRoute().routeName)
+                Pair(PARAM_SCREEN_NAME, getCurrentRoute().routeName)
             )
         )
     }

@@ -6,11 +6,13 @@ import androidx.annotation.Keep
 @Suppress("unused")
 data class SettingsEntity (
     val expandListOnStartUp: Boolean,
+    val isVerticalScreen: Boolean
 ){
-    constructor() : this(false)
+    constructor() : this(false, false)
 }
 
 fun getFakeSettingsEntity() =
     SettingsEntity(
-        expandListOnStartUp = false
+        expandListOnStartUp = true,
+        isVerticalScreen = false
     )

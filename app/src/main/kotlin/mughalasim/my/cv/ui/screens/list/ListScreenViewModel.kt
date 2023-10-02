@@ -1,7 +1,6 @@
 package mughalasim.my.cv.ui.screens.list
 
 import androidx.lifecycle.ViewModel
-import cv.data.repository.AnalyticsRepository
 import cv.domain.usecase.DataUseCase
 import cv.domain.usecase.SettingsUseCase
 import mughalasim.my.cv.di.DI
@@ -16,13 +15,10 @@ class ListScreenViewModel(
 
     fun getExpandListOnStartUp() = settingsUseCase.getExpandListOnStartUp()
 
+    fun isVerticalOrientation() = settingsUseCase.getListOrientation()
+
     fun openSettings() = DI.serviceNavigation.open(route = Route.SettingsScreen)
 
-    fun onBannerTapped(bannerName: String){
-        DI.analytics.logEvent(
-            AnalyticsRepository.EVENT_NAME_BANNER,
-            listOf(Pair(AnalyticsRepository.PARAM_BANNER_NAME, bannerName))
-        )
-    }
+    fun onBannerTapped(bannerName: String) = dataUseCase.onBannerTapped(bannerName)
 
 }

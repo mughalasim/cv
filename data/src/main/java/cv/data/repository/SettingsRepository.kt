@@ -7,16 +7,12 @@ class SettingsRepository(
     private val sharedPreferences: SharedPreferences
 ) : ISettingsRepository {
 
-    override fun getExpandListOnStartUp(): Boolean {
-     return sharedPreferences.getBoolean(SHARED_PREF_EXPAND_LIST_ON_STARTUP, false)
+    override fun setBool(settingName: String, value: Boolean) {
+        sharedPreferences.edit().putBoolean(settingName, value).apply()
     }
 
-    override fun setExpandListOnStartUp(isEnabled: Boolean) {
-        sharedPreferences.edit().putBoolean(SHARED_PREF_EXPAND_LIST_ON_STARTUP, isEnabled).apply()
-    }
-
-    companion object{
-        const val SHARED_PREF_EXPAND_LIST_ON_STARTUP = "SHARED_PREF_EXPAND_LIST_ON_STARTUP"
+    override fun getBool(settingName: String): Boolean {
+        return sharedPreferences.getBoolean(settingName, false)
     }
 
 }

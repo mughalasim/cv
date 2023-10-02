@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import cv.data.repository.AnalyticsRepository
+import cv.domain.Variables.EVENT_NAME_LINK
+import cv.domain.Variables.PARAM_LINK
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
@@ -55,8 +57,8 @@ fun ChipWidget(
                             browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             context.startActivity(browserIntent)
                             DI.analytics.logEvent(
-                                AnalyticsRepository.EVENT_NAME_LINK,
-                                listOf(Pair(AnalyticsRepository.PARAM_LINK, url))
+                                EVENT_NAME_LINK,
+                                listOf(Pair(PARAM_LINK, url))
                             )
                         } else {
                             Toast.makeText(
