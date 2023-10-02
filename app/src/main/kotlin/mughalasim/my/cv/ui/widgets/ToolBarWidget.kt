@@ -33,7 +33,7 @@ fun ToolBarWidget(
         horizontalArrangement = Arrangement.SpaceBetween
     ){
         TextLarge(
-            modifier = Modifier.width(250.dp),
+            modifier = Modifier.width(235.dp),
             text = title,
             color = AppTheme.colors.black
         )
