@@ -40,7 +40,6 @@ import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.theme.padding_screen_large
 import mughalasim.my.cv.ui.theme.padding_screen_small
 import mughalasim.my.cv.ui.widgets.BannerWidget
 import mughalasim.my.cv.ui.widgets.ChipWidget

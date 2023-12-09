@@ -1,7 +1,6 @@
 package mughalasim.my.cv.services
 
 import androidx.navigation.NavController
-import cv.data.repository.AnalyticsRepository
 import cv.domain.Variables.EVENT_NAME_NAVIGATE
 import cv.domain.Variables.PARAM_SCREEN_NAME
 import mughalasim.my.cv.di.DI

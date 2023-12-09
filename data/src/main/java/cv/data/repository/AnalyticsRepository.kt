@@ -1,6 +1,7 @@
 package cv.data.repository
 
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import cv.domain.repositories.IAnalyticsRepository
 
@@ -14,10 +15,7 @@ class AnalyticsRepository(
             bundle.putString(param.first, param.second)
         }
         firebaseAnalytics.logEvent(eventName, bundle)
-    }
-
-    companion object {
-
+        Log.d("Firebase Analytics", bundle.toString())
     }
 
 }
