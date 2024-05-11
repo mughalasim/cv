@@ -4,6 +4,7 @@ appNamespaceId = "mughalasim.my.cv"
 appVersionCode = "14"
 appVersionName = "14.0"
 compileSdk = "34"
+kotlinxSerializationJson = "1.6.3"
 minSdk = "24"
 accompanist = "0.32.0"
 activity-compose = "1.9.0"
@@ -48,6 +49,7 @@ core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }
 foundation-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "compose" }
+jetbrains-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 junit = { module = "junit:junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin-android" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-androidx-compose" }
@@ -76,4 +78,3 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

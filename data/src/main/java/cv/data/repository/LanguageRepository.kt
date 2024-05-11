@@ -7,6 +7,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import cv.data.models.LanguageModel
+import cv.data.models.toLanguageEntity
 import cv.domain.State
 import cv.domain.entities.LanguageEntity
 import cv.domain.repositories.ILanguageRepository
@@ -41,7 +43,11 @@ class LanguageRepository(application: Application, firebaseInstance: FirebaseDat
                                 pluralTexts[it.key as String] = chars
                             }
 
-                            trySendBlocking(State.Success(LanguageEntity(singleTexts, pluralTexts, locale)))
+                            trySendBlocking(
+                                State.Success(
+                                    LanguageModel(singleTexts, pluralTexts, locale).toLanguageEntity(),
+                                ),
+                            )
                         } catch (e: ClassCastException) {
                             Log.e(javaClass.name, e.localizedMessage!!)
                             trySendBlocking(State.Failed())

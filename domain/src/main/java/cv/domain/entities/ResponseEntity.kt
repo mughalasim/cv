@@ -16,9 +16,9 @@ data class ResponseEntity(
     fun getOrderedWork(isAscending: Boolean): List<ExperienceEntity>  {
         return if (isAscending)
             {
-                works.sortedBy { it.start_date }
+                works.sortedBy { it.startDate }
             } else {
-            works.sortedByDescending { it.start_date }
+            works.sortedByDescending { it.startDate }
         }
     }
 }

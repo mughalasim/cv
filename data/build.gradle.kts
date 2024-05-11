@@ -2,7 +2,6 @@ plugins {
     kotlin("kapt")
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.detekt)
     alias(libs.plugins.spotless)
 }
@@ -39,6 +38,8 @@ dependencies {
     api("com.google.firebase:firebase-analytics")
     //noinspection UseTomlInstead
     api("com.google.firebase:firebase-crashlytics")
+    implementation(libs.jetbrains.kotlinx.serialization.json)
+
 
     // Testing -------------------------------------------------------------------------------------
     testImplementation(libs.junit)

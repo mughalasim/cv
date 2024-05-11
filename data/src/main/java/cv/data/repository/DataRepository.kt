@@ -6,6 +6,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import cv.data.models.ResponseModel
+import cv.data.models.toResponseEntity
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.repositories.IDataRepository
@@ -24,7 +26,10 @@ class DataRepository(firebaseInstance: FirebaseDatabase) : IDataRepository {
                 object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         try {
-                            trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
+                            trySendBlocking(
+                                State.Success(snapshot.getValue(ResponseModel::class.java)!!.toResponseEntity()),
+                                // todo - get Gson here
+                            )
                         } catch (e: ClassCastException) {
                             Log.e(javaClass.name, e.localizedMessage!!)
                             trySendBlocking(State.Failed())

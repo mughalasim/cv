@@ -53,23 +53,23 @@ fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) 
                     Column {
                         val timeSpentString =
                             if (entity.ongoing) {
-                                DateTime.now().toYearMonthDuration(entity.start_date)
+                                DateTime.now().toYearMonthDuration(entity.startDate)
                             } else {
-                                entity.start_date.toYearMonthDuration(entity.end_date)
+                                entity.startDate.toYearMonthDuration(entity.endDate)
                             }
                         val timeString =
                             if (entity.ongoing) {
                                 stringResource(R.string.txt_present)
                             } else {
-                                entity.end_date.toMonthYearString()
+                                entity.endDate.toMonthYearString()
                             }
 
                         TextSmall(text = entity.title)
                         TextRegular(text = entity.location)
-                        TextRegular(text = entity.position_title)
+                        TextRegular(text = entity.positionTitle)
                         TextSmall(
                             modifier = Modifier.padding(bottom = padding_screen),
-                            text = "${entity.start_date.toMonthYearString()} - $timeString ($timeSpentString)",
+                            text = "${entity.startDate.toMonthYearString()} - $timeString ($timeSpentString)",
                         )
                         TextRegular(
                             modifier = Modifier.padding(bottom = padding_screen),
