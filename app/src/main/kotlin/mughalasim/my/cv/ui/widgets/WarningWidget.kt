@@ -17,16 +17,17 @@ import mughalasim.my.cv.ui.theme.padding_screen_small
 @Composable
 fun WarningWidget(title: String) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(Alignment.Top)
-            .background(color = AppTheme.colors.backgroundError),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(Alignment.Top)
+                .background(color = AppTheme.colors.backgroundError),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TextRegular(
             modifier = Modifier.padding(padding_screen_small),
             text = title,
-            color = AppTheme.colors.backgroundScreen
+            color = AppTheme.colors.backgroundScreen,
         )
     }
 }
@@ -34,7 +35,7 @@ fun WarningWidget(title: String) {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun WarningWidgetPreviewNight() {
@@ -46,7 +47,7 @@ fun WarningWidgetPreviewNight() {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun WarningWidgetPreview() {
