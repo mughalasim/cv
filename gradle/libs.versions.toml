@@ -1,8 +1,8 @@
 [versions]
 appName = "My Resume"
 appNamespaceId = "mughalasim.my.cv"
-appVersionCode = "13"
-appVersionName = "13.0"
+appVersionCode = "14"
+appVersionName = "14.0"
 compileSdk = "34"
 minSdk = "24"
 accompanist = "0.32.0"
