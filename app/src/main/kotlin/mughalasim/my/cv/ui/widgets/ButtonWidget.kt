@@ -17,23 +17,35 @@ import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
-fun ButtonWidget(modifier: Modifier = Modifier, title: String, isEnabled: Boolean, onButtonClicked: ()-> Unit) {
+fun ButtonWidget(
+    modifier: Modifier = Modifier,
+    title: String,
+    isEnabled: Boolean,
+    onButtonClicked: () -> Unit,
+) {
     Column(
-        modifier = modifier
-            .wrapContentWidth(align = Alignment.CenterHorizontally)
-            .background(
-                color = if (isEnabled) AppTheme.colors.backgroundButtonEnabled else AppTheme.colors.backgroundButtonDisabled,
-                shape = RoundedCornerShape(border_radius)
-            )
-            .clickable {
-                onButtonClicked()
-            }
+        modifier =
+            modifier
+                .wrapContentWidth(align = Alignment.CenterHorizontally)
+                .background(
+                    color =
+                        if (isEnabled) {
+                            AppTheme.colors.backgroundButtonEnabled
+                        } else {
+                            AppTheme.colors.backgroundButtonDisabled
+                        },
+                    shape = RoundedCornerShape(border_radius),
+                )
+                .clickable {
+                    onButtonClicked()
+                },
     ) {
         TextSmall(
-            modifier = Modifier
-                .padding(padding_screen_small),
+            modifier =
+                Modifier
+                    .padding(padding_screen_small),
             text = title.uppercase(),
-            color = if (isEnabled) AppTheme.colors.backgroundScreen else AppTheme.colors.textSecondary
+            color = if (isEnabled) AppTheme.colors.backgroundScreen else AppTheme.colors.textSecondary,
         )
     }
 }
@@ -41,7 +53,7 @@ fun ButtonWidget(modifier: Modifier = Modifier, title: String, isEnabled: Boolea
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun ButtonWidgetPreviewNight() {
@@ -56,7 +68,7 @@ fun ButtonWidgetPreviewNight() {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun ButtonWidgetPreview() {

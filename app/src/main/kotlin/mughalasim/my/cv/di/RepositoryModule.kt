@@ -14,15 +14,16 @@ import cv.domain.repositories.ISettingsRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
-val repositoryModule = module {
+val repositoryModule =
+    module {
 
-    val firebaseInstance = FirebaseDatabase.getInstance()
+        val firebaseInstance = FirebaseDatabase.getInstance()
 
-    single<IDataRepository> { DataRepository(firebaseInstance) }
+        single<IDataRepository> { DataRepository(firebaseInstance) }
 
-    single<IAnalyticsRepository> { AnalyticsRepository(Firebase.analytics) }
+        single<IAnalyticsRepository> { AnalyticsRepository(Firebase.analytics) }
 
-    single<ILanguageRepository> { LanguageRepository(androidApplication(), firebaseInstance) }
+        single<ILanguageRepository> { LanguageRepository(androidApplication(), firebaseInstance) }
 
-    single<ISettingsRepository> { SettingsRepository(get()) }
-}
+        single<ISettingsRepository> { SettingsRepository(get()) }
+    }

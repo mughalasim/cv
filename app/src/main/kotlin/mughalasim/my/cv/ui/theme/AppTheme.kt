@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-object AppTheme{
+object AppTheme {
     val colors: AppColors
         @Composable
         get() = getColors()
@@ -25,19 +25,19 @@ object AppTheme{
 fun getColors(): AppColors {
     val systemUiController = rememberSystemUiController()
     val isDarkMode = isSystemInDarkTheme()
-    val currentColors = remember {if (isDarkMode) DarkAppColors else LightAppColors }
+    val currentColors = remember { if (isDarkMode) DarkAppColors else LightAppColors }
 
-    DisposableEffect(systemUiController, isSystemInDarkTheme()){
+    DisposableEffect(systemUiController, isSystemInDarkTheme()) {
         systemUiController.setSystemBarsColor(
-            color = currentColors.backgroundTitleBar
+            color = currentColors.backgroundTitleBar,
         )
         systemUiController.setStatusBarColor(
-            color = currentColors.backgroundTitleBar
+            color = currentColors.backgroundTitleBar,
         )
         systemUiController.setNavigationBarColor(
-            color = currentColors.backgroundTitleBar
+            color = currentColors.backgroundTitleBar,
         )
-        onDispose {  }
+        onDispose { }
     }
 
     return currentColors
@@ -46,7 +46,7 @@ fun getColors(): AppColors {
 @Composable
 fun AppThemeComposable(
     textStyles: AppTextStyles = AppTheme.textStyles,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val currentColors = getColors()
 
@@ -59,6 +59,6 @@ fun AppThemeComposable(
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = currentColors.backgroundScreen,
-        content = content
+        content = content,
     )
 }

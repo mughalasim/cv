@@ -30,6 +30,10 @@ reword = "4.0.4"
 viewpump = "4.0.10"
 spotless = "6.25.0"
 detekt = "1.23.5"
+kotlin = "1.9.10"
+androidGradlePlugin = "8.1.1"
+google = "4.4.1"
+crashlytics = "2.9.9"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
@@ -65,5 +69,11 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 viewpump = { module = "dev.b3nedikt.viewpump:viewpump", version.ref = "viewpump" }
 
 [plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

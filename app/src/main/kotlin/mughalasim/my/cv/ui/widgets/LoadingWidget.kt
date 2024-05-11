@@ -17,11 +17,12 @@ fun LoadingWidget() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         CircularProgressIndicator(
-            modifier = Modifier
-                .wrapContentWidth(Alignment.CenterHorizontally)
+            modifier =
+                Modifier
+                    .wrapContentWidth(Alignment.CenterHorizontally),
         )
     }
 }
@@ -29,10 +30,10 @@ fun LoadingWidget() {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun LoadingWidgetPreviewNight(){
+fun LoadingWidgetPreviewNight() {
     AppThemeComposable {
         LoadingWidget()
     }
@@ -41,10 +42,10 @@ fun LoadingWidgetPreviewNight(){
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun LoadingWidgetPreview(){
+fun LoadingWidgetPreview() {
     AppThemeComposable {
         LoadingWidget()
     }

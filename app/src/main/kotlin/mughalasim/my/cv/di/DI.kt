@@ -8,7 +8,6 @@ import mughalasim.my.cv.services.IServiceNavigation
 import mughalasim.my.cv.services.ServiceNavigation
 
 object DI {
-
     val analytics: IAnalyticsRepository by lazy {
         AnalyticsRepository(Firebase.analytics)
     }

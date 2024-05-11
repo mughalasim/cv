@@ -22,7 +22,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
 class MainScreen : ComponentActivity() {
-
     private val vm: MainScreenViewModel by viewModel()
 
     override fun getResources() = Restring.wrapResources(this, super.getResources())
@@ -35,13 +34,14 @@ class MainScreen : ComponentActivity() {
                 val navController = rememberNavController()
                 vm.setNavController(navController)
 
-                when(val response = stateLanguage.value){
+                when (val response = stateLanguage.value) {
                     is State.Loading -> LoadingWidget()
 
-                    is State.Failed -> NavigationHost(
-                        navController = navController,
-                        serviceNavigation = vm.getServiceNavigation()
-                    )
+                    is State.Failed ->
+                        NavigationHost(
+                            navController = navController,
+                            serviceNavigation = vm.getServiceNavigation(),
+                        )
 
                     is State.Success<*> -> {
                         response as State.Success<LanguageEntity>
@@ -50,12 +50,13 @@ class MainScreen : ComponentActivity() {
                         Restring.putStringArrays(locale, response.data.pluralTexts)
                         NavigationHost(
                             navController = navController,
-                            serviceNavigation = vm.getServiceNavigation()
+                            serviceNavigation = vm.getServiceNavigation(),
                         )
                     }
                 }
-                val connectionState = LocalContext.current.observeConnectivityAsFlow()
-                    .collectAsState(initial = LocalContext.current.currentConnectivityState)
+                val connectionState =
+                    LocalContext.current.observeConnectivityAsFlow()
+                        .collectAsState(initial = LocalContext.current.currentConnectivityState)
 
                 if (connectionState.value == ConnectionState.Unavailable) {
                     WarningWidget(title = stringResource(R.string.error_internet_connection))

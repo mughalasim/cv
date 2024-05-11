@@ -1,9 +1,10 @@
 plugins {
-    id("com.android.application") version "8.1.1" apply false
-    id("com.android.library") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.10" apply false
-    id("com.google.gms.google-services") version "4.4.1" apply false
-    id("com.google.firebase.crashlytics") version "2.9.9" apply false
-    alias(libs.plugins.detekt) apply true
-    alias(libs.plugins.spotless) apply true
+    alias(libs.plugins.crashlytics) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.spotless) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }

@@ -10,7 +10,6 @@ class ListScreenViewModel(
     private val dataUseCase: DataUseCase,
     private val settingsUseCase: SettingsUseCase,
 ) : ViewModel() {
-
     fun getData() = dataUseCase.getData()
 
     fun getExpandListOnStartUp() = settingsUseCase.getExpandListOnStartUp()
@@ -20,5 +19,4 @@ class ListScreenViewModel(
     fun openSettings() = DI.serviceNavigation.open(route = Route.SettingsScreen)
 
     fun onBannerTapped(bannerName: String) = dataUseCase.onBannerTapped(bannerName)
-
 }

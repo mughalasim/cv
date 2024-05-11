@@ -27,43 +27,53 @@ import mughalasim.my.cv.ui.utils.toYearMonthDuration
 import org.joda.time.DateTime
 
 @Composable
-fun ExperienceWidget(
-    experiences: List<ExperienceEntity> = getFakeExperience()
-) {
+fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) {
     Column(verticalArrangement = Arrangement.Top) {
         repeat(experiences.size) {
             val entity = experiences[it]
-            Row (
-                modifier = Modifier
-                    .padding(bottom = padding_screen_large)
-                    .height(IntrinsicSize.Min),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            Row(
+                modifier =
+                    Modifier
+                        .padding(bottom = padding_screen_large)
+                        .height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
                 Column(
-                    modifier = Modifier
-                        .width(padding_screen_small)
-                        .fillMaxHeight()
-                        .background(color = AppTheme.colors.highLight)
-                ){}
-                Column(modifier = Modifier
-                    .padding(start = padding_screen_small)
+                    modifier =
+                        Modifier
+                            .width(padding_screen_small)
+                            .fillMaxHeight()
+                            .background(color = AppTheme.colors.highLight),
+                ) {}
+                Column(
+                    modifier =
+                        Modifier
+                            .padding(start = padding_screen_small),
                 ) {
                     Column {
-                        val timeSpentString = if (entity.ongoing)
-                            DateTime.now().toYearMonthDuration(entity.start_date) else entity.start_date.toYearMonthDuration(entity.end_date)
-                        val timeString = if (entity.ongoing)
-                            stringResource(R.string.txt_present) else entity.end_date.toMonthYearString()
+                        val timeSpentString =
+                            if (entity.ongoing) {
+                                DateTime.now().toYearMonthDuration(entity.start_date)
+                            } else {
+                                entity.start_date.toYearMonthDuration(entity.end_date)
+                            }
+                        val timeString =
+                            if (entity.ongoing) {
+                                stringResource(R.string.txt_present)
+                            } else {
+                                entity.end_date.toMonthYearString()
+                            }
 
                         TextSmall(text = entity.title)
                         TextRegular(text = entity.location)
                         TextRegular(text = entity.position_title)
                         TextSmall(
                             modifier = Modifier.padding(bottom = padding_screen),
-                            text = "${entity.start_date.toMonthYearString()} - $timeString ($timeSpentString)"
+                            text = "${entity.start_date.toMonthYearString()} - $timeString ($timeSpentString)",
                         )
                         TextRegular(
                             modifier = Modifier.padding(bottom = padding_screen),
-                            text = entity.description
+                            text = entity.description,
                         )
                     }
                     LinksWidget(entity.links)
@@ -76,10 +86,10 @@ fun ExperienceWidget(
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun ExperienceWidgetPreviewNight(){
+fun ExperienceWidgetPreviewNight() {
     AppThemeComposable {
         ExperienceWidget()
     }
@@ -88,10 +98,10 @@ fun ExperienceWidgetPreviewNight(){
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun ExperienceWidgetPreview(){
+fun ExperienceWidgetPreview() {
     AppThemeComposable {
         ExperienceWidget()
     }

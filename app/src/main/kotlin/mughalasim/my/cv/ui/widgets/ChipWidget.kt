@@ -33,45 +33,47 @@ import mughalasim.my.cv.ui.theme.padding_screen_small
 fun ChipWidget(
     modifier: Modifier = Modifier,
     entity: LinkEntity,
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
 ) {
     Surface(
-        modifier = modifier
-            .padding(end = padding_screen_small, top = padding_screen_small)
-            .border(
-                width = line_thickness,
-                color = AppTheme.colors.backgroundChip,
-                shape = RoundedCornerShape(border_radius)
-            ),
-        color = Color.Transparent
+        modifier =
+            modifier
+                .padding(end = padding_screen_small, top = padding_screen_small)
+                .border(
+                    width = line_thickness,
+                    color = AppTheme.colors.backgroundChip,
+                    shape = RoundedCornerShape(border_radius),
+                ),
+        color = Color.Transparent,
     ) {
         Row(
-            modifier = Modifier
-                .toggleable(
-                    value = false,
-                    onValueChange = {
-                        val url = entity.url
-                        if (URLUtil.isValidUrl(url)) {
-                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                            browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            context.startActivity(browserIntent)
-                            DI.analytics.logEvent(
-                                EVENT_NAME_LINK,
-                                listOf(Pair(PARAM_LINK, url))
-                            )
-                        } else {
-                            Toast.makeText(
-                                context,
-                                context.resources.getString(R.string.error_invalid_link),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                )
+            modifier =
+                Modifier
+                    .toggleable(
+                        value = false,
+                        onValueChange = {
+                            val url = entity.url
+                            if (URLUtil.isValidUrl(url)) {
+                                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                context.startActivity(browserIntent)
+                                DI.analytics.logEvent(
+                                    EVENT_NAME_LINK,
+                                    listOf(Pair(PARAM_LINK, url)),
+                                )
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    context.resources.getString(R.string.error_invalid_link),
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        },
+                    ),
         ) {
             TextRegular(
                 modifier = Modifier.padding(padding_screen_small),
-                text = entity.text
+                text = entity.text,
             )
         }
     }
@@ -80,7 +82,7 @@ fun ChipWidget(
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun ChipWidgetPreviewNight() {
@@ -92,7 +94,7 @@ fun ChipWidgetPreviewNight() {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun ChipWidgetPreview() {

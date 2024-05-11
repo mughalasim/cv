@@ -16,32 +16,33 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flowOn
 
 class DataRepository(firebaseInstance: FirebaseDatabase) : IDataRepository {
-
     private var firebaseReference: DatabaseReference = firebaseInstance.getReference("/data")
 
-    override fun getDataFromFirebase() = callbackFlow<State<ResponseEntity>> {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                try {
-                    trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
-                } catch (e: Exception) {
-                    Log.e(javaClass.name, e.localizedMessage!!)
-                    trySendBlocking(State.Failed())
+    override fun getDataFromFirebase() =
+        callbackFlow<State<ResponseEntity>> {
+            val valueEventListener =
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        try {
+                            trySendBlocking(State.Success(snapshot.getValue(ResponseEntity::class.java)!!))
+                        } catch (e: ClassCastException) {
+                            Log.e(javaClass.name, e.localizedMessage!!)
+                            trySendBlocking(State.Failed())
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e(javaClass.name, error.message)
+                        trySendBlocking(State.Failed())
+                    }
                 }
+
+            firebaseReference.addValueEventListener(valueEventListener)
+
+            firebaseReference.get()
+
+            awaitClose {
+                firebaseReference.removeEventListener(valueEventListener)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(javaClass.name, error.message)
-                trySendBlocking(State.Failed())
-            }
-        }
-
-        firebaseReference.addValueEventListener(valueEventListener)
-
-        firebaseReference.get()
-
-        awaitClose {
-            firebaseReference.removeEventListener(valueEventListener)
-        }
-    }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
 }
