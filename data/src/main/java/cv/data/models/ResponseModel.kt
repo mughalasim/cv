@@ -5,7 +5,6 @@ import cv.domain.entities.ResponseEntity
 import kotlinx.serialization.Serializable
 
 @Keep
-@Suppress("unused")
 @Serializable
 data class ResponseModel(
     val description: DescriptionModel,
@@ -13,9 +12,7 @@ data class ResponseModel(
     val works: List<ExperienceModel>,
     val educations: List<ExperienceModel>,
     val references: List<ReferenceModel>,
-) {
-    constructor() : this(DescriptionModel(), listOf(), listOf(), listOf(), listOf())
-}
+)
 
 fun ResponseModel.toResponseEntity() =
     ResponseEntity(

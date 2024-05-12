@@ -22,6 +22,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import cv.domain.State
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
@@ -58,24 +58,26 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen() {
     val viewModel = koinViewModel<ListScreenViewModel>()
-    val stateData = viewModel.getData().collectAsState(initial = State.Loading())
-    when (val response = stateData.value) {
-        is State.Loading -> LoadingWidget()
+    val uiState = viewModel.uiStateFlow.collectAsState(initial = ListScreenViewModel.UiState.Loading)
+    LaunchedEffect(key1 = "test") {
+        viewModel.getData()
+    }
+    when (val response = uiState.value) {
+        is ListScreenViewModel.UiState.Loading -> LoadingWidget()
 
-        is State.Failed -> WarningWidget(title = stringResource(id = R.string.error_server))
+        is ListScreenViewModel.UiState.Error -> WarningWidget(title = stringResource(id = R.string.error_server))
 
-        is State.Success<*> -> {
-            response as State.Success<ResponseEntity>
+        is ListScreenViewModel.UiState.ResultsReceived -> {
             if (viewModel.isVerticalOrientation()) {
                 VerticalScreen(
-                    response = response.data,
+                    response = response.responseEntity,
                     expandListOnStartUp = viewModel.getExpandListOnStartUp(),
                     onOpenSettingsTapped = { viewModel.openSettings() },
                     onBannerTapped = { viewModel.onBannerTapped(it) },
                 )
             } else {
                 HorizontalScreen(
-                    response = response.data,
+                    response = response.responseEntity,
                     onOpenSettingsTapped = { viewModel.openSettings() },
                     onBannerTapped = { viewModel.onBannerTapped(it) },
                 )
@@ -113,9 +115,9 @@ fun VerticalScreen(
 
         Column(
             modifier =
-                Modifier
-                    .verticalScroll(rememberScrollState())
-                    .padding(padding_screen),
+            Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(padding_screen),
             horizontalAlignment = Alignment.Start,
         ) {
             // Name and Job title ----------------------------------------------------------------------
@@ -144,10 +146,10 @@ fun VerticalScreen(
                 ) {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxHeight()
-                                .width(padding_screen_small)
-                                .background(color = AppTheme.colors.highLight),
+                        Modifier
+                            .fillMaxHeight()
+                            .width(padding_screen_small)
+                            .background(color = AppTheme.colors.highLight),
                     ) {}
                     Column(
                         modifier = Modifier.padding(start = padding_screen_small),
@@ -278,9 +280,9 @@ fun HorizontalScreen(
         // Name and Job title ----------------------------------------------------------------------
         Column(
             modifier =
-                Modifier
-                    .align(Alignment.Start)
-                    .padding(start = padding_screen, end = padding_screen),
+            Modifier
+                .align(Alignment.Start)
+                .padding(start = padding_screen, end = padding_screen),
         ) {
             TextLarge(text = response.description.full_name)
             TextRegular(text = response.description.position_title)
@@ -296,9 +298,9 @@ fun HorizontalScreen(
                 0 -> {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(start = padding_screen, end = padding_screen),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(start = padding_screen, end = padding_screen),
                     ) {
                         val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
                         BannerWidget(
@@ -314,10 +316,10 @@ fun HorizontalScreen(
                         ) {
                             Column(
                                 modifier =
-                                    Modifier
-                                        .fillMaxHeight()
-                                        .width(padding_screen_small)
-                                        .background(color = AppTheme.colors.highLight),
+                                Modifier
+                                    .fillMaxHeight()
+                                    .width(padding_screen_small)
+                                    .background(color = AppTheme.colors.highLight),
                             ) {}
                             Column(
                                 modifier = Modifier.padding(start = padding_screen_small),
@@ -335,10 +337,10 @@ fun HorizontalScreen(
                 1 -> {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(start = padding_screen, end = padding_screen)
-                                .verticalScroll(rememberScrollState()),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(start = padding_screen, end = padding_screen)
+                            .verticalScroll(rememberScrollState()),
                     ) {
                         val skillsTitle = stringResource(R.string.txt_skills)
                         BannerWidget(
@@ -356,10 +358,10 @@ fun HorizontalScreen(
                 2 -> {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(start = padding_screen, end = padding_screen)
-                                .verticalScroll(rememberScrollState()),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(start = padding_screen, end = padding_screen)
+                            .verticalScroll(rememberScrollState()),
                     ) {
                         val workExperienceTitle = stringResource(R.string.txt_work_experience)
                         var sortAscending by remember { mutableStateOf(false) }
@@ -381,10 +383,10 @@ fun HorizontalScreen(
                 3 -> {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(start = padding_screen, end = padding_screen)
-                                .verticalScroll(rememberScrollState()),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(start = padding_screen, end = padding_screen)
+                            .verticalScroll(rememberScrollState()),
                     ) {
                         val educationalExperienceTitle = stringResource(R.string.txt_education)
                         BannerWidget(
@@ -402,10 +404,10 @@ fun HorizontalScreen(
                 4 -> {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(start = padding_screen, end = padding_screen)
-                                .verticalScroll(rememberScrollState()),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(start = padding_screen, end = padding_screen)
+                            .verticalScroll(rememberScrollState()),
                     ) {
                         val referencesTitle = stringResource(R.string.txt_references)
                         BannerWidget(
@@ -423,9 +425,9 @@ fun HorizontalScreen(
                 5 -> {
                     Column(
                         modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(start = padding_screen, end = padding_screen),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(start = padding_screen, end = padding_screen),
                     ) {
                         Spacer(modifier = Modifier.padding(top = padding_screen))
                         ChipWidget(

@@ -1,3 +1,11 @@
+rootProject.name = "cv"
+
+include(
+    ":app",
+    ":domain",
+    ":data",
+)
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -9,11 +17,11 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
         mavenCentral()
+        gradlePluginPortal()
+        google()
     }
 }
-rootProject.name = "cv"
-include(":app")
-include(":domain")
-include(":data")
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+

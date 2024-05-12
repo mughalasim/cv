@@ -6,6 +6,7 @@ import dev.b3nedikt.app_locale.AppLocale
 import dev.b3nedikt.restring.Restring
 import dev.b3nedikt.reword.RewordInterceptor
 import dev.b3nedikt.viewpump.ViewPump
+import mughalasim.my.cv.di.apiModule
 import mughalasim.my.cv.di.applicationModule
 import mughalasim.my.cv.di.repositoryModule
 import mughalasim.my.cv.di.useCaseModule
@@ -26,6 +27,7 @@ class App : Application() {
             modules(
                 listOf(
                     applicationModule,
+                    apiModule,
                     repositoryModule,
                     useCaseModule,
                     viewModelModule,

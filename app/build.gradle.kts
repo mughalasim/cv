@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -28,8 +29,9 @@ android {
         targetSdk = libs.findVersion("compileSdk").get().toString().toInt()
         versionCode = libs.findVersion("appVersionCode").get().toString().toInt()
         versionName = libs.findVersion("appVersionName").get().toString()
+        buildConfigField("String", "API_BASE_URL", gradleLocalProperties(rootDir).getProperty("API_BASE_URL"))
 
-        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+//        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         vectorDrawables { useSupportLibrary = true }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -75,7 +77,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = libs.findVersion("compiler").get().toString()
     }
 
     flavorDimensions += "version"
@@ -103,8 +105,8 @@ android {
 
 dependencies {
 
-    implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":domain"))
 
     implementation(libs.kotlin.reflect)
     implementation(libs.core.ktx)
@@ -112,6 +114,7 @@ dependencies {
     implementation(libs.compiler)
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
+    implementation(libs.lifecycle.runtime.compose.android)
     implementation(libs.material)
     implementation(libs.runtime.livedata)
     implementation(libs.foundation.android)
@@ -123,24 +126,24 @@ dependencies {
     implementation(libs.lifecycle.extensions)
     implementation(libs.accompanist.systemuicontroller)
 
-// Navigation
+    // Navigation
     implementation(libs.navigation.compose)
 
-// Koin Dependency Injection
+    // Koin Dependency Injection
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 
-// Coroutines
+    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
-// Restring for Dynamic languages
+    // Restring for Dynamic languages
     implementation(libs.restring)
     implementation(libs.viewpump)
     implementation(libs.reword)
     implementation(libs.applocale)
     implementation(libs.appcompat)
 
-// TESTING -------------------------------------------------------------------------------------
+    // TESTING -------------------------------------------------------------------------------------
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

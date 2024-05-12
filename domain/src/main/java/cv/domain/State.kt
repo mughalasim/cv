@@ -5,7 +5,7 @@ open class State<T> {
 
     data class Success<T>(val data: T) : State<T>()
 
-    class Failed<T> : State<T>()
+    class Failed<T>(val message: String) : State<T>()
 }
 
 sealed class ConnectionState {

@@ -6,30 +6,27 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Keep
-@Suppress("unused")
 @Serializable
 data class ExperienceModel(
     val title: String,
     @SerialName("start_date")
-    val startDate: String,
+    val start_date: String,
     @SerialName("end_date")
-    val endDate: String,
+    val end_date: String,
     @SerialName("position_title")
-    val positionTitle: String,
+    val position_title: String,
     val location: String,
     val description: String,
     val links: List<LinkModel>,
     val ongoing: Boolean = false,
-) {
-    constructor() : this("", "", "", "", "", "", listOf(), false)
-}
+)
 
 fun ExperienceModel.toExperienceEntity() =
     ExperienceEntity(
         title = this.title,
-        startDate = this.startDate,
-        endDate = this.endDate,
-        positionTitle = this.positionTitle,
+        startDate = this.start_date,
+        endDate = this.end_date,
+        positionTitle = this.position_title,
         location = this.location,
         description = this.description,
         links = this.links.map { it.toLinkEntity() },

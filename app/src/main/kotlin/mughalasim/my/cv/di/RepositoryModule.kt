@@ -19,7 +19,7 @@ val repositoryModule =
 
         val firebaseInstance = FirebaseDatabase.getInstance()
 
-        single<IDataRepository> { DataRepository(firebaseInstance) }
+        single<IDataRepository> { DataRepository(get()) }
 
         single<IAnalyticsRepository> { AnalyticsRepository(Firebase.analytics) }
 

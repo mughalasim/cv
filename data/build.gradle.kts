@@ -4,12 +4,17 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.detekt)
     alias(libs.plugins.spotless)
+    kotlin("plugin.serialization")
 }
 
 android {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     namespace = "cv.data"
     compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
+
+    defaultConfig {
+        minSdk = libs.findVersion("minSdk").get().toString().toInt()
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -24,22 +29,26 @@ android {
 dependencies {
 
     implementation(project(":domain"))
-
     implementation(libs.core.ktx)
 
-    // Import the BoM for the Firebase platform
-    api(platform("com.google.firebase:firebase-bom:33.0.0"))
+    api(libs.retrofit)
+    api(libs.retrofit2.kotlinx.serialization.converter)
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
-    // Declare the dependency for the Realtime Database library
-    // When using the BoM, you don"t specify versions in Firebase library dependencies
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
+    //noinspection UseTomlInstead
+    api("com.squareup.okhttp3:okhttp")
+    //noinspection UseTomlInstead
+    api("com.squareup.okhttp3:logging-interceptor")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
     //noinspection UseTomlInstead
     api("com.google.firebase:firebase-database")
     //noinspection UseTomlInstead
     api("com.google.firebase:firebase-analytics")
     //noinspection UseTomlInstead
     api("com.google.firebase:firebase-crashlytics")
-    implementation(libs.jetbrains.kotlinx.serialization.json)
-
 
     // Testing -------------------------------------------------------------------------------------
     testImplementation(libs.junit)

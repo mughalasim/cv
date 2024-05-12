@@ -6,7 +6,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Keep
-@Suppress("unused")
 @Serializable
 data class DescriptionModel(
     val address: String,
@@ -19,9 +18,7 @@ data class DescriptionModel(
     val phone: Long,
     @SerialName("position_title")
     val position_title: String,
-) {
-    constructor() : this("", "", listOf(), 0, "", 0, "")
-}
+)
 
 fun DescriptionModel.toDescriptionEntity() =
     DescriptionEntity(

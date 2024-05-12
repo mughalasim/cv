@@ -50,13 +50,13 @@ class LanguageRepository(application: Application, firebaseInstance: FirebaseDat
                             )
                         } catch (e: ClassCastException) {
                             Log.e(javaClass.name, e.localizedMessage!!)
-                            trySendBlocking(State.Failed())
+                            trySendBlocking(State.Failed(""))
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         Log.e(javaClass.name, error.message)
-                        trySendBlocking(State.Failed())
+                        trySendBlocking(State.Failed(""))
                     }
                 }
 

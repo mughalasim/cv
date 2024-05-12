@@ -11,7 +11,7 @@ class DataUseCase(
     private val languageRepository: ILanguageRepository,
     private val analyticsRepository: IAnalyticsRepository,
 ) {
-    fun getData() = dataRepository.getDataFromFirebase()
+    suspend fun getData() = dataRepository.getDataFromFirebase()
 
     fun getLanguage() = languageRepository.getLanguageFromFirebase()
 
