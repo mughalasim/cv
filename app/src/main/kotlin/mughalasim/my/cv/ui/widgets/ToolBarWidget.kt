@@ -23,39 +23,45 @@ fun ToolBarWidget(
     title: String,
     buttonTitle: String,
     buttonIsEnabled: Boolean = true,
-    onButtonClicked: () -> Unit
+    onButtonClicked: () -> Unit,
 ) {
-    Row (modifier = Modifier
-        .background(color = AppTheme.colors.highLight)
-        .padding(padding_screen)
-        .fillMaxWidth(),
+    Row(
+        modifier =
+            Modifier
+                .background(color = AppTheme.colors.highLight)
+                .padding(padding_screen)
+                .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ){
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
         TextLarge(
             modifier = Modifier.width(235.dp),
             text = title,
-            color = AppTheme.colors.black
+            color = AppTheme.colors.black,
         )
         ButtonWidget(
-           modifier = modifier,
-           title = buttonTitle,
-           isEnabled = buttonIsEnabled,
-           onButtonClicked = onButtonClicked
-       )
+            modifier = modifier,
+            title = buttonTitle,
+            isEnabled = buttonIsEnabled,
+            onButtonClicked = onButtonClicked,
+        )
     }
 }
 
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun ToolBarWidgetPreviewNight() {
     AppThemeComposable {
         Column {
-            ToolBarWidget(title = "Test Long toolbar title, that may overflow", buttonTitle = "Settings", buttonIsEnabled = true) {}
+            ToolBarWidget(
+                title = "Test Long toolbar title, that may overflow",
+                buttonTitle = "Settings",
+                buttonIsEnabled = true,
+            ) {}
         }
     }
 }
@@ -63,7 +69,7 @@ fun ToolBarWidgetPreviewNight() {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun ToolBarWidgetPreview() {

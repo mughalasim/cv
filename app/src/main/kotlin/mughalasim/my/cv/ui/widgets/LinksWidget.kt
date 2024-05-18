@@ -17,28 +17,28 @@ import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 
 @Composable
-fun LinksWidget(
-    links: List<LinkEntity>
-){
+fun LinksWidget(links: List<LinkEntity>) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        if (links.isNotEmpty()){
-            TextSmall(text = stringResource(R.string.txt_links))
-            Row (
-                horizontalArrangement = Arrangement.Start, modifier = Modifier.horizontalScroll(rememberScrollState())
-            ){
-                repeat(links.size){ ChipWidget (entity = links[it]) }
+        if (links.isNotEmpty())
+            {
+                TextSmall(text = stringResource(R.string.txt_links))
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier.horizontalScroll(rememberScrollState()),
+                ) {
+                    repeat(links.size) { ChipWidget(entity = links[it]) }
+                }
             }
-        }
     }
 }
 
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun LinksWidgetPreviewNight(){
+fun LinksWidgetPreviewNight() {
     AppThemeComposable {
         LinksWidget(getFakeLinks())
     }
@@ -47,10 +47,10 @@ fun LinksWidgetPreviewNight(){
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun LinksWidgetPreview(){
+fun LinksWidgetPreview() {
     AppThemeComposable {
         LinksWidget(getFakeLinks())
     }

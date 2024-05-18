@@ -8,29 +8,28 @@ import cv.domain.usecase.SettingsUseCase
 import mughalasim.my.cv.di.DI
 
 class SettingsScreenViewModel(
-    private val settingsUseCase: SettingsUseCase
-): ViewModel() {
-
+    private val settingsUseCase: SettingsUseCase,
+) : ViewModel() {
     private val _settings: MutableLiveData<SettingsEntity> = MutableLiveData(getState())
     val settings: LiveData<SettingsEntity> = _settings
 
-    fun getState() = SettingsEntity(
-        expandListOnStartUp = settingsUseCase.getExpandListOnStartUp(),
-        isVerticalScreen =  settingsUseCase.getListOrientation()
-    )
+    fun getState() =
+        SettingsEntity(
+            expandListOnStartUp = settingsUseCase.getExpandListOnStartUp(),
+            isVerticalScreen = settingsUseCase.getListOrientation(),
+        )
 
-    fun navigateBack(){
-        DI.serviceNavigation.popBack()
+    fun navigateBack() {
+        DI.navigationService.popBack()
     }
 
-    fun setExpandListOnStartUp(isEnabled: Boolean){
+    fun setExpandListOnStartUp(isEnabled: Boolean) {
         settingsUseCase.setExpandListOnStartUp(isEnabled)
         _settings.value = getState()
     }
 
-    fun setListOrientation(isVertical: Boolean){
+    fun setListOrientation(isVertical: Boolean) {
         settingsUseCase.setListOrientation(isVertical)
         _settings.value = getState()
     }
-
 }

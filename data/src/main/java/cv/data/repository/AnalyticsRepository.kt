@@ -6,10 +6,12 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import cv.domain.repositories.IAnalyticsRepository
 
 class AnalyticsRepository(
-    private val firebaseAnalytics: FirebaseAnalytics
+    private val firebaseAnalytics: FirebaseAnalytics,
 ) : IAnalyticsRepository {
-
-    override fun logEvent(eventName: String, params: List<Pair<String, String>>) {
+    override fun logEvent(
+        eventName: String,
+        params: List<Pair<String, String>>,
+    ) {
         val bundle = Bundle()
         for (param in params) {
             bundle.putString(param.first, param.second)
@@ -17,5 +19,4 @@ class AnalyticsRepository(
         firebaseAnalytics.logEvent(eventName, bundle)
         Log.d("Firebase Analytics", bundle.toString())
     }
-
 }

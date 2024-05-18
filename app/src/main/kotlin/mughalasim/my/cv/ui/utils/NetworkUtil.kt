@@ -9,24 +9,26 @@ import cv.domain.ConnectionState
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
-fun Context.observeConnectivityAsFlow() = callbackFlow {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+fun Context.observeConnectivityAsFlow() =
+    callbackFlow {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    val callback = networkCallback { connectionState -> trySend(connectionState) }
+        val callback = networkCallback { connectionState -> trySend(connectionState) }
 
-    val networkRequest = NetworkRequest.Builder()
-        .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-        .build()
+        val networkRequest =
+            NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build()
 
-    connectivityManager.registerNetworkCallback(networkRequest, callback)
+        connectivityManager.registerNetworkCallback(networkRequest, callback)
 
-    val currentState = getCurrentConnectivityState(connectivityManager)
-    trySend(currentState)
+        val currentState = getCurrentConnectivityState(connectivityManager)
+        trySend(currentState)
 
-    awaitClose {
-        connectivityManager.unregisterNetworkCallback(callback)
+        awaitClose {
+            connectivityManager.unregisterNetworkCallback(callback)
+        }
     }
-}
 
 fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
     return object : ConnectivityManager.NetworkCallback() {
@@ -47,11 +49,10 @@ val Context.currentConnectivityState: ConnectionState
         return getCurrentConnectivityState(connectivityManager)
     }
 
-private fun getCurrentConnectivityState(
-    connectivityManager: ConnectivityManager
-): ConnectionState {
+private fun getCurrentConnectivityState(connectivityManager: ConnectivityManager): ConnectionState {
     val actNetwork =
-        connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) ?: return ConnectionState.Unavailable
+        connectivityManager
+            .getNetworkCapabilities(connectivityManager.activeNetwork) ?: return ConnectionState.Unavailable
     return when {
         actNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
             ConnectionState.Available

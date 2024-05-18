@@ -22,6 +22,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import cv.domain.State
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
@@ -58,26 +58,28 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ListScreen() {
     val viewModel = koinViewModel<ListScreenViewModel>()
-    val stateData = viewModel.getData().collectAsState(initial = State.Loading())
-    when (val response = stateData.value) {
-        is State.Loading -> LoadingWidget()
+    val uiState = viewModel.uiStateFlow.collectAsState(initial = ListScreenViewModel.UiState.Loading)
+    LaunchedEffect(true) {
+        viewModel.getData()
+    }
+    when (val response = uiState.value) {
+        is ListScreenViewModel.UiState.Loading -> LoadingWidget()
 
-        is State.Failed -> WarningWidget(title = stringResource(id = R.string.error_server))
+        is ListScreenViewModel.UiState.Error -> WarningWidget(title = response.message)
 
-        is State.Success<*> -> {
-            response as State.Success<ResponseEntity>
-            if(viewModel.isVerticalOrientation()){
+        is ListScreenViewModel.UiState.ResultsReceived -> {
+            if (viewModel.isVerticalOrientation()) {
                 VerticalScreen(
-                    response = response.data,
+                    response = response.responseEntity,
                     expandListOnStartUp = viewModel.getExpandListOnStartUp(),
                     onOpenSettingsTapped = { viewModel.openSettings() },
-                    onBannerTapped = { viewModel.onBannerTapped(it) }
+                    onBannerTapped = { viewModel.onBannerTapped(it) },
                 )
             } else {
                 HorizontalScreen(
-                    response = response.data,
+                    response = response.responseEntity,
                     onOpenSettingsTapped = { viewModel.openSettings() },
-                    onBannerTapped = { viewModel.onBannerTapped(it) }
+                    onBannerTapped = { viewModel.onBannerTapped(it) },
                 )
             }
         }
@@ -89,7 +91,7 @@ fun VerticalScreen(
     response: ResponseEntity,
     expandListOnStartUp: Boolean,
     onOpenSettingsTapped: () -> Unit = {},
-    onBannerTapped: (String) -> Unit = {}
+    onBannerTapped: (String) -> Unit = {},
 ) {
     val enterAnimation = slideInVertically() + fadeIn()
     val exitAnimation = fadeOut()
@@ -101,24 +103,26 @@ fun VerticalScreen(
     var isExpandedReference by remember { mutableStateOf(expandListOnStartUp) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         // Toolbar ---------------------------------------------------------------------------------
-        ToolBarWidget(title = stringResource(id = R.string.app_name),
-            buttonTitle = stringResource(id = R.string.txt_settings)
+        ToolBarWidget(
+            title = stringResource(id = R.string.app_name),
+            buttonTitle = stringResource(id = R.string.txt_settings),
         ) {
             onOpenSettingsTapped()
         }
 
         Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(padding_screen),
+            modifier =
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(padding_screen),
             horizontalAlignment = Alignment.Start,
         ) {
             // Name and Job title ----------------------------------------------------------------------
-            TextLarge(text = response.description.full_name)
-            TextRegular(text = response.description.position_title)
+            TextLarge(text = response.description.fullName)
+            TextRegular(text = response.description.positionTitle)
 
             // [Banner] Contact information ------------------------------------------------------------
             val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
@@ -127,26 +131,28 @@ fun VerticalScreen(
                 onExpandedClicked = {
                     isExpandedContacts = !isExpandedContacts
                     onBannerTapped(contactInfoTitle)
-                }
+                },
             )
             AnimatedVisibility(
                 modifier = Modifier.fillMaxWidth(),
                 visible = isExpandedContacts,
                 enter = enterAnimation,
-                exit = exitAnimation
+                exit = exitAnimation,
             ) {
-
-                Row(modifier = Modifier
-                    .height(IntrinsicSize.Min))
-                {
+                Row(
+                    modifier =
+                        Modifier
+                            .height(IntrinsicSize.Min),
+                ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .width(padding_screen_small)
-                            .background(color = AppTheme.colors.highLight)
+                        modifier =
+                            Modifier
+                                .fillMaxHeight()
+                                .width(padding_screen_small)
+                                .background(color = AppTheme.colors.highLight),
                     ) {}
                     Column(
-                        modifier = Modifier.padding(start = padding_screen_small)
+                        modifier = Modifier.padding(start = padding_screen_small),
                     ) {
                         // Basic information
                         DescriptionWidget(response.description)
@@ -163,18 +169,17 @@ fun VerticalScreen(
                 onExpandedClicked = {
                     isExpandedSkills = !isExpandedSkills
                     onBannerTapped(skillsTitle)
-                }
+                },
             )
             // SKill list
             AnimatedVisibility(
                 modifier = Modifier.fillMaxWidth(),
                 visible = isExpandedSkills,
                 enter = enterAnimation,
-                exit = exitAnimation
+                exit = exitAnimation,
             ) {
                 SkillWidget(response.skills)
             }
-
 
             // [Banner] Work experience ----------------------------------------------------------------
             val workExperienceTitle = stringResource(R.string.txt_work_experience)
@@ -187,18 +192,17 @@ fun VerticalScreen(
                 onExpandedClicked = {
                     isExpandedWork = !isExpandedWork
                     onBannerTapped(workExperienceTitle)
-                }
+                },
             )
             // Work list and links for each experience list
             AnimatedVisibility(
                 modifier = Modifier.fillMaxWidth(),
                 visible = isExpandedWork,
                 enter = enterAnimation,
-                exit = exitAnimation
+                exit = exitAnimation,
             ) {
                 ExperienceWidget(response.getOrderedWork(sortAscending))
             }
-
 
             // [Banner] Education ----------------------------------------------------------------------
             val educationalExperienceTitle = stringResource(R.string.txt_education)
@@ -207,18 +211,17 @@ fun VerticalScreen(
                 onExpandedClicked = {
                     isExpandedEducation = !isExpandedEducation
                     onBannerTapped(educationalExperienceTitle)
-                }
+                },
             )
             // Education list
             AnimatedVisibility(
                 modifier = Modifier.fillMaxWidth(),
                 visible = isExpandedEducation,
                 enter = enterAnimation,
-                exit = exitAnimation
+                exit = exitAnimation,
             ) {
                 ExperienceWidget(response.educations)
             }
-
 
             // [Banner] References ---------------------------------------------------------------------
             val referencesTitle = stringResource(R.string.txt_references)
@@ -227,15 +230,16 @@ fun VerticalScreen(
                 onExpandedClicked = {
                     isExpandedReference = !isExpandedReference
                     onBannerTapped(referencesTitle)
-                }
+                },
             )
             // Reference list
             AnimatedVisibility(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 visible = isExpandedReference,
                 enter = enterAnimation,
-                exit = exitAnimation
+                exit = exitAnimation,
             ) {
                 ReferenceWidget(response.references)
             }
@@ -243,29 +247,31 @@ fun VerticalScreen(
             // [App version] ---------------------------------------------------------------------------
             Spacer(modifier = Modifier.padding(top = padding_screen))
             ChipWidget(
-                entity = LinkEntity(
-                    text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
-                    url = "https://github.com/mughalasim/cv/releases"
-                )
+                entity =
+                    LinkEntity(
+                        text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
+                        url = "https://github.com/mughalasim/cv/releases",
+                    ),
             )
         }
     }
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
+@Suppress("detekt.MagicNumber")
 @Composable
 fun HorizontalScreen(
     response: ResponseEntity,
     onOpenSettingsTapped: () -> Unit = {},
-    onBannerTapped: (String) -> Unit = {}
+    onBannerTapped: (String) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         // Toolbar ---------------------------------------------------------------------------------
-        ToolBarWidget(title = stringResource(id = R.string.app_name),
-            buttonTitle = stringResource(id = R.string.txt_settings)
+        ToolBarWidget(
+            title = stringResource(id = R.string.app_name),
+            buttonTitle = stringResource(id = R.string.txt_settings),
         ) {
             onOpenSettingsTapped()
         }
@@ -273,43 +279,51 @@ fun HorizontalScreen(
         Spacer(modifier = Modifier.padding(top = padding_screen))
 
         // Name and Job title ----------------------------------------------------------------------
-        Column (modifier = Modifier
-            .align(Alignment.Start)
-            .padding(start = padding_screen, end = padding_screen)
-        ){
-            TextLarge(text = response.description.full_name)
-            TextRegular(text = response.description.position_title)
+        Column(
+            modifier =
+                Modifier
+                    .align(Alignment.Start)
+                    .padding(start = padding_screen, end = padding_screen),
+        ) {
+            TextLarge(text = response.description.fullName)
+            TextRegular(text = response.description.positionTitle)
         }
 
         val pagerState = rememberPagerState(pageCount = { 6 })
         HorizontalPager(
             verticalAlignment = Alignment.Top,
-            state = pagerState) { page ->
+            state = pagerState,
+        ) { page ->
             when (page) {
                 // [Banner] Contact information ----------------------------------------------------
                 0 -> {
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = padding_screen, end = padding_screen)
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen),
                     ) {
                         val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
                         BannerWidget(
                             title = contactInfoTitle,
                             onExpandedClicked = {
                                 onBannerTapped(contactInfoTitle)
-                            }
+                            },
                         )
-                        Row(modifier = Modifier
-                            .height(IntrinsicSize.Min))
-                        {
+                        Row(
+                            modifier =
+                                Modifier
+                                    .height(IntrinsicSize.Min),
+                        ) {
                             Column(
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .width(padding_screen_small)
-                                    .background(color = AppTheme.colors.highLight)
+                                modifier =
+                                    Modifier
+                                        .fillMaxHeight()
+                                        .width(padding_screen_small)
+                                        .background(color = AppTheme.colors.highLight),
                             ) {}
                             Column(
-                                modifier = Modifier.padding(start = padding_screen_small)
+                                modifier = Modifier.padding(start = padding_screen_small),
                             ) {
                                 // Basic information
                                 DescriptionWidget(response.description)
@@ -322,17 +336,19 @@ fun HorizontalScreen(
 
                 // [Banner] Skills------------------------------------------------------------------
                 1 -> {
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = padding_screen, end = padding_screen)
-                        .verticalScroll(rememberScrollState())
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val skillsTitle = stringResource(R.string.txt_skills)
                         BannerWidget(
                             title = skillsTitle,
                             onExpandedClicked = {
                                 onBannerTapped(skillsTitle)
-                            }
+                            },
                         )
                         // Skill list
                         SkillWidget(response.skills)
@@ -341,10 +357,12 @@ fun HorizontalScreen(
 
                 // [Banner] Work experience --------------------------------------------------------
                 2 -> {
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = padding_screen, end = padding_screen)
-                        .verticalScroll(rememberScrollState())
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val workExperienceTitle = stringResource(R.string.txt_work_experience)
                         var sortAscending by remember { mutableStateOf(false) }
@@ -355,7 +373,7 @@ fun HorizontalScreen(
                             onFilterClicked = { sortAscending = !sortAscending },
                             onExpandedClicked = {
                                 onBannerTapped(workExperienceTitle)
-                            }
+                            },
                         )
                         // Work list and links for each experience list
                         ExperienceWidget(response.getOrderedWork(sortAscending))
@@ -364,17 +382,19 @@ fun HorizontalScreen(
 
                 // [Banner] Education --------------------------------------------------------------
                 3 -> {
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = padding_screen, end = padding_screen)
-                        .verticalScroll(rememberScrollState())
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val educationalExperienceTitle = stringResource(R.string.txt_education)
                         BannerWidget(
                             title = stringResource(R.string.txt_education),
                             onExpandedClicked = {
                                 onBannerTapped(educationalExperienceTitle)
-                            }
+                            },
                         )
                         // Education list
                         ExperienceWidget(response.educations)
@@ -383,17 +403,19 @@ fun HorizontalScreen(
 
                 // [Banner] References -------------------------------------------------------------
                 4 -> {
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = padding_screen, end = padding_screen)
-                        .verticalScroll(rememberScrollState())
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val referencesTitle = stringResource(R.string.txt_references)
                         BannerWidget(
                             title = referencesTitle,
                             onExpandedClicked = {
                                 onBannerTapped(referencesTitle)
-                            }
+                            },
                         )
                         // Reference list
                         ReferenceWidget(response.references)
@@ -401,23 +423,26 @@ fun HorizontalScreen(
                 }
 
                 // [App version] -------------------------------------------------------------------
-                5 ->{
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = padding_screen, end = padding_screen)
+                5 -> {
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen),
                     ) {
                         Spacer(modifier = Modifier.padding(top = padding_screen))
                         ChipWidget(
-                            modifier = Modifier
-                                .padding(start = padding_screen)
-                                .align(Alignment.CenterHorizontally),
-                            entity = LinkEntity(
-                                text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
-                                url = "https://github.com/mughalasim/cv/releases"
-                            )
+                            modifier =
+                                Modifier
+                                    .padding(start = padding_screen)
+                                    .align(Alignment.CenterHorizontally),
+                            entity =
+                                LinkEntity(
+                                    text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
+                                    url = "https://github.com/mughalasim/cv/releases",
+                                ),
                         )
                     }
-
                 }
             }
         }
@@ -427,7 +452,7 @@ fun HorizontalScreen(
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun VerticalScreenPreviewNight() {
@@ -439,7 +464,7 @@ fun VerticalScreenPreviewNight() {
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun VerticalScreenPreview() {
@@ -451,7 +476,7 @@ fun VerticalScreenPreview() {
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun HorizontalScreenPreviewNight() {
@@ -463,7 +488,7 @@ fun HorizontalScreenPreviewNight() {
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun HorizontalScreenPreview() {

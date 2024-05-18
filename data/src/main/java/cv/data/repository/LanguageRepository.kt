@@ -1,60 +1,38 @@
 package cv.data.repository
 
 import android.app.Application
-import android.util.Log
-import com.google.firebase.database.*
+import cv.data.models.toLanguageEntity
+import cv.data.retrofit.ApiResult
+import cv.data.service.ApiService
 import cv.domain.State
 import cv.domain.entities.LanguageEntity
 import cv.domain.repositories.ILanguageRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flowOn
 
-class LanguageRepository(application: Application, firebaseInstance: FirebaseDatabase) :
-    ILanguageRepository {
-
+class LanguageRepository(
+    application: Application,
+    private val apiService: ApiService,
+) : ILanguageRepository {
     private val locale = application.resources.configuration.locales.get(0).language
-    private var firebaseReference: DatabaseReference = firebaseInstance.getReference("/language/$locale")
+    var languageEntity: LanguageEntity? = null
 
-    override fun getLanguageFromFirebase() = callbackFlow<State<LanguageEntity>> {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                try {
-                    val responseHashMap = snapshot.value as HashMap<*, *>
-                    @Suppress("UNCHECKED_CAST")
-                    val singleTexts =
-                        responseHashMap.filter { it.value !is ArrayList<*> } as HashMap<String, CharSequence>
+    override suspend fun getLanguage(): State<LanguageEntity> {
+        if (languageEntity == null){
+           return when (val response = apiService.getLanguage(locale)) {
+                is ApiResult.Error -> {
+                    State.Failed(response.message ?: "")
+                }
 
-                    val pluralTexts: HashMap<String, Array<CharSequence>> = hashMapOf()
+                is ApiResult.Exception -> {
+                    State.Failed(response.throwable.message ?: "")
+                }
 
-                    responseHashMap.filter { it.value is ArrayList<*> }.forEach {
-                        val values = it.value as ArrayList<*>
-                        val chars = arrayOf<CharSequence>(values.toList().toString())
-                        pluralTexts[it.key as String] = chars
-                    }
-
-                    trySendBlocking(State.Success(LanguageEntity(singleTexts, pluralTexts, locale)))
-
-                } catch (e: Exception) {
-                    Log.e(javaClass.name, e.localizedMessage!!)
-                    trySendBlocking(State.Failed())
+                is ApiResult.Success -> {
+                    languageEntity = response.data.toLanguageEntity(locale)
+                    State.Success(languageEntity!!)
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e(javaClass.name, error.message)
-                trySendBlocking(State.Failed())
-            }
+        } else {
+            return State.Success(languageEntity!!)
         }
-
-        firebaseReference.addValueEventListener(valueEventListener)
-
-        firebaseReference.get()
-
-        awaitClose {
-            firebaseReference.removeEventListener(valueEventListener)
-        }
-    }.flowOn(Dispatchers.IO)
+    }
 }

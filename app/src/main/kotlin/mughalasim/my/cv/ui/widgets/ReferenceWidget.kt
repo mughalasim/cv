@@ -22,28 +22,31 @@ import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
-fun ReferenceWidget(
-    references: List<ReferenceEntity>
-) {
+fun ReferenceWidget(references: List<ReferenceEntity>) {
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
     ) {
         repeat(references.size) {
             val entity = references[it]
-            Row(modifier = Modifier
-                .padding(bottom = padding_screen)
-                .height(IntrinsicSize.Min))
-            {
+            Row(
+                modifier =
+                    Modifier
+                        .padding(bottom = padding_screen)
+                        .height(IntrinsicSize.Min),
+            ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(padding_screen_small)
-                        .background(color = AppTheme.colors.highLight)
+                    modifier =
+                        Modifier
+                            .fillMaxHeight()
+                            .width(padding_screen_small)
+                            .background(color = AppTheme.colors.highLight),
                 ) {}
-                Column(modifier = Modifier
-                    .padding(start = padding_screen_small))
-                {
+                Column(
+                    modifier =
+                        Modifier
+                            .padding(start = padding_screen_small),
+                ) {
                     TextSmall(text = entity.name)
                     TextRegular(text = entity.company)
                     TextRegular(text = entity.contact)
@@ -56,7 +59,7 @@ fun ReferenceWidget(
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun ReferenceWidgetPreviewNight() {
@@ -68,7 +71,7 @@ fun ReferenceWidgetPreviewNight() {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
 fun ReferenceWidgetPreview() {

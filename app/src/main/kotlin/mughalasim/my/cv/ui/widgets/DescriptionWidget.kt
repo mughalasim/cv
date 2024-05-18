@@ -17,25 +17,26 @@ import mughalasim.my.cv.ui.theme.padding_screen
 @Composable
 fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier =
+            Modifier
+                .fillMaxWidth(),
     ) {
         TextSmall(text = stringResource(R.string.txt_address))
         TextRegular(
             modifier = Modifier.padding(bottom = padding_screen),
-            text = entity.address
+            text = entity.address,
         )
 
         TextSmall(text = stringResource(R.string.txt_telephone))
         TextRegular(
             modifier = Modifier.padding(bottom = padding_screen),
-            text = "+${entity.area_code} ${entity.phone}"
+            text = "+${entity.areaCode} ${entity.phone}",
         )
 
         TextSmall(text = stringResource(R.string.txt_email))
         TextRegular(
             modifier = Modifier.padding(bottom = padding_screen),
-            text = entity.email
+            text = entity.email,
         )
     }
 }
@@ -43,10 +44,10 @@ fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun DescriptionWidgetPreviewNight(){
+fun DescriptionWidgetPreviewNight() {
     AppThemeComposable {
         DescriptionWidget()
     }
@@ -55,10 +56,10 @@ fun DescriptionWidgetPreviewNight(){
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun DescriptionWidgetPreview(){
+fun DescriptionWidgetPreview() {
     AppThemeComposable {
         DescriptionWidget()
     }

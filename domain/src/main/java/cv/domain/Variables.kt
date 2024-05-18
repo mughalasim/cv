@@ -14,5 +14,4 @@ object Variables {
     const val PARAM_LINK = "link"
     const val PARAM_EXPAND_LIST_ON_START_UP = "expand_list_on_start_up"
     const val PARAM_MAIN_SCREEN_ORIENTATION = "main_screen_orientation"
-
 }

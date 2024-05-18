@@ -22,24 +22,26 @@ import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
-fun SkillWidget(
-    skills: List<SkillEntity>
-){
+fun SkillWidget(skills: List<SkillEntity>) {
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
     ) {
-        repeat(skills.size){
-            Row ( modifier = Modifier
-                .height(IntrinsicSize.Min)
-                .padding(bottom = padding_screen)
-            ){
-                Column (modifier = Modifier
-                    .fillMaxHeight()
-                    .width(padding_screen_small)
-                    .background(color = AppTheme.colors.highLight)
-                ){}
-                Column ( modifier = Modifier.padding(start = padding_screen_small)) {
+        repeat(skills.size) {
+            Row(
+                modifier =
+                    Modifier
+                        .height(IntrinsicSize.Min)
+                        .padding(bottom = padding_screen),
+            ) {
+                Column(
+                    modifier =
+                        Modifier
+                            .fillMaxHeight()
+                            .width(padding_screen_small)
+                            .background(color = AppTheme.colors.highLight),
+                ) {}
+                Column(modifier = Modifier.padding(start = padding_screen_small)) {
                     TextSmall(text = skills[it].title)
                     TextRegular(text = skills[it].description)
                 }
@@ -51,10 +53,10 @@ fun SkillWidget(
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun SkillWidgetPreviewNight(){
+fun SkillWidgetPreviewNight() {
     AppThemeComposable {
         SkillWidget(getFakeSkills())
     }
@@ -63,10 +65,10 @@ fun SkillWidgetPreviewNight(){
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun SkillWidgetPreview(){
+fun SkillWidgetPreview() {
     AppThemeComposable {
         SkillWidget(getFakeSkills())
     }

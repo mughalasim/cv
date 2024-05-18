@@ -1,66 +1,58 @@
 package mughalasim.my.cv.ui.screens.main
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import cv.domain.ConnectionState
-import cv.domain.State
-import cv.domain.entities.LanguageEntity
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
 import mughalasim.my.cv.navigation.NavigationHost
-import mughalasim.my.cv.ui.theme.AppThemeComposable
+import mughalasim.my.cv.ui.screens.list.ListScreenViewModel
 import mughalasim.my.cv.ui.utils.currentConnectivityState
 import mughalasim.my.cv.ui.utils.observeConnectivityAsFlow
 import mughalasim.my.cv.ui.widgets.LoadingWidget
 import mughalasim.my.cv.ui.widgets.WarningWidget
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
-class MainScreen : ComponentActivity() {
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    val viewModel = koinViewModel<MainScreenViewModel>()
+    val uiState = viewModel.uiStateFlow.collectAsState(initial = ListScreenViewModel.UiState.Loading)
 
-    private val vm: MainScreenViewModel by viewModel()
+    viewModel.setNavController(navController)
+    LaunchedEffect(true) {
+        viewModel.getLanguage()
+    }
 
-    override fun getResources() = Restring.wrapResources(this, super.getResources())
+    when (val response = uiState.value) {
+        is MainScreenViewModel.UiState.Loading -> LoadingWidget()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AppThemeComposable {
-                val stateLanguage = vm.getLanguage().collectAsState(initial = State.Loading())
-                val navController = rememberNavController()
-                vm.setNavController(navController)
+        is MainScreenViewModel.UiState.Error ->
+            NavigationHost(
+                navController = navController,
+                navigationService = viewModel.getServiceNavigation(),
+            )
 
-                when(val response = stateLanguage.value){
-                    is State.Loading -> LoadingWidget()
-
-                    is State.Failed -> NavigationHost(
-                        navController = navController,
-                        serviceNavigation = vm.getServiceNavigation()
-                    )
-
-                    is State.Success<*> -> {
-                        response as State.Success<LanguageEntity>
-                        val locale = Locale(response.data.locale)
-                        Restring.putStrings(locale, response.data.singleTexts)
-                        Restring.putStringArrays(locale, response.data.pluralTexts)
-                        NavigationHost(
-                            navController = navController,
-                            serviceNavigation = vm.getServiceNavigation()
-                        )
-                    }
-                }
-                val connectionState = LocalContext.current.observeConnectivityAsFlow()
-                    .collectAsState(initial = LocalContext.current.currentConnectivityState)
-
-                if (connectionState.value == ConnectionState.Unavailable) {
-                    WarningWidget(title = stringResource(R.string.error_internet_connection))
-                }
-            }
+        is MainScreenViewModel.UiState.ResultsReceived -> {
+            val locale = Locale(response.languageEntity.locale)
+            Restring.putStrings(locale, response.languageEntity.singleTexts)
+            Restring.putStringArrays(locale, response.languageEntity.pluralTexts)
+            NavigationHost(
+                navController = navController,
+                navigationService = viewModel.getServiceNavigation(),
+            )
         }
+    }
+    val connectionState =
+        LocalContext.current.observeConnectivityAsFlow()
+            .collectAsState(initial = LocalContext.current.currentConnectivityState)
+
+    if (connectionState.value == ConnectionState.Unavailable) {
+        WarningWidget(title = stringResource(R.string.error_internet_connection))
     }
 }

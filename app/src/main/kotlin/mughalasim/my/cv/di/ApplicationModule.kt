@@ -8,15 +8,15 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val applicationModule = module {
+val applicationModule =
+    module {
 
-    single { FirebaseApp.initializeApp(androidApplication())}
+        single { FirebaseApp.initializeApp(androidApplication()) }
 
-    single <SharedPreferences> {
-        androidApplication().getSharedPreferences (
-            androidContext().getString(R.string.app_name),
-            Context.MODE_PRIVATE
-        )
+        single<SharedPreferences> {
+            androidApplication().getSharedPreferences(
+                androidContext().getString(R.string.app_name),
+                Context.MODE_PRIVATE,
+            )
+        }
     }
-
-}

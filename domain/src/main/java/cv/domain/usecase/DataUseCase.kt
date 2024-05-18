@@ -9,17 +9,16 @@ import cv.domain.repositories.ILanguageRepository
 class DataUseCase(
     private val dataRepository: IDataRepository,
     private val languageRepository: ILanguageRepository,
-    private val analyticsRepository: IAnalyticsRepository
+    private val analyticsRepository: IAnalyticsRepository,
 ) {
-    fun getData() = dataRepository.getDataFromFirebase()
+    suspend fun getData() = dataRepository.getData()
 
-    fun getLanguage() = languageRepository.getLanguageFromFirebase()
+    suspend fun getLanguage() = languageRepository.getLanguage()
 
     fun onBannerTapped(bannerName: String) {
         analyticsRepository.logEvent(
             EVENT_NAME_BANNER,
-            listOf(Pair(PARAM_BANNER_NAME, bannerName))
+            listOf(Pair(PARAM_BANNER_NAME, bannerName)),
         )
     }
-
 }

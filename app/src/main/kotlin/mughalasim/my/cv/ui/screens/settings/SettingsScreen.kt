@@ -42,28 +42,29 @@ fun SettingsScreen() {
         },
         onNavigateBack = {
             viewModel.navigateBack()
-        }
+        },
     )
 }
 
 sealed class OnSettingsChanged {
     data class ExpandListOnStartUp(val isEnabled: Boolean) : OnSettingsChanged()
+
     data class IsVerticalScreen(val isVertical: Boolean) : OnSettingsChanged()
 }
 
 @Composable
-fun SettingsScreenItems (
+fun SettingsScreenItems(
     settingsEntity: SettingsEntity,
     onSettingsChanged: (OnSettingsChanged) -> Unit,
-    onNavigateBack: () -> Unit
-){
-    Column (
-        modifier = Modifier.fillMaxSize()
+    onNavigateBack: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
     ) {
         // Toolbar ---------------------------------------------------------------------------------
         ToolBarWidget(
             title = stringResource(id = R.string.txt_settings),
-            buttonTitle = stringResource(id = R.string.txt_back)
+            buttonTitle = stringResource(id = R.string.txt_back),
         ) {
             onNavigateBack()
         }
@@ -71,54 +72,63 @@ fun SettingsScreenItems (
         Spacer(modifier = Modifier.padding(top = padding_screen))
 
         // Scrollable Settings list ----------------------------------------------------------------
-        Column (
-            modifier = Modifier.verticalScroll(rememberScrollState())
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState()),
         ) {
-
             // Setting for Vertical or horizontal view pager on the main screen
-            Row(modifier = Modifier
-                .padding(start = padding_screen, end = padding_screen)
-                .fillMaxWidth(),
+            Row(
+                modifier =
+                    Modifier
+                        .padding(start = padding_screen, end = padding_screen)
+                        .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Switch(
                     checked = settingsEntity.isVerticalScreen,
                     onCheckedChange = {
                         onSettingsChanged(OnSettingsChanged.IsVerticalScreen(it))
-                    }
+                    },
                 )
                 Column {
                     TextLarge(text = stringResource(R.string.txt_setting_is_vertical))
-                    TextRegular(text = if(settingsEntity.isVerticalScreen)
-                        stringResource(R.string.txt_setting_is_vertical_true)
-                    else
-                        stringResource(R.string.txt_setting_is_vertical_false)
+                    TextRegular(
+                        text =
+                            if (settingsEntity.isVerticalScreen) {
+                                stringResource(R.string.txt_setting_is_vertical_true)
+                            } else {
+                                stringResource(R.string.txt_setting_is_vertical_false)
+                            },
                     )
                 }
             }
 
             // Settings for all category collapsible state only for vertical list view
-            if (settingsEntity.isVerticalScreen){
+            if (settingsEntity.isVerticalScreen) {
                 Spacer(modifier = Modifier.padding(top = padding_screen))
-                Row(modifier = Modifier
-                    .padding(start = padding_screen, end = padding_screen)
-                    .fillMaxWidth(),
+                Row(
+                    modifier =
+                        Modifier
+                            .padding(start = padding_screen, end = padding_screen)
+                            .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Switch(
                         checked = settingsEntity.expandListOnStartUp,
                         onCheckedChange = {
                             onSettingsChanged(OnSettingsChanged.ExpandListOnStartUp(it))
-                        }
+                        },
                     )
                     Column {
                         TextLarge(text = stringResource(R.string.txt_setting_expanded_list))
-                        TextRegular(text = if(settingsEntity.expandListOnStartUp)
-                            stringResource(R.string.txt_setting_expanded_list_true)
-                        else
-                            stringResource(R.string.txt_setting_expanded_list_false)
+                        TextRegular(
+                            text =
+                                if (settingsEntity.expandListOnStartUp) {
+                                    stringResource(R.string.txt_setting_expanded_list_true)
+                                } else {
+                                    stringResource(R.string.txt_setting_expanded_list_false)
+                                },
                         )
                     }
                 }
@@ -130,10 +140,10 @@ fun SettingsScreenItems (
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun SettingsScreenPreviewNight(){
+fun SettingsScreenPreviewNight() {
     AppThemeComposable {
         SettingsScreenItems(getFakeSettingsEntity(), {}, {})
     }
@@ -142,10 +152,10 @@ fun SettingsScreenPreviewNight(){
 @Preview(
     showBackground = true,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun SettingsScreenPreview(){
+fun SettingsScreenPreview() {
     AppThemeComposable {
         SettingsScreenItems(getFakeSettingsEntity(), {}, {})
     }

@@ -32,59 +32,66 @@ fun BannerWidget(
     sortAscending: Boolean = false,
     onFilterClicked: () -> Unit = {},
     onExpandedClicked: () -> Unit = {},
-){
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = padding_screen_large, bottom = padding_screen_large)
-            .clip(RoundedCornerShape(border_radius))
-            .background(color = AppTheme.colors.highLight)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = padding_screen_large, bottom = padding_screen_large)
+                .clip(RoundedCornerShape(border_radius))
+                .background(color = AppTheme.colors.highLight),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = AppTheme.colors.highLight)
-                .clip(RoundedCornerShape(border_radius))
-                .clickable { onExpandedClicked() },
-            horizontalArrangement =  Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(color = AppTheme.colors.highLight)
+                    .clip(RoundedCornerShape(border_radius))
+                    .clickable { onExpandedClicked() },
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             TextRegular(
-                modifier = Modifier
-                    .padding(padding_screen),
+                modifier =
+                    Modifier
+                        .padding(padding_screen),
                 text = title,
-                color = AppTheme.colors.black
+                color = AppTheme.colors.black,
             )
             Spacer(modifier = Modifier.weight(1f))
-            if (hasFilter){
-               IconButton(
-                   modifier = Modifier.padding(end = padding_screen_small),
-                   onClick = { onFilterClicked() }
-               ) {
-                   Icon(
-                       painter = painterResource(
-                           id = if(sortAscending)
-                               mughalasim.my.cv.R.drawable.ic_sort_ascending
-                           else mughalasim.my.cv.R.drawable.ic_sort_descending),
-                       contentDescription = null,
-                       tint = AppTheme.colors.black,
-                       modifier = Modifier.padding(padding_screen_small)
-                   )
-               }
-            }
+            if (hasFilter)
+                {
+                    IconButton(
+                        modifier = Modifier.padding(end = padding_screen_small),
+                        onClick = { onFilterClicked() },
+                    ) {
+                        Icon(
+                            painter =
+                                painterResource(
+                                    id =
+                                        if (sortAscending) {
+                                            mughalasim.my.cv.R.drawable.ic_sort_ascending
+                                        } else {
+                                            mughalasim.my.cv.R.drawable.ic_sort_descending
+                                        },
+                                ),
+                            contentDescription = null,
+                            tint = AppTheme.colors.black,
+                            modifier = Modifier.padding(padding_screen_small),
+                        )
+                    }
+                }
         }
-
     }
 }
-
 
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun BannerWidgetPreviewNight(){
+fun BannerWidgetPreviewNight() {
     AppThemeComposable {
         Column(verticalArrangement = Arrangement.Top) {
             BannerWidget("Banner")
@@ -97,10 +104,10 @@ fun BannerWidgetPreviewNight(){
 @Preview(
     showBackground = false,
     showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
 )
 @Composable
-fun BannerWidgetPreview(){
+fun BannerWidgetPreview() {
     AppThemeComposable {
         Column(verticalArrangement = Arrangement.Top) {
             BannerWidget("Banner")
