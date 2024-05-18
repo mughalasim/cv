@@ -10,10 +10,15 @@ Download the sample app [here](https://github.com/mughalasim/cv/raw/master/app/r
 - Supports Dark and Light themes.
 - Firebase analytics for screen and button tap tracking
 
-## New Additions
-- Detekt, Spotless and Konsist for easier code formatting and testing
-- Adding Retrofit to consume Firebase Database REST API
-- Migrate from Groovy DSL to Kotlin DSL
+## New Additions 18th May 2024
+- Detekt, ktlint and Spotless for easier code formatting and readability
+- Adding Retrofit2 to consume Firebase Database REST API
+- Migrate from Groovy DSL to Kotlin DSL with version catalogue
+- Added Kotlinx serialization with custom call adapters to process API response
+- Using android gradle 8.4.0
+- Using KoinViewModel injected into compose functions being lifecycle aware
+- Updated lifecycle, compose, navigation and koin
+- Added proguard rules for better obfuscation support
 
 ## Release notes 
 Get the release notes [here](https://github.com/mughalasim/cv/releases)
