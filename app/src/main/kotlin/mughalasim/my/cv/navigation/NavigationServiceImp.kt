@@ -1,4 +1,4 @@
-package mughalasim.my.cv.services
+package mughalasim.my.cv.navigation
 
 import androidx.navigation.NavController
 import cv.domain.Variables.EVENT_NAME_NAVIGATE
@@ -6,7 +6,7 @@ import cv.domain.Variables.PARAM_SCREEN_NAME
 import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.ui.utils.toRoute
 
-class ServiceNavigationImp : ServiceNavigation {
+class NavigationServiceImp : NavigationService {
     private lateinit var navController: NavController
     private lateinit var initialRoute: Route
 

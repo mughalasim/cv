@@ -53,6 +53,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            isDebuggable = true
             signingConfig = signingConfigs.getByName("config")
             resValue("string", "app_name", appName)
         }
@@ -93,16 +94,6 @@ android {
 
     kapt {
         correctErrorTypes = true
-    }
-
-    packaging {
-        resources.excludes +=
-            setOf(
-                "META-INF/AL2.0",
-                "META-INF/licenses/**",
-                "**/attach_hotspot_windows.dll",
-                "META-INF/LGPL2.1",
-            )
     }
 }
 

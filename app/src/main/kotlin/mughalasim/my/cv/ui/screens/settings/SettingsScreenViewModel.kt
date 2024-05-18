@@ -20,7 +20,7 @@ class SettingsScreenViewModel(
         )
 
     fun navigateBack() {
-        DI.serviceNavigation.popBack()
+        DI.navigationService.popBack()
     }
 
     fun setExpandListOnStartUp(isEnabled: Boolean) {

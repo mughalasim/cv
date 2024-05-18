@@ -6,7 +6,7 @@ import cv.domain.entities.ResponseEntity
 import cv.domain.usecase.DataUseCase
 import cv.domain.usecase.SettingsUseCase
 import mughalasim.my.cv.di.DI
-import mughalasim.my.cv.services.Route
+import mughalasim.my.cv.navigation.Route
 import mughalasim.my.cv.ui.screens.base.BaseAction
 import mughalasim.my.cv.ui.screens.base.BaseState
 import mughalasim.my.cv.ui.screens.base.BaseViewModel
@@ -33,7 +33,7 @@ class ListScreenViewModel(
 
     fun isVerticalOrientation() = settingsUseCase.getListOrientation()
 
-    fun openSettings() = DI.serviceNavigation.open(route = Route.SettingsScreen)
+    fun openSettings() = DI.navigationService.open(route = Route.SettingsScreen)
 
     fun onBannerTapped(bannerName: String) = dataUseCase.onBannerTapped(bannerName)
 

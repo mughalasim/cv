@@ -35,7 +35,7 @@ fun MainScreen() {
         is MainScreenViewModel.UiState.Error ->
             NavigationHost(
                 navController = navController,
-                serviceNavigation = viewModel.getServiceNavigation(),
+                navigationService = viewModel.getServiceNavigation(),
             )
 
         is MainScreenViewModel.UiState.ResultsReceived -> {
@@ -44,7 +44,7 @@ fun MainScreen() {
             Restring.putStringArrays(locale, response.languageEntity.pluralTexts)
             NavigationHost(
                 navController = navController,
-                serviceNavigation = viewModel.getServiceNavigation(),
+                navigationService = viewModel.getServiceNavigation(),
             )
         }
     }

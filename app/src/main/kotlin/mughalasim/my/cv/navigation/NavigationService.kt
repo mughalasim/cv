@@ -1,8 +1,8 @@
-package mughalasim.my.cv.services
+package mughalasim.my.cv.navigation
 
 import androidx.navigation.NavController
 
-interface ServiceNavigation {
+interface NavigationService {
     fun setNavController(navController: NavController)
 
     fun open(

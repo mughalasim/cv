@@ -6,7 +6,7 @@ import cv.domain.State
 import cv.domain.entities.LanguageEntity
 import cv.domain.usecase.DataUseCase
 import mughalasim.my.cv.di.DI
-import mughalasim.my.cv.services.ServiceNavigation
+import mughalasim.my.cv.navigation.NavigationService
 import mughalasim.my.cv.ui.screens.base.BaseAction
 import mughalasim.my.cv.ui.screens.base.BaseState
 import mughalasim.my.cv.ui.screens.base.BaseViewModel
@@ -28,9 +28,9 @@ class MainScreenViewModel(
         }
     }
 
-    fun setNavController(navController: NavHostController) = DI.serviceNavigation.setNavController(navController)
+    fun setNavController(navController: NavHostController) = DI.navigationService.setNavController(navController)
 
-    fun getServiceNavigation(): ServiceNavigation = DI.serviceNavigation
+    fun getServiceNavigation(): NavigationService = DI.navigationService
 
     @Immutable
     sealed interface UiState : BaseState {

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
-import mughalasim.my.cv.services.Route
+import mughalasim.my.cv.navigation.Route
 import mughalasim.my.cv.ui.utils.DateConstants.formatMonthYear
 import mughalasim.my.cv.ui.utils.DateConstants.formatYearMonthDay
 import org.joda.time.DateTime
