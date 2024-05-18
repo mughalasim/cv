@@ -3,26 +3,23 @@ package cv.domain.entities
 import androidx.annotation.Keep
 
 @Keep
-@Suppress("unused")
 data class DescriptionEntity(
     val address: String,
-    val full_name: String,
+    val fullName: String,
     val links: List<LinkEntity>,
-    val area_code: Int,
+    val areaCode: Int,
     val email: String,
     val phone: Long,
-    val position_title: String,
-) {
-    constructor() : this("", "", listOf(), 0, "", 0, "")
-}
+    val positionTitle: String,
+)
 
 fun getFakeDescription() =
     DescriptionEntity(
         address = "London, United Kingdom",
-        full_name = "Asim Mughal",
+        fullName = "Asim Mughal",
         links = getFakeLinks(),
-        area_code = 44,
+        areaCode = 44,
         email = "test@test.com",
         phone = 7470997045,
-        position_title = "Mobile Software Engineer",
+        positionTitle = "Mobile Software Engineer",
     )

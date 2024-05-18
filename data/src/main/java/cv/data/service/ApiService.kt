@@ -5,6 +5,7 @@ import cv.data.models.LanguageModel
 import cv.data.models.ResponseModel
 import cv.data.retrofit.ApiResult
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("data.json")
@@ -13,6 +14,8 @@ interface ApiService {
     @GET("data/description.json")
     suspend fun getDescription(): ApiResult<DescriptionModel>
 
-    @GET("language.json")
-    suspend fun getLanguage(): ApiResult<LanguageModel>
+    @GET("language/{locale}.json")
+    suspend fun getLanguage(
+        @Path(value = "locale") locale: String,
+    ): ApiResult<LanguageModel>
 }

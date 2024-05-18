@@ -11,9 +11,9 @@ class DataUseCase(
     private val languageRepository: ILanguageRepository,
     private val analyticsRepository: IAnalyticsRepository,
 ) {
-    suspend fun getData() = dataRepository.getDataFromFirebase()
+    suspend fun getData() = dataRepository.getData()
 
-    fun getLanguage() = languageRepository.getLanguageFromFirebase()
+    suspend fun getLanguage() = languageRepository.getLanguage()
 
     fun onBannerTapped(bannerName: String) {
         analyticsRepository.logEvent(

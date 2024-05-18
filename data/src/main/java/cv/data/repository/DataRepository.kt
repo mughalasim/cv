@@ -9,7 +9,7 @@ import cv.domain.repositories.IDataRepository
 class DataRepository(
     private val apiService: ApiService,
 ) : IDataRepository {
-    override suspend fun getDataFromFirebase() =
+    override suspend fun getData() =
         when (val response = apiService.getData()) {
             is ApiResult.Error -> {
                 State.Failed(response.message ?: "")

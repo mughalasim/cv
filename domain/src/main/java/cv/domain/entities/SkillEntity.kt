@@ -3,13 +3,10 @@ package cv.domain.entities
 import androidx.annotation.Keep
 
 @Keep
-@Suppress("unused")
 data class SkillEntity(
     val title: String,
     val description: String,
-) {
-    constructor() : this("", "")
-}
+)
 
 fun getFakeSkills() =
     listOf(

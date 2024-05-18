@@ -3,7 +3,6 @@ package cv.domain.entities
 import androidx.annotation.Keep
 
 @Keep
-@Suppress("unused")
 data class ExperienceEntity(
     val title: String,
     val startDate: String,
@@ -11,12 +10,11 @@ data class ExperienceEntity(
     val positionTitle: String,
     val location: String,
     val description: String,
-    val links: List<LinkEntity>,
+    val links: List<LinkEntity>?,
     val ongoing: Boolean = false,
-) {
-    constructor() : this("", "", "", "", "", "", listOf(), false)
-}
+)
 
+@Suppress("detekt.MagicNumber")
 fun getFakeExperience() =
     listOf(
         ExperienceEntity(

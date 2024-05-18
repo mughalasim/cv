@@ -29,9 +29,12 @@ android {
         targetSdk = libs.findVersion("compileSdk").get().toString().toInt()
         versionCode = libs.findVersion("appVersionCode").get().toString().toInt()
         versionName = libs.findVersion("appVersionName").get().toString()
-        buildConfigField("String", "API_BASE_URL", gradleLocalProperties(rootDir).getProperty("API_BASE_URL"))
-
-//        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        buildConfigField(
+            "String",
+            "API_BASE_URL",
+            gradleLocalProperties(rootDir, providers).getProperty("API_BASE_URL"),
+        )
+        proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         vectorDrawables { useSupportLibrary = true }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -114,22 +117,26 @@ dependencies {
     implementation(libs.compiler)
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
-    implementation(libs.lifecycle.runtime.compose.android)
     implementation(libs.material)
     implementation(libs.runtime.livedata)
     implementation(libs.foundation.android)
 
     implementation(libs.activity.compose)
+    implementation(libs.accompanist.systemuicontroller)
+
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.savedstate)
+    implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.extensions)
-    implementation(libs.accompanist.systemuicontroller)
 
     // Navigation
     implementation(libs.navigation.compose)
 
     // Koin Dependency Injection
+    implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 

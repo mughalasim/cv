@@ -15,16 +15,20 @@ class SettingsUseCase(
     fun getExpandListOnStartUp() = settingsRepository.getBool(SHARED_PREF_EXPAND_LIST_ON_STARTUP)
 
     fun setExpandListOnStartUp(isEnabled: Boolean) {
-        analyticsRepository.logEvent(EVENT_NAME_SETTING,
-            listOf(Pair(PARAM_EXPAND_LIST_ON_START_UP, isEnabled.toString())))
+        analyticsRepository.logEvent(
+            EVENT_NAME_SETTING,
+            listOf(Pair(PARAM_EXPAND_LIST_ON_START_UP, isEnabled.toString())),
+        )
         settingsRepository.setBool(SHARED_PREF_EXPAND_LIST_ON_STARTUP, isEnabled)
     }
 
     fun getListOrientation() = settingsRepository.getBool(SHARED_PREF_LIST_ORIENTATION)
 
     fun setListOrientation(isVertical: Boolean) {
-        analyticsRepository.logEvent(EVENT_NAME_SETTING,
-            listOf(Pair(PARAM_MAIN_SCREEN_ORIENTATION, isVertical.toString())))
+        analyticsRepository.logEvent(
+            EVENT_NAME_SETTING,
+            listOf(Pair(PARAM_MAIN_SCREEN_ORIENTATION, isVertical.toString())),
+        )
         settingsRepository.setBool(SHARED_PREF_LIST_ORIENTATION, isVertical)
     }
 }

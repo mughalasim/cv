@@ -37,15 +37,17 @@ val apiModule =
         }
 
         single<Retrofit> {
+            @Suppress("JSON_FORMAT_REDUNDANT")
             Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .client(get())
-                .addConverterFactory(kotlinx.serialization.json.Json {
-                    // By default Kotlin serialization will serialize all of the keys present in JSON object and throw an
-                    // exception if given key is not present in the Kotlin class. This flag allows to ignore JSON fields
-                    ignoreUnknownKeys = true
-                    isLenient = true
-                }.asConverterFactory(CONTENT_TYPE_APPLICATION.toMediaType()))
+                .addConverterFactory(
+                    kotlinx.serialization.json.Json {
+                        ignoreUnknownKeys = true
+                        isLenient = true
+                    }
+                        .asConverterFactory(CONTENT_TYPE_APPLICATION.toMediaType()),
+                )
                 .addCallAdapterFactory(ApiResultAdapterFactory())
                 .build()
         }

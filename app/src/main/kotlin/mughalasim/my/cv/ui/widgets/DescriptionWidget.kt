@@ -30,7 +30,7 @@ fun DescriptionWidget(entity: DescriptionEntity = getFakeDescription()) {
         TextSmall(text = stringResource(R.string.txt_telephone))
         TextRegular(
             modifier = Modifier.padding(bottom = padding_screen),
-            text = "+${entity.area_code} ${entity.phone}",
+            text = "+${entity.areaCode} ${entity.phone}",
         )
 
         TextSmall(text = stringResource(R.string.txt_email))

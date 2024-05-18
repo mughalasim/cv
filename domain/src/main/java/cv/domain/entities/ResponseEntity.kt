@@ -3,7 +3,6 @@ package cv.domain.entities
 import androidx.annotation.Keep
 
 @Keep
-@Suppress("unused")
 data class ResponseEntity(
     val description: DescriptionEntity,
     val skills: List<SkillEntity>,
@@ -11,9 +10,7 @@ data class ResponseEntity(
     val educations: List<ExperienceEntity>,
     val references: List<ReferenceEntity>,
 ) {
-    constructor() : this(DescriptionEntity(), listOf(), listOf(), listOf(), listOf())
-
-    fun getOrderedWork(isAscending: Boolean): List<ExperienceEntity>  {
+    fun getOrderedWork(isAscending: Boolean): List<ExperienceEntity> {
         return if (isAscending)
             {
                 works.sortedBy { it.startDate }

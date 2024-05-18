@@ -10,23 +10,23 @@ import kotlinx.serialization.Serializable
 data class DescriptionModel(
     val address: String,
     @SerialName("full_name")
-    val full_name: String,
+    val fullName: String,
     val links: List<LinkModel>,
     @SerialName("area_code")
-    val area_code: Int,
+    val areaCode: Int,
     val email: String,
     val phone: Long,
     @SerialName("position_title")
-    val position_title: String,
+    val positionTitle: String,
 )
 
 fun DescriptionModel.toDescriptionEntity() =
     DescriptionEntity(
         address = this.address,
-        full_name = this.full_name,
+        fullName = this.fullName,
         links = this.links.map { it.toLinkEntity() },
-        area_code = this.area_code,
+        areaCode = this.areaCode,
         email = this.email,
         phone = this.phone,
-        position_title = this.position_title,
+        positionTitle = this.positionTitle,
     )

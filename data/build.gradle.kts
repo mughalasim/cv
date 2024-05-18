@@ -33,22 +33,16 @@ dependencies {
 
     api(libs.retrofit)
     api(libs.retrofit2.kotlinx.serialization.converter)
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    api(libs.kotlinx.serialization.json)
 
+    api(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    api(libs.logging.interceptor)
 
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
-    //noinspection UseTomlInstead
-    api("com.squareup.okhttp3:okhttp")
-    //noinspection UseTomlInstead
-    api("com.squareup.okhttp3:logging-interceptor")
-
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    //noinspection UseTomlInstead
-    api("com.google.firebase:firebase-database")
-    //noinspection UseTomlInstead
-    api("com.google.firebase:firebase-analytics")
-    //noinspection UseTomlInstead
-    api("com.google.firebase:firebase-crashlytics")
+    api(platform(libs.firebase.bom))
+    api(libs.firebase.database)
+    api(libs.firebase.analytics)
+    api(libs.firebase.crashlytics)
 
     // Testing -------------------------------------------------------------------------------------
     testImplementation(libs.junit)

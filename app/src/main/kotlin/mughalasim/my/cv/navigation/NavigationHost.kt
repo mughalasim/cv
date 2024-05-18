@@ -4,15 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import mughalasim.my.cv.services.IServiceNavigation
 import mughalasim.my.cv.services.Route
+import mughalasim.my.cv.services.ServiceNavigation
 import mughalasim.my.cv.ui.screens.list.ListScreen
 import mughalasim.my.cv.ui.screens.settings.SettingsScreen
 
 @Composable
 fun NavigationHost(
     navController: NavHostController,
-    serviceNavigation: IServiceNavigation,
+    serviceNavigation: ServiceNavigation,
 ) {
     NavHost(
         navController = navController,

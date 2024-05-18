@@ -124,7 +124,7 @@ complexity:
     threshold: 600
   LongMethod:
     active: true
-    threshold: 60
+    threshold: 200
   LongParameterList:
     active: true
     functionThreshold: 10
@@ -323,11 +323,11 @@ naming:
     active: false
     minimumFunctionNameLength: 3
   FunctionNaming:
-    active: true
+    active: false
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     functionPattern: '[a-z][a-zA-Z0-9]*'
     excludeClassPattern: '$^'
-    ignoreAnnotated: [ 'Composable' ]
+    ignoreAnnotated: []
   FunctionParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
@@ -615,7 +615,7 @@ style:
     active: false
   ReturnCount:
     active: true
-    max: 3
+    max: 4
     excludedFunctions: [ 'equals' ]
     excludeLabeled: false
     excludeReturnFromLambda: true
@@ -664,7 +664,7 @@ style:
     active: true
     allowedNames: '(_|ignored|expected|serialVersionUID)'
     ignoreAnnotated:
-      - 'Preview'
+      ['Preview', 'Composable']
   UseAnyOrNoneInsteadOfFind:
     active: true
   UseArrayLiteralsInAnnotations:

@@ -2,10 +2,8 @@ package mughalasim.my.cv.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -50,11 +48,11 @@ fun AppThemeComposable(
 ) {
     val currentColors = getColors()
 
-    CompositionLocalProvider {
-        ProvideTextStyle(textStyles.small.copy(color = currentColors.textPrimary), content)
-        ProvideTextStyle(textStyles.regular.copy(color = currentColors.textPrimary), content)
-        ProvideTextStyle(textStyles.large.copy(color = currentColors.textSecondary), content)
-    }
+//    CompositionLocalProvider {
+//        ProvideTextStyle(textStyles.small.copy(color = currentColors.textPrimary), content)
+//        ProvideTextStyle(textStyles.regular.copy(color = currentColors.textPrimary), content)
+//        ProvideTextStyle(textStyles.large.copy(color = currentColors.textSecondary), content)
+//    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),

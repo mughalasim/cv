@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-internal class ApiResultCall<T> constructor(
+internal class ApiResultCall<T> (
     private val callDelegate: Call<T>,
 ) : Call<ApiResult<T>> {
     @Suppress("detekt.MagicNumber")
@@ -44,7 +44,8 @@ internal class ApiResultCall<T> constructor(
 
     override fun clone(): Call<ApiResult<T>> = ApiResultCall(callDelegate.clone())
 
-    override fun execute(): Response<ApiResult<T>> = throw UnsupportedOperationException("ResponseCall does not support execute.")
+    override fun execute(): Response<ApiResult<T>> =
+        throw UnsupportedOperationException("ResponseCall does not support execute.")
 
     override fun isExecuted(): Boolean = callDelegate.isExecuted
 

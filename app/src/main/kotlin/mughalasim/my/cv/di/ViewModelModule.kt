@@ -6,12 +6,11 @@ import mughalasim.my.cv.ui.screens.settings.SettingsScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val viewModelModule = module {
+val viewModelModule =
+    module {
+        viewModel { ListScreenViewModel(get(), get()) }
 
-    viewModel { ListScreenViewModel(get(), get()) }
+        viewModel { MainScreenViewModel(get()) }
 
-    viewModel { MainScreenViewModel(get()) }
-
-    viewModel { SettingsScreenViewModel(get()) }
-
-}
+        viewModel { SettingsScreenViewModel(get()) }
+    }

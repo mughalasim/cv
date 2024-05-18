@@ -2,6 +2,9 @@ package mughalasim.my.cv.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
 import mughalasim.my.cv.services.Route
@@ -27,6 +30,12 @@ fun String.toRoute(): Route =
         .firstOrNull { it.objectInstance?.routeName == this }
         ?.objectInstance
         ?: Route.ListScreen
+
+inline fun <reified VM : ViewModel> createViewModelStoreOwner(): ViewModelStoreOwner {
+    return object : ViewModelStoreOwner {
+        override val viewModelStore = ViewModelStore()
+    }
+}
 
 @Composable
 fun String.toYearMonthDuration(endDateString: String): String {

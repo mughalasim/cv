@@ -2,12 +2,25 @@ package mughalasim.my.cv.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+@Suppress("detekt.MagicNumber")
 val Red = Color(0xFFC90C0C)
+
+@Suppress("detekt.MagicNumber")
 val Yellow = Color(0xFFF1B252)
+
+@Suppress("detekt.MagicNumber")
 val LightGreen = Color(0xFFA0E294)
+
+@Suppress("detekt.MagicNumber")
 val DarkBlue = Color(0xFF31078F)
+
+@Suppress("detekt.MagicNumber")
 val LightBlue = Color(0xFFCBD0D8)
+
+@Suppress("detekt.MagicNumber")
 val DarkGrey = Color(0xFF3B3A3C)
+
+@Suppress("detekt.MagicNumber")
 val LightGrey = Color(0xFF8D939C)
 
 val DarkAppColors =
@@ -36,6 +49,7 @@ val LightAppColors =
         highLight = Yellow,
     )
 
+@Suppress("detekt.LongParameterList")
 class AppColors(
     val textPrimary: Color,
     val textSecondary: Color,

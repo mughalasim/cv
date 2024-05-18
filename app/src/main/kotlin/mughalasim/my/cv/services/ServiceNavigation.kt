@@ -1,69 +1,18 @@
 package mughalasim.my.cv.services
 
 import androidx.navigation.NavController
-import cv.domain.Variables.EVENT_NAME_NAVIGATE
-import cv.domain.Variables.PARAM_SCREEN_NAME
-import mughalasim.my.cv.di.DI
-import mughalasim.my.cv.ui.utils.toRoute
 
-sealed class Route(val routeName: String, val isInitialRoute: Boolean = false) {
-    data object ListScreen : Route("ListScreen")
+interface ServiceNavigation {
+    fun setNavController(navController: NavController)
 
-    data object SettingsScreen : Route("SettingsScreen")
-
-    companion object {
-        fun getInitialRoute(): Route =
-            Route::class.sealedSubclasses
-                .firstOrNull { it.objectInstance?.isInitialRoute == true }
-                ?.objectInstance
-                ?: ListScreen
-    }
-}
-
-class ServiceNavigation : IServiceNavigation {
-    private lateinit var navController: NavController
-    private lateinit var initialRoute: Route
-
-    override fun setNavController(navController: NavController) {
-        this.navController = navController
-        val initialRoute = Route.getInitialRoute()
-        this.initialRoute = initialRoute
-    }
-
-    override fun open(
+    fun open(
         route: Route,
-        removeCurrentFromStack: Boolean,
-    ) {
-        if (route == getCurrentRoute()) {
-            // preventing double tab
-            return
-        }
-        navController.navigate(route.routeName) {
-            if (removeCurrentFromStack) {
-                popUpTo(getCurrentRoute().routeName) {
-                    inclusive = true
-                }
-            }
-        }
-        DI.analytics.logEvent(
-            EVENT_NAME_NAVIGATE,
-            listOf(
-                Pair(PARAM_SCREEN_NAME, route.routeName),
-            ),
-        )
-    }
+        removeCurrentFromStack: Boolean = false,
+    )
 
-    override fun popBack() {
-        navController.popBackStack()
-        DI.analytics.logEvent(
-            EVENT_NAME_NAVIGATE,
-            listOf(
-                Pair(PARAM_SCREEN_NAME, getCurrentRoute().routeName),
-            ),
-        )
-    }
+    fun popBack()
 
-    override fun getCurrentRoute(): Route = navController.currentDestination?.route?.toRoute() ?: Route.ListScreen
+    fun getCurrentRoute(): Route
 
-    override fun getInitialRoute(): Route = initialRoute
+    fun getInitialRoute(): Route
 }

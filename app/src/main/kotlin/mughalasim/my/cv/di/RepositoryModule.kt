@@ -1,7 +1,6 @@
 package mughalasim.my.cv.di
 
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import cv.data.repository.AnalyticsRepository
 import cv.data.repository.DataRepository
@@ -16,14 +15,11 @@ import org.koin.dsl.module
 
 val repositoryModule =
     module {
-
-        val firebaseInstance = FirebaseDatabase.getInstance()
-
         single<IDataRepository> { DataRepository(get()) }
 
         single<IAnalyticsRepository> { AnalyticsRepository(Firebase.analytics) }
 
-        single<ILanguageRepository> { LanguageRepository(androidApplication(), firebaseInstance) }
+        single<ILanguageRepository> { LanguageRepository(androidApplication(), get()) }
 
         single<ISettingsRepository> { SettingsRepository(get()) }
     }

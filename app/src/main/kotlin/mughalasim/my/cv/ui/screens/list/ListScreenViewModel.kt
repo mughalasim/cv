@@ -1,41 +1,32 @@
 package mughalasim.my.cv.ui.screens.list
 
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.viewModelScope
 import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.usecase.DataUseCase
 import cv.domain.usecase.SettingsUseCase
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.services.Route
 import mughalasim.my.cv.ui.screens.base.BaseAction
 import mughalasim.my.cv.ui.screens.base.BaseState
 import mughalasim.my.cv.ui.screens.base.BaseViewModel
 
-internal class ListScreenViewModel(
+class ListScreenViewModel(
     private val dataUseCase: DataUseCase,
     private val settingsUseCase: SettingsUseCase,
-) : BaseViewModel<ListScreenViewModel.UiState, ListScreenViewModel.Action> (UiState.Loading) {
-    private var job: Job? = null
-
-    fun getData() {
+) : BaseViewModel<ListScreenViewModel.UiState, ListScreenViewModel.Action>(UiState.Loading) {
+    suspend fun getData() {
         sendAction(Action.Loading)
-        job?.cancel()
-        job =
-            viewModelScope.launch {
-                dataUseCase.getData().also { result ->
-                    when (result) {
-                        is State.Failed -> {
-                            sendAction(Action.ShowErrorMessage(result.message))
-                        }
-                        is State.Success -> {
-                            sendAction(Action.ShowResults(result.data))
-                        }
-                    }
+        dataUseCase.getData().also { result ->
+            when (result) {
+                is State.Failed -> {
+                    sendAction(Action.ShowErrorMessage(result.message))
+                }
+                is State.Success -> {
+                    sendAction(Action.ShowResults(result.data))
                 }
             }
+        }
     }
 
     fun getExpandListOnStartUp() = settingsUseCase.getExpandListOnStartUp()
@@ -47,7 +38,7 @@ internal class ListScreenViewModel(
     fun onBannerTapped(bannerName: String) = dataUseCase.onBannerTapped(bannerName)
 
     @Immutable
-    internal sealed interface UiState : BaseState {
+    sealed interface UiState : BaseState {
         data object Loading : UiState
 
         data class Error(val message: String) : UiState
@@ -57,7 +48,7 @@ internal class ListScreenViewModel(
         ) : UiState
     }
 
-    internal sealed interface Action : BaseAction<UiState> {
+    sealed interface Action : BaseAction<UiState> {
         data object Loading : Action {
             override fun reduce(state: UiState): UiState = UiState.Loading
         }

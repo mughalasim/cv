@@ -3,13 +3,10 @@ package cv.domain.entities
 import androidx.annotation.Keep
 
 @Keep
-@Suppress("unused")
 data class LinkEntity(
     val text: String,
     val url: String,
-) {
-    constructor() : this("", "")
-}
+)
 
 fun getFakeLinks() =
     listOf(

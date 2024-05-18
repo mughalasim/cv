@@ -76,7 +76,9 @@ fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) 
                             text = entity.description,
                         )
                     }
-                    LinksWidget(entity.links)
+                    entity.links?.let { links ->
+                        LinksWidget(links)
+                    }
                 }
             }
         }

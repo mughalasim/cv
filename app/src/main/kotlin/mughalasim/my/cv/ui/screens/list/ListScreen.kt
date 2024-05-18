@@ -59,13 +59,13 @@ import org.koin.androidx.compose.koinViewModel
 fun ListScreen() {
     val viewModel = koinViewModel<ListScreenViewModel>()
     val uiState = viewModel.uiStateFlow.collectAsState(initial = ListScreenViewModel.UiState.Loading)
-    LaunchedEffect(key1 = "test") {
+    LaunchedEffect(true) {
         viewModel.getData()
     }
     when (val response = uiState.value) {
         is ListScreenViewModel.UiState.Loading -> LoadingWidget()
 
-        is ListScreenViewModel.UiState.Error -> WarningWidget(title = stringResource(id = R.string.error_server))
+        is ListScreenViewModel.UiState.Error -> WarningWidget(title = response.message)
 
         is ListScreenViewModel.UiState.ResultsReceived -> {
             if (viewModel.isVerticalOrientation()) {
@@ -115,14 +115,14 @@ fun VerticalScreen(
 
         Column(
             modifier =
-            Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(padding_screen),
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(padding_screen),
             horizontalAlignment = Alignment.Start,
         ) {
             // Name and Job title ----------------------------------------------------------------------
-            TextLarge(text = response.description.full_name)
-            TextRegular(text = response.description.position_title)
+            TextLarge(text = response.description.fullName)
+            TextRegular(text = response.description.positionTitle)
 
             // [Banner] Contact information ------------------------------------------------------------
             val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
@@ -146,10 +146,10 @@ fun VerticalScreen(
                 ) {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxHeight()
-                            .width(padding_screen_small)
-                            .background(color = AppTheme.colors.highLight),
+                            Modifier
+                                .fillMaxHeight()
+                                .width(padding_screen_small)
+                                .background(color = AppTheme.colors.highLight),
                     ) {}
                     Column(
                         modifier = Modifier.padding(start = padding_screen_small),
@@ -258,6 +258,7 @@ fun VerticalScreen(
 }
 
 @OptIn(ExperimentalFoundationApi::class)
+@Suppress("detekt.MagicNumber")
 @Composable
 fun HorizontalScreen(
     response: ResponseEntity,
@@ -280,12 +281,12 @@ fun HorizontalScreen(
         // Name and Job title ----------------------------------------------------------------------
         Column(
             modifier =
-            Modifier
-                .align(Alignment.Start)
-                .padding(start = padding_screen, end = padding_screen),
+                Modifier
+                    .align(Alignment.Start)
+                    .padding(start = padding_screen, end = padding_screen),
         ) {
-            TextLarge(text = response.description.full_name)
-            TextRegular(text = response.description.position_title)
+            TextLarge(text = response.description.fullName)
+            TextRegular(text = response.description.positionTitle)
         }
 
         val pagerState = rememberPagerState(pageCount = { 6 })
@@ -298,9 +299,9 @@ fun HorizontalScreen(
                 0 -> {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = padding_screen, end = padding_screen),
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen),
                     ) {
                         val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
                         BannerWidget(
@@ -316,10 +317,10 @@ fun HorizontalScreen(
                         ) {
                             Column(
                                 modifier =
-                                Modifier
-                                    .fillMaxHeight()
-                                    .width(padding_screen_small)
-                                    .background(color = AppTheme.colors.highLight),
+                                    Modifier
+                                        .fillMaxHeight()
+                                        .width(padding_screen_small)
+                                        .background(color = AppTheme.colors.highLight),
                             ) {}
                             Column(
                                 modifier = Modifier.padding(start = padding_screen_small),
@@ -337,10 +338,10 @@ fun HorizontalScreen(
                 1 -> {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = padding_screen, end = padding_screen)
-                            .verticalScroll(rememberScrollState()),
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val skillsTitle = stringResource(R.string.txt_skills)
                         BannerWidget(
@@ -358,10 +359,10 @@ fun HorizontalScreen(
                 2 -> {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = padding_screen, end = padding_screen)
-                            .verticalScroll(rememberScrollState()),
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val workExperienceTitle = stringResource(R.string.txt_work_experience)
                         var sortAscending by remember { mutableStateOf(false) }
@@ -383,10 +384,10 @@ fun HorizontalScreen(
                 3 -> {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = padding_screen, end = padding_screen)
-                            .verticalScroll(rememberScrollState()),
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val educationalExperienceTitle = stringResource(R.string.txt_education)
                         BannerWidget(
@@ -404,10 +405,10 @@ fun HorizontalScreen(
                 4 -> {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = padding_screen, end = padding_screen)
-                            .verticalScroll(rememberScrollState()),
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen)
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         val referencesTitle = stringResource(R.string.txt_references)
                         BannerWidget(
@@ -425,9 +426,9 @@ fun HorizontalScreen(
                 5 -> {
                     Column(
                         modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(start = padding_screen, end = padding_screen),
+                            Modifier
+                                .fillMaxSize()
+                                .padding(start = padding_screen, end = padding_screen),
                     ) {
                         Spacer(modifier = Modifier.padding(top = padding_screen))
                         ChipWidget(
