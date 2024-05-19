@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import cv.domain.State
 import cv.domain.entities.LanguageEntity
 import cv.domain.usecase.DataUseCase
-import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.navigation.NavigationService
 import mughalasim.my.cv.ui.screens.base.BaseAction
 import mughalasim.my.cv.ui.screens.base.BaseState
@@ -13,6 +12,7 @@ import mughalasim.my.cv.ui.screens.base.BaseViewModel
 
 class MainScreenViewModel(
     private val dataUseCase: DataUseCase,
+    private val navigationService: NavigationService,
 ) : BaseViewModel<MainScreenViewModel.UiState, MainScreenViewModel.Action>(UiState.Loading) {
     suspend fun getLanguage(){
         sendAction(Action.Loading)
@@ -28,9 +28,9 @@ class MainScreenViewModel(
         }
     }
 
-    fun setNavController(navController: NavHostController) = DI.navigationService.setNavController(navController)
+    fun setNavController(navController: NavHostController) = navigationService.setNavController(navController)
 
-    fun getServiceNavigation(): NavigationService = DI.navigationService
+    fun getServiceNavigation(): NavigationService = navigationService
 
     @Immutable
     sealed interface UiState : BaseState {

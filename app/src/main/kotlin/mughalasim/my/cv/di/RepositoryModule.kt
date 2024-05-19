@@ -1,25 +1,19 @@
 package mughalasim.my.cv.di
 
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
-import cv.data.repository.AnalyticsRepository
-import cv.data.repository.DataRepository
-import cv.data.repository.LanguageRepository
-import cv.data.repository.SettingsRepository
-import cv.domain.repositories.IAnalyticsRepository
-import cv.domain.repositories.IDataRepository
-import cv.domain.repositories.ILanguageRepository
-import cv.domain.repositories.ISettingsRepository
+import cv.data.repository.DataRepositoryImp
+import cv.data.repository.LanguageRepositoryImp
+import cv.data.repository.SettingsRepositoryImp
+import cv.domain.repositories.DataRepository
+import cv.domain.repositories.LanguageRepository
+import cv.domain.repositories.SettingsRepository
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val repositoryModule =
     module {
-        single<IDataRepository> { DataRepository(get()) }
+        single<DataRepository> { DataRepositoryImp(get()) }
 
-        single<IAnalyticsRepository> { AnalyticsRepository(Firebase.analytics) }
+        single<LanguageRepository> { LanguageRepositoryImp(androidApplication(), get()) }
 
-        single<ILanguageRepository> { LanguageRepository(androidApplication(), get()) }
-
-        single<ISettingsRepository> { SettingsRepository(get()) }
+        single<SettingsRepository> { SettingsRepositoryImp(get()) }
     }

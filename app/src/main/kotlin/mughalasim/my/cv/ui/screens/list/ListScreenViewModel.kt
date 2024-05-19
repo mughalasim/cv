@@ -5,7 +5,7 @@ import cv.domain.State
 import cv.domain.entities.ResponseEntity
 import cv.domain.usecase.DataUseCase
 import cv.domain.usecase.SettingsUseCase
-import mughalasim.my.cv.di.DI
+import mughalasim.my.cv.navigation.NavigationService
 import mughalasim.my.cv.navigation.Route
 import mughalasim.my.cv.ui.screens.base.BaseAction
 import mughalasim.my.cv.ui.screens.base.BaseState
@@ -14,6 +14,7 @@ import mughalasim.my.cv.ui.screens.base.BaseViewModel
 class ListScreenViewModel(
     private val dataUseCase: DataUseCase,
     private val settingsUseCase: SettingsUseCase,
+    private val navigationService: NavigationService,
 ) : BaseViewModel<ListScreenViewModel.UiState, ListScreenViewModel.Action>(UiState.Loading) {
     suspend fun getData() {
         sendAction(Action.Loading)
@@ -33,7 +34,7 @@ class ListScreenViewModel(
 
     fun isVerticalOrientation() = settingsUseCase.getListOrientation()
 
-    fun openSettings() = DI.navigationService.open(route = Route.SettingsScreen)
+    fun openSettings() = navigationService.open(route = Route.SettingsScreen)
 
     fun onBannerTapped(bannerName: String) = dataUseCase.onBannerTapped(bannerName)
 

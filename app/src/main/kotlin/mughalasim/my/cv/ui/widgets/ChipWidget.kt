@@ -17,12 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import cv.domain.Variables.EVENT_NAME_LINK
-import cv.domain.Variables.PARAM_LINK
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
-import mughalasim.my.cv.di.DI
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
@@ -57,10 +54,6 @@ fun ChipWidget(
                                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                                 browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 context.startActivity(browserIntent)
-                                DI.analytics.logEvent(
-                                    EVENT_NAME_LINK,
-                                    listOf(Pair(PARAM_LINK, url)),
-                                )
                             } else {
                                 Toast.makeText(
                                     context,

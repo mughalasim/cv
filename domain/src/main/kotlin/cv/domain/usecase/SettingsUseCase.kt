@@ -5,12 +5,12 @@ import cv.domain.Variables.PARAM_EXPAND_LIST_ON_START_UP
 import cv.domain.Variables.PARAM_MAIN_SCREEN_ORIENTATION
 import cv.domain.Variables.SHARED_PREF_EXPAND_LIST_ON_STARTUP
 import cv.domain.Variables.SHARED_PREF_LIST_ORIENTATION
-import cv.domain.repositories.IAnalyticsRepository
-import cv.domain.repositories.ISettingsRepository
+import cv.domain.repositories.AnalyticsRepository
+import cv.domain.repositories.SettingsRepository
 
 class SettingsUseCase(
-    private val settingsRepository: ISettingsRepository,
-    private val analyticsRepository: IAnalyticsRepository,
+    private val settingsRepository: SettingsRepository,
+    private val analyticsRepository: AnalyticsRepository,
 ) {
     fun getExpandListOnStartUp() = settingsRepository.getBool(SHARED_PREF_EXPAND_LIST_ON_STARTUP)
 

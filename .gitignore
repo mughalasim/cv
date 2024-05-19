@@ -23,3 +23,5 @@ local.properties
 /app/release/output-metadata.json
 /.idea/*
 /keystore.properties
+/app/detekt-baseline.xml
+/data/detekt-baseline.xml

@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import cv.domain.entities.SettingsEntity
 import cv.domain.usecase.SettingsUseCase
-import mughalasim.my.cv.di.DI
+import mughalasim.my.cv.navigation.NavigationService
 
 class SettingsScreenViewModel(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationService: NavigationService,
 ) : ViewModel() {
     private val _settings: MutableLiveData<SettingsEntity> = MutableLiveData(getState())
     val settings: LiveData<SettingsEntity> = _settings
@@ -20,7 +21,7 @@ class SettingsScreenViewModel(
         )
 
     fun navigateBack() {
-        DI.navigationService.popBack()
+        navigationService.popBack()
     }
 
     fun setExpandListOnStartUp(isEnabled: Boolean) {

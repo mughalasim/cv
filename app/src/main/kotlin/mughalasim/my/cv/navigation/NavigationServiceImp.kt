@@ -3,10 +3,12 @@ package mughalasim.my.cv.navigation
 import androidx.navigation.NavController
 import cv.domain.Variables.EVENT_NAME_NAVIGATE
 import cv.domain.Variables.PARAM_SCREEN_NAME
-import mughalasim.my.cv.di.DI
+import cv.domain.repositories.AnalyticsRepository
 import mughalasim.my.cv.ui.utils.toRoute
 
-class NavigationServiceImp : NavigationService {
+class NavigationServiceImp(
+    private val analyticsRepository: AnalyticsRepository,
+) : NavigationService {
     private lateinit var navController: NavController
     private lateinit var initialRoute: Route
 
@@ -31,7 +33,7 @@ class NavigationServiceImp : NavigationService {
                 }
             }
         }
-        DI.analytics.logEvent(
+        analyticsRepository.logEvent(
             EVENT_NAME_NAVIGATE,
             listOf(
                 Pair(PARAM_SCREEN_NAME, route.routeName),
@@ -41,7 +43,7 @@ class NavigationServiceImp : NavigationService {
 
     override fun popBack() {
         navController.popBackStack()
-        DI.analytics.logEvent(
+        analyticsRepository.logEvent(
             EVENT_NAME_NAVIGATE,
             listOf(
                 Pair(PARAM_SCREEN_NAME, getCurrentRoute().routeName),

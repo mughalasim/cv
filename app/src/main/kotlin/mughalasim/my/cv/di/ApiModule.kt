@@ -1,9 +1,9 @@
 package mughalasim.my.cv.di
 
-import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import cv.data.retrofit.ApiResultAdapterFactory
 import cv.data.service.ApiService
+import cv.domain.repositories.AppLoggerRepository
 import mughalasim.my.cv.BuildConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -15,13 +15,17 @@ import retrofit2.Retrofit
 val apiModule =
     module {
 
-        single<OkHttpClient> {
+        single<OkHttpClient>() {
             OkHttpClient.Builder()
                 .addInterceptor(
                     HttpLoggingInterceptor { message ->
-                        Log.d("HTTP: ", "Http: $message")
+                        get<AppLoggerRepository>().log("Http: $message")
                     }.apply {
-                        level = HttpLoggingInterceptor.Level.BODY
+                        level = if (BuildConfig.DEBUG){
+                            HttpLoggingInterceptor.Level.BODY
+                        } else {
+                            HttpLoggingInterceptor.Level.NONE
+                        }
                     },
                 )
                 .build()
@@ -30,24 +34,16 @@ val apiModule =
         single<Converter.Factory> {
             @Suppress("JSON_FORMAT_REDUNDANT")
             kotlinx.serialization.json.Json {
-                // By default Kotlin serialization will serialize all of the keys present in JSON object and throw an
-                // exception if given key is not present in the Kotlin class. This flag allows to ignore JSON fields
                 ignoreUnknownKeys = true
+                isLenient = true
             }.asConverterFactory(CONTENT_TYPE_APPLICATION.toMediaType())
         }
 
         single<Retrofit> {
-            @Suppress("JSON_FORMAT_REDUNDANT")
             Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .client(get())
-                .addConverterFactory(
-                    kotlinx.serialization.json.Json {
-                        ignoreUnknownKeys = true
-                        isLenient = true
-                    }
-                        .asConverterFactory(CONTENT_TYPE_APPLICATION.toMediaType()),
-                )
+                .addConverterFactory(get())
                 .addCallAdapterFactory(ApiResultAdapterFactory())
                 .build()
         }
