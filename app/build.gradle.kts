@@ -53,7 +53,6 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            isDebuggable = true
             signingConfig = signingConfigs.getByName("config")
             resValue("string", "app_name", appName)
         }
@@ -95,6 +94,11 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
+    firebaseCrashlytics {
+        mappingFileUploadEnabled = false
+        nativeSymbolUploadEnabled = false
+    }
 }
 
 dependencies {
@@ -133,6 +137,7 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
 
     // Restring for Dynamic languages
     implementation(libs.restring)
@@ -141,9 +146,9 @@ dependencies {
     implementation(libs.applocale)
     implementation(libs.appcompat)
 
+    // Joda time
+    implementation(libs.android.joda)
+
     // TESTING -------------------------------------------------------------------------------------
     testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(libs.ui.test.junit4)
 }

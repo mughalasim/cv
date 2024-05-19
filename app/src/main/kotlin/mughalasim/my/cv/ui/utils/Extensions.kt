@@ -2,9 +2,6 @@ package mughalasim.my.cv.ui.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
 import mughalasim.my.cv.navigation.Route
@@ -31,12 +28,6 @@ fun String.toRoute(): Route =
         ?.objectInstance
         ?: Route.ListScreen
 
-inline fun <reified VM : ViewModel> createViewModelStoreOwner(): ViewModelStoreOwner {
-    return object : ViewModelStoreOwner {
-        override val viewModelStore = ViewModelStore()
-    }
-}
-
 @Composable
 fun String.toYearMonthDuration(endDateString: String): String {
     val context = LocalContext.current.resources
@@ -44,8 +35,11 @@ fun String.toYearMonthDuration(endDateString: String): String {
     val endDate = endDateString.toYearMonthDayDate()
 
     val years = Years.yearsBetween(startDate.withTime(0, 0, 0, 0), endDate.withTime(0, 0, 0, 0)).years
-    val months = Months.monthsBetween(startDate.withTime(0, 0, 0, 0),
-        endDate.withTime(0, 0, 0, 0)).months % DateConstants.MONTHS
+    val months =
+        Months.monthsBetween(
+            startDate.withTime(0, 0, 0, 0),
+            endDate.withTime(0, 0, 0, 0),
+        ).months % DateConstants.MONTHS
     return (
         (if (years > 0) String.format(context.getQuantityString(R.plurals.plural_year, years), years) else "") +
             (if (years > 0 && months > 0) " " else "") +
@@ -60,8 +54,11 @@ fun DateTime.toYearMonthDuration(startDateString: String): String {
     val endDate = this
 
     val years = Years.yearsBetween(startDate.withTime(0, 0, 0, 0), endDate.withTime(0, 0, 0, 0)).years
-    val months = Months.monthsBetween(startDate.withTime(0, 0, 0, 0),
-        endDate.withTime(0, 0, 0, 0)).months % DateConstants.MONTHS
+    val months =
+        Months.monthsBetween(
+            startDate.withTime(0, 0, 0, 0),
+            endDate.withTime(0, 0, 0, 0),
+        ).months % DateConstants.MONTHS
     return (
         (if (years > 0) String.format(context.getQuantityString(R.plurals.plural_year, years), years) else "") +
             (if (years > 0 && months > 0) " " else "") +

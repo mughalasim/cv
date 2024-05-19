@@ -11,16 +11,10 @@ java {
 }
 
 dependencies {
-    // Kotlin coroutines
-    api(libs.kotlinx.coroutines.android)
-    api(libs.kotlinx.coroutines.core)
-
-    // Arrow - Functional programming
-    api(libs.arrow.core)
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
 
     // Joda time
-    api(libs.android.joda)
-
-    // android x keep annotation
-    api(libs.annotation.jvm)
+    implementation(libs.android.joda)
 }
