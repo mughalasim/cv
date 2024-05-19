@@ -44,8 +44,9 @@ dependencies {
     api(libs.firebase.analytics)
     api(libs.firebase.crashlytics)
 
+    // android x keep annotation
+    implementation(libs.annotation.jvm)
+
     // Testing -------------------------------------------------------------------------------------
     testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
 }

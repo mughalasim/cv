@@ -1,8 +1,5 @@
 package cv.domain.entities
 
-import androidx.annotation.Keep
-
-@Keep
 data class LinkEntity(
     val text: String,
     val url: String,

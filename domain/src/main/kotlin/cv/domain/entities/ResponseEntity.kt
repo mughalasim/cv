@@ -1,8 +1,5 @@
 package cv.domain.entities
 
-import androidx.annotation.Keep
-
-@Keep
 data class ResponseEntity(
     val description: DescriptionEntity,
     val skills: List<SkillEntity>,

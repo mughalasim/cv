@@ -1,8 +1,5 @@
 package cv.domain.entities
 
-import androidx.annotation.Keep
-
-@Keep
 data class DescriptionEntity(
     val address: String,
     val fullName: String,
