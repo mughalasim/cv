@@ -13,7 +13,6 @@ import mughalasim.my.cv.R
 import mughalasim.my.cv.navigation.NavigationHost
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.widgets.BottomNavItem
 import mughalasim.my.cv.ui.widgets.BottomNavigationWidget
 import mughalasim.my.cv.ui.widgets.ToolBarWidget
 import org.koin.androidx.compose.koinViewModel
@@ -31,11 +30,12 @@ fun MainScreen() {
         bottomBar = {
             BottomNavigationWidget(navController)
         },
-        floatingActionButton = {}
+        floatingActionButton = {},
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding).background(color = AppTheme.colors.backgroundScreen),
+            modifier =
+                Modifier
+                    .padding(innerPadding).background(color = AppTheme.colors.backgroundScreen),
             verticalArrangement = Arrangement.spacedBy(padding_screen),
         ) {
             NavigationHost(

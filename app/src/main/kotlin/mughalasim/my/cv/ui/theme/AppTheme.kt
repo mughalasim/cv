@@ -42,9 +42,7 @@ fun getColors(): AppColors {
 }
 
 @Composable
-fun AppThemeComposable(
-    content: @Composable () -> Unit,
-) {
+fun AppThemeComposable(content: @Composable () -> Unit) {
     val currentColors = getColors()
 
     Surface(

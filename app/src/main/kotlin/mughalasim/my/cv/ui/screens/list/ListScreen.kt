@@ -1,13 +1,8 @@
 package mughalasim.my.cv.ui.screens.list
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -20,21 +15,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
-import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.utils.ConnectionState
 import mughalasim.my.cv.ui.utils.currentConnectivityState
 import mughalasim.my.cv.ui.utils.observeConnectivityAsFlow
-import mughalasim.my.cv.ui.widgets.BottomNavigationWidget
-import mughalasim.my.cv.ui.widgets.ToolBarWidget
 import mughalasim.my.cv.ui.widgets.WarningWidget
 import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ListScreen(
-    viewModel: ListScreenViewModel = koinViewModel<ListScreenViewModel>()
-) {
+fun ListScreen(viewModel: ListScreenViewModel = koinViewModel<ListScreenViewModel>()) {
     val uiState =
         viewModel.uiStateFlow.collectAsState(initial = ListScreenViewModel.UiState.Loading)
     val isRefreshing = (uiState.value is ListScreenViewModel.UiState.Loading)
@@ -50,7 +40,7 @@ fun ListScreen(
     Box(
         Modifier
             .pullRefresh(pullRefreshState)
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         when (val response = uiState.value) {
             is ListScreenViewModel.UiState.Loading -> Unit
@@ -78,13 +68,13 @@ fun ListScreen(
                         response = response.responseEntity,
                         expandListOnStartUp = viewModel.getExpandListOnStartUp(),
                         onBannerTapped = viewModel::onBannerTapped,
-                        onLinkTapped = viewModel::onLinkTapped
+                        onLinkTapped = viewModel::onLinkTapped,
                     )
                 } else {
                     HorizontalScreen(
                         response = response.responseEntity,
                         onBannerTapped = viewModel::onBannerTapped,
-                        onLinkTapped = viewModel::onLinkTapped
+                        onLinkTapped = viewModel::onLinkTapped,
                     )
                 }
             }
@@ -92,7 +82,7 @@ fun ListScreen(
         PullRefreshIndicator(
             refreshing = isRefreshing,
             state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter),
         )
     }
 }

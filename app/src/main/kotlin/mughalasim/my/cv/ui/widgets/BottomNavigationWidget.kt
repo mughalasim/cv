@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -19,46 +18,48 @@ import mughalasim.my.cv.navigation.Route
 import mughalasim.my.cv.ui.theme.AppTheme
 
 @Composable
-fun BottomNavigationWidget(
-    navHostController: NavHostController
-) {
+fun BottomNavigationWidget(navHostController: NavHostController) {
     BottomNavigation(
-        backgroundColor = AppTheme.colors.highLight
+        backgroundColor = AppTheme.colors.highLight,
     ) {
-        val tabList = listOf(
-            BottomNavItem.ListScreen,
-            BottomNavItem.SettingsScreen,
-        )
+        val tabList =
+            listOf(
+                BottomNavItem.ListScreen,
+                BottomNavItem.SettingsScreen,
+            )
         val navStackBackEntry by navHostController.currentBackStackEntryAsState()
         val currentDestination = navStackBackEntry?.destination
 
         tabList.forEach { item ->
             val isCurrentSelection = currentDestination?.hierarchy?.any { it.route == item.route } == true
-            val selectedColor = if (isCurrentSelection) AppTheme.colors.textPrimary else AppTheme.colors.backgroundScreen
+            val selectedColor =
+                if (isCurrentSelection) AppTheme.colors.textPrimary else AppTheme.colors.backgroundScreen
             BottomNavigationItem(
                 selected = isCurrentSelection,
                 onClick = {
-                    if (!isCurrentSelection)
-                        navHostController.navigate(item.route){
+                    if (!isCurrentSelection) {
+                        navHostController.navigate(item.route) {
                             popUpTo(navHostController.graph.findStartDestination().id) {
                                 saveState = true
                             }
                             launchSingleTop = true
                             restoreState = true
                         }
+                    }
                 },
                 icon = {
                     Icon(
                         imageVector = item.icon,
                         contentDescription = null,
-                        tint = selectedColor
+                        tint = selectedColor,
                     )
                 },
                 label = {
                     Text(
                         item.label,
-                        color = selectedColor
-                    ) }
+                        color = selectedColor,
+                    )
+                },
             )
         }
     }

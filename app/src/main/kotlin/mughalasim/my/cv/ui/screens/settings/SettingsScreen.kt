@@ -27,9 +27,7 @@ import mughalasim.my.cv.ui.widgets.TextRegular
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SettingsScreen(
-    viewModel: SettingsScreenViewModel = koinViewModel<SettingsScreenViewModel>()
-) {
+fun SettingsScreen(viewModel: SettingsScreenViewModel = koinViewModel<SettingsScreenViewModel>()) {
     val settingsEntity = viewModel.settings.observeAsState(initial = viewModel.getState())
 
     SettingsScreenItems(
@@ -39,7 +37,7 @@ fun SettingsScreen(
                 is OnSettingsChanged.ExpandListOnStartUp -> viewModel.setExpandListOnStartUp(it.isEnabled)
                 is OnSettingsChanged.IsVerticalScreen -> viewModel.setListOrientation(it.isVertical)
             }
-        }
+        },
     )
 }
 

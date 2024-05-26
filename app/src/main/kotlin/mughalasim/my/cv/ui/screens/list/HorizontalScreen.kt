@@ -63,12 +63,12 @@ fun HorizontalScreen(
             state = pagerState,
         ) { page ->
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
             ) {
                 when (page) {
-
                     PAGE_1 -> {
                         val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
                         BannerWidget(
@@ -79,15 +79,15 @@ fun HorizontalScreen(
                         )
                         Row(
                             modifier =
-                            Modifier
-                                .height(IntrinsicSize.Min),
+                                Modifier
+                                    .height(IntrinsicSize.Min),
                         ) {
                             Column(
                                 modifier =
-                                Modifier
-                                    .fillMaxHeight()
-                                    .width(line_thickness_medium)
-                                    .background(color = AppTheme.colors.highLight),
+                                    Modifier
+                                        .fillMaxHeight()
+                                        .width(line_thickness_medium)
+                                        .background(color = AppTheme.colors.highLight),
                             ) {}
                             Column(
                                 modifier = Modifier.padding(start = padding_screen_small),
@@ -95,7 +95,6 @@ fun HorizontalScreen(
                                 DescriptionWidget(response.description)
                                 LinksWidget(response.description.links, onLinkTapped)
                             }
-
                         }
                     }
 
@@ -123,7 +122,6 @@ fun HorizontalScreen(
                             },
                         )
                         ExperienceWidget(response.getOrderedWork(sortAscending), onLinkTapped)
-
                     }
 
                     PAGE_4 -> {
@@ -151,18 +149,19 @@ fun HorizontalScreen(
                     PAGE_6 -> {
                         ChipWidget(
                             modifier =
-                            Modifier
-                                .padding(start = padding_screen)
-                                .align(Alignment.CenterHorizontally),
+                                Modifier
+                                    .padding(start = padding_screen)
+                                    .align(Alignment.CenterHorizontally),
                             entity =
-                            LinkEntity(
-                                text = stringResource(
-                                    R.string.txt_version,
-                                    BuildConfig.VERSION_NAME
+                                LinkEntity(
+                                    text =
+                                        stringResource(
+                                            R.string.txt_version,
+                                            BuildConfig.VERSION_NAME,
+                                        ),
+                                    url = "https://github.com/mughalasim/cv/releases",
                                 ),
-                                url = "https://github.com/mughalasim/cv/releases",
-                            ),
-                            onLinkTapped = onLinkTapped
+                            onLinkTapped = onLinkTapped,
                         )
                     }
                 }

@@ -58,9 +58,9 @@ fun VerticalScreen(
 
     Column(
         modifier =
-        Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(padding_screen),
+            Modifier
+                .verticalScroll(rememberScrollState())
+                .padding(padding_screen),
         horizontalAlignment = Alignment.Start,
     ) {
         // Name and Job title ----------------------------------------------------------------------
@@ -82,15 +82,15 @@ fun VerticalScreen(
         ) {
             Row(
                 modifier =
-                Modifier
-                    .height(IntrinsicSize.Min),
+                    Modifier
+                        .height(IntrinsicSize.Min),
             ) {
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxHeight()
-                        .width(line_thickness_medium)
-                        .background(color = AppTheme.colors.highLight),
+                        Modifier
+                            .fillMaxHeight()
+                            .width(line_thickness_medium)
+                            .background(color = AppTheme.colors.highLight),
                 ) {}
                 Column(
                     modifier = Modifier.padding(start = padding_screen_small),
@@ -170,8 +170,8 @@ fun VerticalScreen(
         // Reference list
         AnimatedVisibility(
             modifier =
-            Modifier
-                .fillMaxWidth(),
+                Modifier
+                    .fillMaxWidth(),
             visible = isExpandedReference,
         ) {
             ReferenceWidget(response.references)
@@ -181,11 +181,11 @@ fun VerticalScreen(
         Spacer(modifier = Modifier.padding(top = padding_screen))
         ChipWidget(
             entity =
-            LinkEntity(
-                text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
-                url = "https://github.com/mughalasim/cv/releases"
-            ),
-            onLinkTapped = onLinkTapped
+                LinkEntity(
+                    text = stringResource(R.string.txt_version, BuildConfig.VERSION_NAME),
+                    url = "https://github.com/mughalasim/cv/releases",
+                ),
+            onLinkTapped = onLinkTapped,
         )
     }
 }
