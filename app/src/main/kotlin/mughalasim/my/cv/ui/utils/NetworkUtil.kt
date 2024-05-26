@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import cv.domain.ConnectionState
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
@@ -64,4 +63,10 @@ private fun getCurrentConnectivityState(connectivityManager: ConnectivityManager
             ConnectionState.Unavailable
         }
     }
+}
+
+sealed class ConnectionState {
+    data object Available : ConnectionState()
+
+    data object Unavailable : ConnectionState()
 }

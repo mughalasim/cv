@@ -23,13 +23,14 @@ import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
-import mughalasim.my.cv.ui.theme.line_thickness
+import mughalasim.my.cv.ui.theme.line_thickness_small
 import mughalasim.my.cv.ui.theme.padding_screen_small
 
 @Composable
 fun ChipWidget(
     modifier: Modifier = Modifier,
     entity: LinkEntity,
+    onLinkTapped: (String) -> Unit,
     context: Context = LocalContext.current,
 ) {
     Surface(
@@ -37,7 +38,7 @@ fun ChipWidget(
             modifier
                 .padding(end = padding_screen_small, top = padding_screen_small)
                 .border(
-                    width = line_thickness,
+                    width = line_thickness_small,
                     color = AppTheme.colors.backgroundChip,
                     shape = RoundedCornerShape(border_radius),
                 ),
@@ -54,6 +55,7 @@ fun ChipWidget(
                                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                                 browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                                 context.startActivity(browserIntent)
+                                onLinkTapped(url)
                             } else {
                                 Toast.makeText(
                                     context,
@@ -80,7 +82,7 @@ fun ChipWidget(
 @Composable
 fun ChipWidgetPreviewNight() {
     AppThemeComposable {
-        ChipWidget(entity = getFakeLinks()[0])
+        ChipWidget(entity = getFakeLinks()[0], onLinkTapped = {})
     }
 }
 
@@ -92,6 +94,6 @@ fun ChipWidgetPreviewNight() {
 @Composable
 fun ChipWidgetPreview() {
     AppThemeComposable {
-        ChipWidget(entity = getFakeLinks()[0])
+        ChipWidget(entity = getFakeLinks()[0], onLinkTapped = {})
     }
 }

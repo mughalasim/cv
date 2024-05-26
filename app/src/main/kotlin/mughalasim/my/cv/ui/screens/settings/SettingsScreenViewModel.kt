@@ -9,7 +9,6 @@ import mughalasim.my.cv.navigation.NavigationService
 
 class SettingsScreenViewModel(
     private val settingsUseCase: SettingsUseCase,
-    private val navigationService: NavigationService,
 ) : ViewModel() {
     private val _settings: MutableLiveData<SettingsEntity> = MutableLiveData(getState())
     val settings: LiveData<SettingsEntity> = _settings
@@ -19,10 +18,6 @@ class SettingsScreenViewModel(
             expandListOnStartUp = settingsUseCase.getExpandListOnStartUp(),
             isVerticalScreen = settingsUseCase.getListOrientation(),
         )
-
-    fun navigateBack() {
-        navigationService.popBack()
-    }
 
     fun setExpandListOnStartUp(isEnabled: Boolean) {
         settingsUseCase.setExpandListOnStartUp(isEnabled)

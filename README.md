@@ -19,6 +19,7 @@ Download the sample app [here](https://github.com/mughalasim/cv/raw/master/app/r
 - Using KoinViewModel injected into compose functions being lifecycle aware
 - Updated lifecycle, compose, navigation and koin
 - Added proguard rules for better obfuscation support
+- Added bottom navigation and top bar with jetpack compose scaffold
 
 ## Release notes 
 Get the release notes [here](https://github.com/mughalasim/cv/releases)
@@ -26,6 +27,11 @@ Get the release notes [here](https://github.com/mughalasim/cv/releases)
 
 ## Preview
 <img 
-    src="https://github.com/mughalasim/cv/blob/master/images/video.gif" 
+    src="https://github.com/mughalasim/cv/blob/master/images/sc1.png" 
+    width="180" height="400" alt="null"
+/>
+
+<img
+    src="https://github.com/mughalasim/cv/blob/master/images/sc2.png"
     width="180" height="400" alt="null"
 />
