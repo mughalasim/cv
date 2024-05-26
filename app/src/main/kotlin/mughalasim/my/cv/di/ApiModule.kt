@@ -1,7 +1,7 @@
 package mughalasim.my.cv.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import cv.data.retrofit.ApiResultAdapterFactory
+import cv.data.retrofit.ApiAdapterFactory
 import cv.data.service.ApiService
 import cv.domain.repositories.AppLoggerRepository
 import mughalasim.my.cv.BuildConfig
@@ -44,7 +44,7 @@ val apiModule =
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .client(get())
                 .addConverterFactory(get())
-                .addCallAdapterFactory(ApiResultAdapterFactory())
+                .addCallAdapterFactory(ApiAdapterFactory())
                 .build()
         }
 

@@ -1,30 +1,55 @@
 package mughalasim.my.cv.ui.screens.list
 
 import androidx.compose.runtime.Immutable
-import cv.domain.State
+import androidx.lifecycle.viewModelScope
+import cv.domain.DomainResult
+import cv.domain.entities.LanguageEntity
 import cv.domain.entities.ResponseEntity
 import cv.domain.usecase.DataUseCase
 import cv.domain.usecase.SettingsUseCase
-import mughalasim.my.cv.navigation.NavigationService
-import mughalasim.my.cv.navigation.Route
+import kotlinx.coroutines.launch
 import mughalasim.my.cv.ui.screens.base.BaseAction
 import mughalasim.my.cv.ui.screens.base.BaseState
 import mughalasim.my.cv.ui.screens.base.BaseViewModel
+import mughalasim.my.cv.ui.utils.ErrorCodeConverter
 
 class ListScreenViewModel(
     private val dataUseCase: DataUseCase,
     private val settingsUseCase: SettingsUseCase,
-    private val navigationService: NavigationService,
+    private val errorCodeConverter: ErrorCodeConverter,
 ) : BaseViewModel<ListScreenViewModel.UiState, ListScreenViewModel.Action>(UiState.Loading) {
-    suspend fun getData() {
+    private var hasFetchedLanguage = false
+
+    fun getData() {
         sendAction(Action.Loading)
-        dataUseCase.getData().also { result ->
-            when (result) {
-                is State.Failed -> {
-                    sendAction(Action.ShowErrorMessage(result.message))
+        viewModelScope.launch {
+            dataUseCase.getData().also { result ->
+                when (result) {
+                    is DomainResult.Error -> {
+                        sendAction(Action.ShowErrorMessage(errorCodeConverter.getMessage(result.error)))
+                    }
+                    is DomainResult.Success -> {
+                        sendAction(Action.DataReceived(result.data))
+                    }
                 }
-                is State.Success -> {
-                    sendAction(Action.ShowResults(result.data))
+            }
+        }
+    }
+
+    suspend fun getLanguage(){
+        if (hasFetchedLanguage) {
+            getData()
+            return
+        }
+        sendAction(Action.Loading)
+        dataUseCase.getLanguage().also { result ->
+            hasFetchedLanguage = true
+            when (result) {
+                is DomainResult.Error -> {
+                    sendAction(Action.ShowErrorMessage(errorCodeConverter.getMessage(result.error)))
+                }
+                is DomainResult.Success -> {
+                    sendAction(Action.LanguageReceived(result.data))
                 }
             }
         }
@@ -34,9 +59,9 @@ class ListScreenViewModel(
 
     fun isVerticalOrientation() = settingsUseCase.getListOrientation()
 
-    fun openSettings() = navigationService.open(route = Route.SettingsScreen)
-
     fun onBannerTapped(bannerName: String) = dataUseCase.onBannerTapped(bannerName)
+
+    fun onLinkTapped(url: String) = dataUseCase.onLinkTapped(url)
 
     @Immutable
     sealed interface UiState : BaseState {
@@ -44,8 +69,12 @@ class ListScreenViewModel(
 
         data class Error(val message: String) : UiState
 
-        data class ResultsReceived(
+        data class DataReceived(
             val responseEntity: ResponseEntity,
+        ) : UiState
+
+        data class LanguageReceived(
+            val languageEntity: LanguageEntity,
         ) : UiState
     }
 
@@ -58,8 +87,12 @@ class ListScreenViewModel(
             override fun reduce(state: UiState): UiState = UiState.Error(message)
         }
 
-        data class ShowResults(val responseEntity: ResponseEntity) : Action {
-            override fun reduce(state: UiState): UiState = UiState.ResultsReceived(responseEntity)
+        data class DataReceived(val responseEntity: ResponseEntity) : Action {
+            override fun reduce(state: UiState): UiState = UiState.DataReceived(responseEntity)
+        }
+
+        data class LanguageReceived(val languageEntity: LanguageEntity) : Action {
+            override fun reduce(state: UiState): UiState = UiState.LanguageReceived(languageEntity)
         }
     }
 }

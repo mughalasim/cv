@@ -17,18 +17,20 @@ import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 
 @Composable
-fun LinksWidget(links: List<LinkEntity>) {
+fun LinksWidget(
+    links: List<LinkEntity>,
+    onLinkTapped: (String) -> Unit,
+) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        if (links.isNotEmpty())
-            {
-                TextSmall(text = stringResource(R.string.txt_links))
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.horizontalScroll(rememberScrollState()),
-                ) {
-                    repeat(links.size) { ChipWidget(entity = links[it]) }
-                }
+        if (links.isNotEmpty()) {
+            TextSmall(text = stringResource(R.string.txt_links))
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+            ) {
+                repeat(links.size) { ChipWidget(entity = links[it], onLinkTapped = onLinkTapped) }
             }
+        }
     }
 }
 
@@ -40,7 +42,7 @@ fun LinksWidget(links: List<LinkEntity>) {
 @Composable
 fun LinksWidgetPreviewNight() {
     AppThemeComposable {
-        LinksWidget(getFakeLinks())
+        LinksWidget(getFakeLinks()){}
     }
 }
 
@@ -52,6 +54,6 @@ fun LinksWidgetPreviewNight() {
 @Composable
 fun LinksWidgetPreview() {
     AppThemeComposable {
-        LinksWidget(getFakeLinks())
+        LinksWidget(getFakeLinks()){}
     }
 }

@@ -19,6 +19,7 @@ import cv.domain.entities.getFakeExperience
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
+import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_large
 import mughalasim.my.cv.ui.theme.padding_screen_small
@@ -27,7 +28,10 @@ import mughalasim.my.cv.ui.utils.toYearMonthDuration
 import org.joda.time.DateTime
 
 @Composable
-fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) {
+fun ExperienceWidget(
+    experiences: List<ExperienceEntity> = getFakeExperience(),
+    onLinkTapped:(String) -> Unit,
+) {
     Column(verticalArrangement = Arrangement.Top) {
         repeat(experiences.size) {
             val entity = experiences[it]
@@ -41,7 +45,7 @@ fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) 
                 Column(
                     modifier =
                         Modifier
-                            .width(padding_screen_small)
+                            .width(line_thickness_medium)
                             .fillMaxHeight()
                             .background(color = AppTheme.colors.highLight),
                 ) {}
@@ -77,7 +81,7 @@ fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) 
                         )
                     }
                     entity.links?.let { links ->
-                        LinksWidget(links)
+                        LinksWidget(links, onLinkTapped)
                     }
                 }
             }
@@ -93,7 +97,7 @@ fun ExperienceWidget(experiences: List<ExperienceEntity> = getFakeExperience()) 
 @Composable
 fun ExperienceWidgetPreviewNight() {
     AppThemeComposable {
-        ExperienceWidget()
+        ExperienceWidget(){}
     }
 }
 
@@ -105,6 +109,6 @@ fun ExperienceWidgetPreviewNight() {
 @Composable
 fun ExperienceWidgetPreview() {
     AppThemeComposable {
-        ExperienceWidget()
+        ExperienceWidget(){}
     }
 }

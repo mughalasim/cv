@@ -18,6 +18,7 @@ import cv.domain.entities.ReferenceEntity
 import cv.domain.entities.getFakeReferences
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
+import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_small
 
@@ -39,7 +40,7 @@ fun ReferenceWidget(references: List<ReferenceEntity>) {
                     modifier =
                         Modifier
                             .fillMaxHeight()
-                            .width(padding_screen_small)
+                            .width(line_thickness_medium)
                             .background(color = AppTheme.colors.highLight),
                 ) {}
                 Column(

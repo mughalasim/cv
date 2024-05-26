@@ -8,5 +8,5 @@ data class SettingsEntity(
 fun getFakeSettingsEntity() =
     SettingsEntity(
         expandListOnStartUp = true,
-        isVerticalScreen = false,
+        isVerticalScreen = true,
     )

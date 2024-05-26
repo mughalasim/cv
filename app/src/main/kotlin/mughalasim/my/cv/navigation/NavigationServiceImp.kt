@@ -23,7 +23,6 @@ class NavigationServiceImp(
         removeCurrentFromStack: Boolean,
     ) {
         if (route == getCurrentRoute()) {
-            // preventing double tab
             return
         }
         navController.navigate(route.routeName) {

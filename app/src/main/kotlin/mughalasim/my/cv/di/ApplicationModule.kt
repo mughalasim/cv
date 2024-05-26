@@ -13,6 +13,8 @@ import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
 import mughalasim.my.cv.navigation.NavigationService
 import mughalasim.my.cv.navigation.NavigationServiceImp
+import mughalasim.my.cv.ui.utils.ErrorCodeConverter
+import mughalasim.my.cv.ui.utils.ErrorCodeConverterImp
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -21,6 +23,8 @@ val applicationModule =
     module {
 
         single { FirebaseApp.initializeApp(androidApplication()) }
+
+        single<ErrorCodeConverter> { ErrorCodeConverterImp(androidApplication()) }
 
         single<AppLoggerRepository> { AppLoggerRepositoryImp(isEnabled = BuildConfig.DEBUG) }
 

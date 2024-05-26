@@ -2,8 +2,9 @@ package cv.data.repository
 
 import cv.data.models.toResponseEntity
 import cv.data.retrofit.ApiResult
+import cv.data.retrofit.toDomainError
 import cv.data.service.ApiService
-import cv.domain.State
+import cv.domain.DomainResult
 import cv.domain.repositories.DataRepository
 
 class DataRepositoryImp(
@@ -12,15 +13,11 @@ class DataRepositoryImp(
     override suspend fun getData() =
         when (val response = apiService.getData()) {
             is ApiResult.Error -> {
-                State.Failed(response.message ?: "")
-            }
-
-            is ApiResult.Exception -> {
-                State.Failed(response.throwable.message ?: "")
+                DomainResult.Error(response.error.toDomainError())
             }
 
             is ApiResult.Success -> {
-                State.Success(response.data.toResponseEntity())
+                DomainResult.Success(response.data.toResponseEntity())
             }
         }
 }

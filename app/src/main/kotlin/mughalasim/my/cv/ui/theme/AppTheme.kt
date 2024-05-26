@@ -43,16 +43,9 @@ fun getColors(): AppColors {
 
 @Composable
 fun AppThemeComposable(
-    textStyles: AppTextStyles = AppTheme.textStyles,
     content: @Composable () -> Unit,
 ) {
     val currentColors = getColors()
-
-//    CompositionLocalProvider {
-//        ProvideTextStyle(textStyles.small.copy(color = currentColors.textPrimary), content)
-//        ProvideTextStyle(textStyles.regular.copy(color = currentColors.textPrimary), content)
-//        ProvideTextStyle(textStyles.large.copy(color = currentColors.textSecondary), content)
-//    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),

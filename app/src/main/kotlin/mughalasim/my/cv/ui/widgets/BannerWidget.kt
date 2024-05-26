@@ -37,7 +37,7 @@ fun BannerWidget(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(top = padding_screen_large, bottom = padding_screen_large)
+                .padding(top = padding_screen, bottom = padding_screen_small)
                 .clip(RoundedCornerShape(border_radius))
                 .background(color = AppTheme.colors.highLight),
     ) {
@@ -54,7 +54,7 @@ fun BannerWidget(
             TextRegular(
                 modifier =
                     Modifier
-                        .padding(padding_screen),
+                        .padding(padding_screen_small),
                 text = title,
                 color = AppTheme.colors.black,
             )
@@ -77,7 +77,6 @@ fun BannerWidget(
                                 ),
                             contentDescription = null,
                             tint = AppTheme.colors.black,
-                            modifier = Modifier.padding(padding_screen_small),
                         )
                     }
                 }

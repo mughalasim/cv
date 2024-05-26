@@ -21,15 +21,15 @@ import cv.domain.entities.SettingsEntity
 import cv.domain.entities.getFakeSettingsEntity
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
-import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.theme.padding_screen_large
 import mughalasim.my.cv.ui.widgets.TextLarge
 import mughalasim.my.cv.ui.widgets.TextRegular
-import mughalasim.my.cv.ui.widgets.ToolBarWidget
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SettingsScreen() {
-    val viewModel = koinViewModel<SettingsScreenViewModel>()
+fun SettingsScreen(
+    viewModel: SettingsScreenViewModel = koinViewModel<SettingsScreenViewModel>()
+) {
     val settingsEntity = viewModel.settings.observeAsState(initial = viewModel.getState())
 
     SettingsScreenItems(
@@ -39,10 +39,7 @@ fun SettingsScreen() {
                 is OnSettingsChanged.ExpandListOnStartUp -> viewModel.setExpandListOnStartUp(it.isEnabled)
                 is OnSettingsChanged.IsVerticalScreen -> viewModel.setListOrientation(it.isVertical)
             }
-        },
-        onNavigateBack = {
-            viewModel.navigateBack()
-        },
+        }
     )
 }
 
@@ -56,20 +53,11 @@ sealed class OnSettingsChanged {
 fun SettingsScreenItems(
     settingsEntity: SettingsEntity,
     onSettingsChanged: (OnSettingsChanged) -> Unit,
-    onNavigateBack: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        // Toolbar ---------------------------------------------------------------------------------
-        ToolBarWidget(
-            title = stringResource(id = R.string.txt_settings),
-            buttonTitle = stringResource(id = R.string.txt_back),
-        ) {
-            onNavigateBack()
-        }
-
-        Spacer(modifier = Modifier.padding(top = padding_screen))
+        Spacer(modifier = Modifier.padding(top = padding_screen_large))
 
         // Scrollable Settings list ----------------------------------------------------------------
         Column(
@@ -79,7 +67,6 @@ fun SettingsScreenItems(
             Row(
                 modifier =
                     Modifier
-                        .padding(start = padding_screen, end = padding_screen)
                         .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -105,11 +92,10 @@ fun SettingsScreenItems(
 
             // Settings for all category collapsible state only for vertical list view
             if (settingsEntity.isVerticalScreen) {
-                Spacer(modifier = Modifier.padding(top = padding_screen))
+                Spacer(modifier = Modifier.padding(top = padding_screen_large))
                 Row(
                     modifier =
                         Modifier
-                            .padding(start = padding_screen, end = padding_screen)
                             .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -145,7 +131,7 @@ fun SettingsScreenItems(
 @Composable
 fun SettingsScreenPreviewNight() {
     AppThemeComposable {
-        SettingsScreenItems(getFakeSettingsEntity(), {}, {})
+        SettingsScreenItems(getFakeSettingsEntity()) {}
     }
 }
 
@@ -157,6 +143,6 @@ fun SettingsScreenPreviewNight() {
 @Composable
 fun SettingsScreenPreview() {
     AppThemeComposable {
-        SettingsScreenItems(getFakeSettingsEntity(), {}, {})
+        SettingsScreenItems(getFakeSettingsEntity()) {}
     }
 }

@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class ApiResultAdapterFactory : CallAdapter.Factory() {
+class ApiAdapterFactory : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<out Annotation>,
@@ -21,6 +21,6 @@ class ApiResultAdapterFactory : CallAdapter.Factory() {
 
         val successType = getParameterUpperBound(0, responseType)
 
-        return ApiResultCallAdapter<Any>(successType)
+        return ApiCallAdapter<Any>(successType)
     }
 }

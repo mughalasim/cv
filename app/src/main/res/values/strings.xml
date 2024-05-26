@@ -25,6 +25,8 @@
     <!-- Error messages-->
     <string name="error_internet_connection">Please check your internet connection</string>
     <string name="error_server">There seems to be an error with the server, please contact your administrator</string>
+    <string name="error_unauthorised">You are not authorised to access this data</string>
+    <string name="error_unknown">An unknown error has occurred, please try again later</string>
     <string name="error_invalid_link">Invalid Link Url</string>
 
     <!-- Plurals-->

@@ -18,6 +18,7 @@ import cv.domain.entities.SkillEntity
 import cv.domain.entities.getFakeSkills
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
+import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_small
 
@@ -38,7 +39,7 @@ fun SkillWidget(skills: List<SkillEntity>) {
                     modifier =
                         Modifier
                             .fillMaxHeight()
-                            .width(padding_screen_small)
+                            .width(line_thickness_medium)
                             .background(color = AppTheme.colors.highLight),
                 ) {}
                 Column(modifier = Modifier.padding(start = padding_screen_small)) {

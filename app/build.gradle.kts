@@ -99,6 +99,11 @@ android {
         mappingFileUploadEnabled = false
         nativeSymbolUploadEnabled = false
     }
+
+    packaging {
+        resources.excludes.add("META-INF/LICENSE.txt")
+        resources.excludes.add("META-INF/NOTICE.txt")
+    }
 }
 
 dependencies {
@@ -129,6 +134,9 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation.compose)
+//    implementation(libs.navigation.fragment)
+//    implementation(libs.navigation.fragment.compose)
+//    implementation(libs.navigation.ui.ktx)
 
     // Koin Dependency Injection
     implementation(libs.koin.core)
@@ -147,7 +155,7 @@ dependencies {
     implementation(libs.appcompat)
 
     // Joda time
-    implementation(libs.android.joda)
+    api(libs.android.joda)
 
     // TESTING -------------------------------------------------------------------------------------
     testImplementation(libs.junit)

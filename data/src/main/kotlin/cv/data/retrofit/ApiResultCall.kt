@@ -6,45 +6,54 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-internal class ApiResultCall<T>(
-    private val callDelegate: Call<T>,
-) : Call<ApiResult<T>> {
+internal class ApiResultCall<D>(
+    private val callDelegate: Call<D>,
+) : Call<ApiResult<D>> {
     @Suppress("detekt.MagicNumber")
-    override fun enqueue(callback: Callback<ApiResult<T>>) =
+    override fun enqueue(callback: Callback<ApiResult<D>>) =
         callDelegate.enqueue(
-            object : Callback<T> {
+            object : Callback<D> {
                 override fun onResponse(
-                    call: Call<T>,
-                    response: Response<T>,
+                    call: Call<D>,
+                    response: Response<D>,
                 ) {
                     response.body()?.let {
                         when (response.code()) {
                             in 200..208 -> {
-                                callback.onResponse(this@ApiResultCall, Response.success(ApiResult.Success(it)))
+                                callback.onResponse(
+                                    this@ApiResultCall,
+                                    Response.success(ApiResult.Success(it))
+                                )
                             }
                             in 400..409 -> {
                                 callback.onResponse(
                                     this@ApiResultCall,
-                                    Response.success(ApiResult.Error(response.code(), response.message())),
+                                    Response.success(ApiResult.Error(ApiError.UNAUTHORISED)),
                                 )
                             }
                         }
-                    } ?: callback.onResponse(this@ApiResultCall, Response.success(ApiResult.Error(123, "message")))
+                    } ?: callback.onResponse(
+                        this@ApiResultCall,
+                        Response.success(ApiResult.Error(ApiError.SERVER))
+                    )
                 }
 
                 override fun onFailure(
-                    call: Call<T>,
+                    call: Call<D>,
                     throwable: Throwable,
                 ) {
-                    callback.onResponse(this@ApiResultCall, Response.success(ApiResult.Exception(throwable)))
+                    callback.onResponse(
+                        this@ApiResultCall,
+                        Response.success(ApiResult.Error(ApiError.UNKNOWN))
+                    )
                     call.cancel()
                 }
             },
         )
 
-    override fun clone(): Call<ApiResult<T>> = ApiResultCall(callDelegate.clone())
+    override fun clone(): Call<ApiResult<D>> = ApiResultCall(callDelegate.clone())
 
-    override fun execute(): Response<ApiResult<T>> {
+    override fun execute(): Response<ApiResult<D>> {
         throw UnsupportedOperationException("ResponseCall does not support execute.")
     }
 
