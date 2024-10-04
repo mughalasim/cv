@@ -18,6 +18,8 @@ data class DescriptionModel(
     val phone: Long,
     @SerialName("position_title")
     val positionTitle: String,
+    @SerialName("profile_picture_url")
+    val profilePictureUrl: String,
 )
 
 fun DescriptionModel.toDescriptionEntity() =
@@ -29,4 +31,5 @@ fun DescriptionModel.toDescriptionEntity() =
         email = this.email,
         phone = this.phone,
         positionTitle = this.positionTitle,
+        profilePictureUrl = this.profilePictureUrl
     )

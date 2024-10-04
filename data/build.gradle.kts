@@ -1,28 +1,33 @@
 plugins {
-    kotlin("kapt")
+    alias(libs.plugins.kapt)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.detekt)
     alias(libs.plugins.spotless)
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     namespace = "cv.data"
-    compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
+    compileSdk = libs.versions.appCompileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.findVersion("minSdk").get().toString().toInt()
+        minSdk = libs.versions.appMinSdk.get().toInt()
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
+    }
+
+    detekt {
+        toolVersion = libs.versions.detekt.get()
+        config.setFrom(rootProject.file("detekt.yml"))
+        buildUponDefaultConfig = false
     }
 }
 

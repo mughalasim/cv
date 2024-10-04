@@ -1,20 +1,19 @@
 package mughalasim.my.cv.ui.screens.list
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.b3nedikt.restring.Restring
 import mughalasim.my.cv.R
+import mughalasim.my.cv.ui.screens.list.ListScreenViewModel.UiState
 import mughalasim.my.cv.ui.utils.ConnectionState
 import mughalasim.my.cv.ui.utils.currentConnectivityState
 import mughalasim.my.cv.ui.utils.observeConnectivityAsFlow
@@ -22,67 +21,54 @@ import mughalasim.my.cv.ui.widgets.WarningWidget
 import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(viewModel: ListScreenViewModel = koinViewModel<ListScreenViewModel>()) {
     val uiState =
-        viewModel.uiStateFlow.collectAsState(initial = ListScreenViewModel.UiState.Loading)
-    val isRefreshing = (uiState.value is ListScreenViewModel.UiState.Loading)
-    val pullRefreshState = rememberPullRefreshState(isRefreshing, { viewModel.getData() })
+        viewModel.uiStateFlow.collectAsState(initial = UiState.Loading)
     val connectionState =
         LocalContext.current.observeConnectivityAsFlow()
             .collectAsState(initial = LocalContext.current.currentConnectivityState)
 
-    LaunchedEffect(true) {
-        viewModel.getLanguage()
-    }
+    PullToRefreshBox(
+        modifier = Modifier
+            .fillMaxSize() ,
+        isRefreshing = (uiState.value is UiState.Loading),
+        onRefresh = { viewModel.getData() }
+    ){
+        Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
+            if (connectionState.value == ConnectionState.Unavailable) {
+                WarningWidget(title = stringResource(R.string.error_internet_connection))
+            }
+            when (val response = uiState.value) {
+                is UiState.Loading -> Unit
 
-    Box(
-        Modifier
-            .pullRefresh(pullRefreshState)
-            .fillMaxSize(),
-    ) {
-        when (val response = uiState.value) {
-            is ListScreenViewModel.UiState.Loading -> Unit
-
-            is ListScreenViewModel.UiState.Error -> {
-                if (connectionState.value == ConnectionState.Unavailable) {
-                    WarningWidget(title = stringResource(R.string.error_internet_connection))
-                } else {
+                is UiState.Error -> {
                     WarningWidget(title = response.message)
                 }
-            }
 
-            is ListScreenViewModel.UiState.LanguageReceived -> {
-                val locale = Locale(response.languageEntity.locale)
-                Restring.putStrings(locale, response.languageEntity.singleTexts)
-                Restring.putStringArrays(locale, response.languageEntity.pluralTexts)
-                LaunchedEffect(true) {
-                    viewModel.getData()
+                is UiState.LanguageReceived -> {
+                    val locale = Locale(response.languageEntity.locale)
+                    Restring.putStrings(locale, response.languageEntity.singleTexts)
+                    Restring.putStringArrays(locale, response.languageEntity.pluralTexts)
                 }
-            }
 
-            is ListScreenViewModel.UiState.DataReceived -> {
-                if (viewModel.isVerticalOrientation()) {
-                    VerticalScreen(
-                        response = response.responseEntity,
-                        expandListOnStartUp = viewModel.getExpandListOnStartUp(),
-                        onBannerTapped = viewModel::onBannerTapped,
-                        onLinkTapped = viewModel::onLinkTapped,
-                    )
-                } else {
-                    HorizontalScreen(
-                        response = response.responseEntity,
-                        onBannerTapped = viewModel::onBannerTapped,
-                        onLinkTapped = viewModel::onLinkTapped,
-                    )
+                is UiState.DataReceived -> {
+                    if (viewModel.isVerticalOrientation()) {
+                        VerticalScreen(
+                            response = response.responseEntity,
+                            expandListOnStartUp = viewModel.getExpandListOnStartUp(),
+                            onBannerTapped = viewModel::onBannerTapped,
+                            onLinkTapped = viewModel::onLinkTapped,
+                        )
+                    } else {
+                        HorizontalScreen(
+                            response = response.responseEntity,
+                            onLinkTapped = viewModel::onLinkTapped,
+                        )
+                    }
                 }
             }
         }
-        PullRefreshIndicator(
-            refreshing = isRefreshing,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter),
-        )
     }
 }

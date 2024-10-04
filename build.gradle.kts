@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.spotless) apply false
-    kotlin("jvm") version "1.9.24"
-    kotlin("plugin.serialization") version "1.9.24"
+    alias(libs.plugins.kapt) apply false
+    alias(libs.plugins.jvm) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }

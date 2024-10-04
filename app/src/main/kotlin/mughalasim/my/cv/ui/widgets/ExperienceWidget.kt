@@ -1,6 +1,5 @@
 package mughalasim.my.cv.ui.widgets
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.ExperienceEntity
 import cv.domain.entities.getFakeExperience
 import mughalasim.my.cv.R
@@ -23,6 +21,7 @@ import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_large
 import mughalasim.my.cv.ui.theme.padding_screen_small
+import mughalasim.my.cv.ui.utils.AppPreview
 import mughalasim.my.cv.ui.utils.toMonthYearString
 import mughalasim.my.cv.ui.utils.toYearMonthDuration
 import org.joda.time.DateTime
@@ -68,9 +67,9 @@ fun ExperienceWidget(
                                 entity.endDate.toMonthYearString()
                             }
 
-                        TextSmall(text = entity.title)
-                        TextRegular(text = entity.location)
-                        TextRegular(text = entity.positionTitle)
+                        TextRegularBold(text = entity.title)
+                        TextSmall(text = entity.location)
+                        TextSmall(text = entity.positionTitle)
                         TextSmall(
                             modifier = Modifier.padding(bottom = padding_screen),
                             text = "${entity.startDate.toMonthYearString()} - $timeString ($timeSpentString)",
@@ -89,23 +88,7 @@ fun ExperienceWidget(
     }
 }
 
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun ExperienceWidgetPreviewNight() {
-    AppThemeComposable {
-        ExperienceWidget(){}
-    }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun ExperienceWidgetPreview() {
     AppThemeComposable {

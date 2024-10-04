@@ -7,7 +7,8 @@ import mughalasim.my.cv.navigation.NavigationService
 class MainScreenViewModel(
     private val navigationService: NavigationService,
 ) : ViewModel() {
-    fun setNavController(navController: NavHostController) = navigationService.setNavController(navController)
+    fun setNavController(navController: NavHostController) =
+        navigationService.setNavController(navController)
 
-    fun getNavigationService(): NavigationService = navigationService
+    fun getNavigationService() = navigationService
 }

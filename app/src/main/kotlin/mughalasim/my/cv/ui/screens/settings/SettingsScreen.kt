@@ -1,6 +1,5 @@
 package mughalasim.my.cv.ui.screens.settings
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,18 +9,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Switch
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.SettingsEntity
 import cv.domain.entities.getFakeSettingsEntity
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen_large
+import mughalasim.my.cv.ui.utils.AppPreview
 import mughalasim.my.cv.ui.widgets.TextLarge
 import mughalasim.my.cv.ui.widgets.TextRegular
 import org.koin.androidx.compose.koinViewModel
@@ -121,23 +120,7 @@ fun SettingsScreenItems(
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun SettingsScreenPreviewNight() {
-    AppThemeComposable {
-        SettingsScreenItems(getFakeSettingsEntity()) {}
-    }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun SettingsScreenPreview() {
     AppThemeComposable {

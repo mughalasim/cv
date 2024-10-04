@@ -2,7 +2,6 @@ package mughalasim.my.cv.ui.widgets
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.webkit.URLUtil
 import android.widget.Toast
@@ -11,12 +10,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.getFakeLinks
 import mughalasim.my.cv.R
@@ -25,6 +23,7 @@ import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.border_radius
 import mughalasim.my.cv.ui.theme.line_thickness_small
 import mughalasim.my.cv.ui.theme.padding_screen_small
+import mughalasim.my.cv.ui.utils.AppPreview
 
 @Composable
 fun ChipWidget(
@@ -74,23 +73,7 @@ fun ChipWidget(
     }
 }
 
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun ChipWidgetPreviewNight() {
-    AppThemeComposable {
-        ChipWidget(entity = getFakeLinks()[0], onLinkTapped = {})
-    }
-}
-
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun ChipWidgetPreview() {
     AppThemeComposable {
