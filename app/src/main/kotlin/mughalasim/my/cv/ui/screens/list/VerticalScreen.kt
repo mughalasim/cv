@@ -1,19 +1,12 @@
 package mughalasim.my.cv.ui.screens.list
 
-import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,31 +15,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.LinkEntity
 import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
 import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
-import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
-import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.theme.padding_screen_small
+import mughalasim.my.cv.ui.utils.AppPreview
 import mughalasim.my.cv.ui.widgets.BannerWidget
 import mughalasim.my.cv.ui.widgets.ChipWidget
 import mughalasim.my.cv.ui.widgets.DescriptionWidget
 import mughalasim.my.cv.ui.widgets.ExperienceWidget
-import mughalasim.my.cv.ui.widgets.LinksWidget
+import mughalasim.my.cv.ui.widgets.ImageAndNameWidget
 import mughalasim.my.cv.ui.widgets.ReferenceWidget
 import mughalasim.my.cv.ui.widgets.SkillWidget
-import mughalasim.my.cv.ui.widgets.TextLarge
-import mughalasim.my.cv.ui.widgets.TextRegular
 
 @Composable
 fun VerticalScreen(
     response: ResponseEntity,
     expandListOnStartUp: Boolean,
+    scrollState: ScrollState,
     onBannerTapped: (String) -> Unit = {},
     onLinkTapped: (String) -> Unit = {},
 ) {
@@ -58,19 +47,18 @@ fun VerticalScreen(
 
     Column(
         modifier =
-            Modifier
-                .verticalScroll(rememberScrollState())
-                .padding(padding_screen),
+        Modifier
+            .padding(padding_screen),
         horizontalAlignment = Alignment.Start,
     ) {
-        // Name and Job title ----------------------------------------------------------------------
-        TextLarge(text = response.description.fullName)
-        TextRegular(text = response.description.positionTitle)
+        // Image, Name and Job title ---------------------------------------------------------------
+        ImageAndNameWidget(response.description, scrollState)
 
         // [Banner] Contact information ------------------------------------------------------------
         val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
         BannerWidget(
             title = contactInfoTitle,
+            isExpanded = isExpandedContacts,
             onExpandedClicked = {
                 isExpandedContacts = !isExpandedContacts
                 onBannerTapped(contactInfoTitle)
@@ -80,33 +68,14 @@ fun VerticalScreen(
             modifier = Modifier.fillMaxWidth(),
             visible = isExpandedContacts,
         ) {
-            Row(
-                modifier =
-                    Modifier
-                        .height(IntrinsicSize.Min),
-            ) {
-                Column(
-                    modifier =
-                        Modifier
-                            .fillMaxHeight()
-                            .width(line_thickness_medium)
-                            .background(color = AppTheme.colors.highLight),
-                ) {}
-                Column(
-                    modifier = Modifier.padding(start = padding_screen_small),
-                ) {
-                    // Basic information
-                    DescriptionWidget(response.description)
-                    // Links
-                    LinksWidget(response.description.links, onLinkTapped)
-                }
-            }
+            DescriptionWidget(response.description, onLinkTapped)
         }
 
         // [Banner] Skills--------------------------------------------------------------------------
         val skillsTitle = stringResource(R.string.txt_skills)
         BannerWidget(
             title = skillsTitle,
+            isExpanded = isExpandedSkills,
             onExpandedClicked = {
                 isExpandedSkills = !isExpandedSkills
                 onBannerTapped(skillsTitle)
@@ -127,6 +96,7 @@ fun VerticalScreen(
             title = workExperienceTitle,
             hasFilter = isExpandedWork,
             sortAscending = sortAscending,
+            isExpanded = isExpandedWork,
             onFilterClicked = { sortAscending = !sortAscending },
             onExpandedClicked = {
                 isExpandedWork = !isExpandedWork
@@ -145,6 +115,7 @@ fun VerticalScreen(
         val educationalExperienceTitle = stringResource(R.string.txt_education)
         BannerWidget(
             title = stringResource(R.string.txt_education),
+            isExpanded = isExpandedEducation,
             onExpandedClicked = {
                 isExpandedEducation = !isExpandedEducation
                 onBannerTapped(educationalExperienceTitle)
@@ -162,6 +133,7 @@ fun VerticalScreen(
         val referencesTitle = stringResource(R.string.txt_references)
         BannerWidget(
             title = referencesTitle,
+            isExpanded = isExpandedReference,
             onExpandedClicked = {
                 isExpandedReference = !isExpandedReference
                 onBannerTapped(referencesTitle)
@@ -190,26 +162,14 @@ fun VerticalScreen(
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun VerticalScreenPreviewNight() {
-    AppThemeComposable {
-        VerticalScreen(getFakeResponse(), true)
-    }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun VerticalScreenPreview() {
     AppThemeComposable {
-        VerticalScreen(getFakeResponse(), true)
+        VerticalScreen(
+            response = getFakeResponse(),
+            expandListOnStartUp = true,
+            scrollState = rememberScrollState()
+        )
     }
 }

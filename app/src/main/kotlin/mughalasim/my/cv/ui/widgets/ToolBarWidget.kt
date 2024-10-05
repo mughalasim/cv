@@ -1,6 +1,5 @@
 package mughalasim.my.cv.ui.widgets
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,10 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.padding_screen
+import mughalasim.my.cv.ui.utils.AppPreview
 
 @Composable
 fun ToolBarWidget(title: String) {
@@ -33,27 +32,7 @@ fun ToolBarWidget(title: String) {
     }
 }
 
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun ToolBarWidgetPreviewNight() {
-    AppThemeComposable {
-        Column {
-            ToolBarWidget(
-                title = "Test Long toolbar title, that may overflow",
-            )
-        }
-    }
-}
-
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun ToolBarWidgetPreview() {
     AppThemeComposable {

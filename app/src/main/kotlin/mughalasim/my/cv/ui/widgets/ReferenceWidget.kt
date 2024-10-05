@@ -1,6 +1,5 @@
 package mughalasim.my.cv.ui.widgets
 
-import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.ReferenceEntity
 import cv.domain.entities.getFakeReferences
 import mughalasim.my.cv.ui.theme.AppTheme
@@ -21,6 +19,7 @@ import mughalasim.my.cv.ui.theme.AppThemeComposable
 import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_small
+import mughalasim.my.cv.ui.utils.AppPreview
 
 @Composable
 fun ReferenceWidget(references: List<ReferenceEntity>) {
@@ -48,32 +47,16 @@ fun ReferenceWidget(references: List<ReferenceEntity>) {
                         Modifier
                             .padding(start = padding_screen_small),
                 ) {
-                    TextSmall(text = entity.name)
-                    TextRegular(text = entity.company)
-                    TextRegular(text = entity.contact)
+                    TextSmall(entity.name)
+                    TextRegular(entity.company)
+                    TextRegular(entity.contact)
                 }
             }
         }
     }
 }
 
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun ReferenceWidgetPreviewNight() {
-    AppThemeComposable {
-        ReferenceWidget(getFakeReferences())
-    }
-}
-
-@Preview(
-    showBackground = false,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun ReferenceWidgetPreview() {
     AppThemeComposable {

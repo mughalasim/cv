@@ -1,29 +1,28 @@
 package mughalasim.my.cv.ui.screens.settings
 
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Switch
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import cv.domain.entities.SettingsEntity
 import cv.domain.entities.getFakeSettingsEntity
 import mughalasim.my.cv.R
 import mughalasim.my.cv.ui.theme.AppThemeComposable
+import mughalasim.my.cv.ui.theme.padding_screen
 import mughalasim.my.cv.ui.theme.padding_screen_large
+import mughalasim.my.cv.ui.utils.AppPreview
 import mughalasim.my.cv.ui.widgets.TextLarge
-import mughalasim.my.cv.ui.widgets.TextRegular
+import mughalasim.my.cv.ui.widgets.TextRegularBold
+import mughalasim.my.cv.ui.widgets.TextSmall
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -53,91 +52,69 @@ fun SettingsScreenItems(
     onSettingsChanged: (OnSettingsChanged) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(padding_screen),
     ) {
-        Spacer(modifier = Modifier.padding(top = padding_screen_large))
-
-        // Scrollable Settings list ----------------------------------------------------------------
-        Column(
-            modifier = Modifier.verticalScroll(rememberScrollState()),
+        TextLarge("Settings", modifier = Modifier.padding(bottom = padding_screen))
+        // Setting for Vertical or horizontal view pager on the main screen
+        Row(
+            modifier =
+            Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            // Setting for Vertical or horizontal view pager on the main screen
+            Switch(
+                modifier = Modifier.padding(end = padding_screen),
+                checked = settingsEntity.isVerticalScreen,
+                onCheckedChange = {
+                    onSettingsChanged(OnSettingsChanged.IsVerticalScreen(it))
+                },
+            )
+            Column {
+                TextRegularBold(stringResource(R.string.txt_setting_is_vertical))
+                TextSmall(
+                    if (settingsEntity.isVerticalScreen) {
+                        stringResource(R.string.txt_setting_is_vertical_true)
+                    } else {
+                        stringResource(R.string.txt_setting_is_vertical_false)
+                    },
+                )
+            }
+        }
+
+        // Settings for all category collapsible state only for vertical list view
+        if (settingsEntity.isVerticalScreen) {
+            Spacer(modifier = Modifier.padding(top = padding_screen_large))
             Row(
                 modifier =
-                    Modifier
-                        .fillMaxWidth(),
+                Modifier
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Switch(
-                    checked = settingsEntity.isVerticalScreen,
+                    modifier = Modifier.padding(end = padding_screen),
+                    checked = settingsEntity.expandListOnStartUp,
                     onCheckedChange = {
-                        onSettingsChanged(OnSettingsChanged.IsVerticalScreen(it))
+                        onSettingsChanged(OnSettingsChanged.ExpandListOnStartUp(it))
                     },
                 )
                 Column {
-                    TextLarge(text = stringResource(R.string.txt_setting_is_vertical))
-                    TextRegular(
-                        text =
-                            if (settingsEntity.isVerticalScreen) {
-                                stringResource(R.string.txt_setting_is_vertical_true)
-                            } else {
-                                stringResource(R.string.txt_setting_is_vertical_false)
-                            },
-                    )
-                }
-            }
-
-            // Settings for all category collapsible state only for vertical list view
-            if (settingsEntity.isVerticalScreen) {
-                Spacer(modifier = Modifier.padding(top = padding_screen_large))
-                Row(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Switch(
-                        checked = settingsEntity.expandListOnStartUp,
-                        onCheckedChange = {
-                            onSettingsChanged(OnSettingsChanged.ExpandListOnStartUp(it))
+                    TextRegularBold(stringResource(R.string.txt_setting_expanded_list))
+                    TextSmall(
+                        if (settingsEntity.expandListOnStartUp) {
+                            stringResource(R.string.txt_setting_expanded_list_true)
+                        } else {
+                            stringResource(R.string.txt_setting_expanded_list_false)
                         },
                     )
-                    Column {
-                        TextLarge(text = stringResource(R.string.txt_setting_expanded_list))
-                        TextRegular(
-                            text =
-                                if (settingsEntity.expandListOnStartUp) {
-                                    stringResource(R.string.txt_setting_expanded_list_true)
-                                } else {
-                                    stringResource(R.string.txt_setting_expanded_list_false)
-                                },
-                        )
-                    }
                 }
             }
         }
     }
 }
 
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
-@Composable
-fun SettingsScreenPreviewNight() {
-    AppThemeComposable {
-        SettingsScreenItems(getFakeSettingsEntity()) {}
-    }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    uiMode = Configuration.UI_MODE_NIGHT_NO,
-)
+@AppPreview
 @Composable
 fun SettingsScreenPreview() {
     AppThemeComposable {

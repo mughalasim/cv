@@ -20,6 +20,12 @@ class ListScreenViewModel(
 ) : BaseViewModel<ListScreenViewModel.UiState, ListScreenViewModel.Action>(UiState.Loading) {
     private var hasFetchedLanguage = false
 
+    init {
+        viewModelScope.launch {
+            getLanguage()
+        }
+    }
+
     fun getData() {
         sendAction(Action.Loading)
         viewModelScope.launch {
@@ -50,6 +56,7 @@ class ListScreenViewModel(
                 }
                 is DomainResult.Success -> {
                     sendAction(Action.LanguageReceived(result.data))
+                    getData()
                 }
             }
         }

@@ -3,11 +3,12 @@ import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
-    kotlin("kapt")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.crashlytics)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.detekt)
     alias(libs.plugins.spotless)
 }
@@ -17,18 +18,17 @@ val keystoreProperties = Properties()
 keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-    val appName = libs.findVersion("appName").get().toString()
+    val appName = "${libs.versions.appName.get()} (${libs.versions.appVersionName.get()})"
 
-    namespace = libs.findVersion("appNamespaceId").get().toString()
-    compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
+    namespace = libs.versions.appNamespaceId.get()
+    compileSdk = libs.versions.appCompileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = libs.findVersion("appNamespaceId").get().toString()
-        minSdk = libs.findVersion("minSdk").get().toString().toInt()
-        targetSdk = libs.findVersion("compileSdk").get().toString().toInt()
-        versionCode = libs.findVersion("appVersionCode").get().toString().toInt()
-        versionName = libs.findVersion("appVersionName").get().toString()
+        applicationId = libs.versions.appNamespaceId.get()
+        minSdk = libs.versions.appMinSdk.get().toInt()
+        targetSdk = libs.versions.appTargetSdk.get().toInt()
+        versionCode = libs.versions.appVersionCode.get().toInt()
+        versionName = libs.versions.appVersionName.get()
         buildConfigField(
             "String",
             "API_BASE_URL",
@@ -71,16 +71,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.findVersion("compiler").get().toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
     }
 
     flavorDimensions += "version"
@@ -93,6 +89,12 @@ android {
 
     kapt {
         correctErrorTypes = true
+    }
+
+    detekt {
+        toolVersion = libs.versions.detekt.get()
+        config.setFrom(rootProject.file("detekt.yml"))
+        buildUponDefaultConfig = false
     }
 
     firebaseCrashlytics {
@@ -118,6 +120,8 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
     implementation(libs.material)
+    implementation(libs.material3.android)
+    implementation(libs.material.icons.extended.android)
     implementation(libs.runtime.livedata)
     implementation(libs.foundation.android)
 
@@ -134,9 +138,9 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation.compose)
-//    implementation(libs.navigation.fragment)
-//    implementation(libs.navigation.fragment.compose)
-//    implementation(libs.navigation.ui.ktx)
+
+    // Image loading - Coil
+    implementation(libs.coil.compose)
 
     // Koin Dependency Injection
     implementation(libs.koin.core)

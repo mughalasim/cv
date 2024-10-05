@@ -19,7 +19,7 @@ val apiModule =
             OkHttpClient.Builder()
                 .addInterceptor(
                     HttpLoggingInterceptor { message ->
-                        get<AppLoggerRepository>().log("Http: $message")
+                        get<AppLoggerRepository>().log("Https: $message")
                     }.apply {
                         level = if (BuildConfig.DEBUG){
                             HttpLoggingInterceptor.Level.BODY

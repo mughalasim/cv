@@ -6,13 +6,13 @@ import androidx.compose.ui.graphics.Color
 val Red = Color(0xFFC90C0C)
 
 @Suppress("detekt.MagicNumber")
-val Yellow = Color(0xFFF1B252)
+val LightPurple = Color(0xFFE8EAF6)
 
 @Suppress("detekt.MagicNumber")
-val LightGreen = Color(0xFFA0E294)
+val LightTeal = Color(0xFFE0F7FA)
 
 @Suppress("detekt.MagicNumber")
-val DarkBlue = Color(0xFF31078F)
+val DarkBlue = Color(0xFF1A237E)
 
 @Suppress("detekt.MagicNumber")
 val LightBlue = Color(0xFFCBD0D8)
@@ -27,26 +27,24 @@ val DarkAppColors =
     AppColors(
         textPrimary = Color.White,
         textSecondary = LightGrey,
-        backgroundTitleBar = Color.Black,
+        backgroundTitleBar = Color.DarkGray,
         backgroundScreen = Color.Black,
         backgroundChip = DarkGrey,
         backgroundError = Red,
-        backgroundButtonDisabled = DarkGrey,
-        backgroundButtonEnabled = Color.White,
-        highLight = LightGreen,
+        backgroundBottomNavigation = DarkGrey,
+        highLight = LightTeal,
     )
 
 val LightAppColors =
     AppColors(
         textPrimary = DarkBlue,
         textSecondary = DarkGrey,
-        backgroundTitleBar = DarkBlue,
+        backgroundTitleBar = LightPurple,
         backgroundScreen = Color.White,
         backgroundChip = LightBlue,
         backgroundError = Red,
-        backgroundButtonDisabled = LightBlue,
-        backgroundButtonEnabled = DarkBlue,
-        highLight = Yellow,
+        backgroundBottomNavigation = LightTeal,
+        highLight = LightPurple,
     )
 
 @Suppress("detekt.LongParameterList")
@@ -57,8 +55,7 @@ class AppColors(
     val backgroundScreen: Color,
     val backgroundChip: Color,
     val backgroundError: Color,
-    val backgroundButtonDisabled: Color,
-    val backgroundButtonEnabled: Color,
+    val backgroundBottomNavigation: Color,
     val highLight: Color,
     val black: Color = Color.Black,
 )
