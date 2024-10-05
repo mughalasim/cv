@@ -1,11 +1,13 @@
 package mughalasim.my.cv.ui.widgets
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -28,9 +30,13 @@ import mughalasim.my.cv.ui.theme.icon_image
 import mughalasim.my.cv.ui.theme.line_thickness_small
 import mughalasim.my.cv.ui.theme.profile_picture_height
 import mughalasim.my.cv.ui.utils.AppPreview
+import mughalasim.my.cv.ui.utils.parallaxLayoutModifier
 
 @Composable
-fun ImageReloadWidget(imageUrl: String) {
+fun ImageReloadWidget(
+    imageUrl: String,
+    scrollState: ScrollState,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,6 +57,7 @@ fun ImageReloadWidget(imageUrl: String) {
             contentDescription = "picture",
             contentScale = ContentScale.Crop,
             modifier = Modifier
+                .parallaxLayoutModifier(scrollState, 1)
                 .clip(RoundedCornerShape(border_radius))
                 .border(
                     border = BorderStroke(line_thickness_small, AppTheme.colors.highLight),
@@ -90,7 +97,7 @@ fun ImageReloadWidget(imageUrl: String) {
                         .build()
                 }
             ) {
-                TextRegular(text = "Retry")
+                TextRegular("Retry")
             }
         }
     }
@@ -100,6 +107,6 @@ fun ImageReloadWidget(imageUrl: String) {
 @Composable
 fun ImageReloadWidgetPreview() {
     AppThemeComposable {
-        ImageReloadWidget("")
+        ImageReloadWidget("", rememberScrollState())
     }
 }

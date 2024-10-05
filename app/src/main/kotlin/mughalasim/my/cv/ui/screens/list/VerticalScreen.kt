@@ -1,16 +1,12 @@
 package mughalasim.my.cv.ui.screens.list
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,18 +20,14 @@ import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
 import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
-import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
-import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.theme.padding_screen_small
 import mughalasim.my.cv.ui.utils.AppPreview
 import mughalasim.my.cv.ui.widgets.BannerWidget
 import mughalasim.my.cv.ui.widgets.ChipWidget
 import mughalasim.my.cv.ui.widgets.DescriptionWidget
 import mughalasim.my.cv.ui.widgets.ExperienceWidget
 import mughalasim.my.cv.ui.widgets.ImageAndNameWidget
-import mughalasim.my.cv.ui.widgets.LinksWidget
 import mughalasim.my.cv.ui.widgets.ReferenceWidget
 import mughalasim.my.cv.ui.widgets.SkillWidget
 
@@ -43,6 +35,7 @@ import mughalasim.my.cv.ui.widgets.SkillWidget
 fun VerticalScreen(
     response: ResponseEntity,
     expandListOnStartUp: Boolean,
+    scrollState: ScrollState,
     onBannerTapped: (String) -> Unit = {},
     onLinkTapped: (String) -> Unit = {},
 ) {
@@ -59,7 +52,7 @@ fun VerticalScreen(
         horizontalAlignment = Alignment.Start,
     ) {
         // Image, Name and Job title ---------------------------------------------------------------
-        ImageAndNameWidget(response.description)
+        ImageAndNameWidget(response.description, scrollState)
 
         // [Banner] Contact information ------------------------------------------------------------
         val contactInfoTitle = stringResource(id = R.string.txt_contact_info)
@@ -75,27 +68,7 @@ fun VerticalScreen(
             modifier = Modifier.fillMaxWidth(),
             visible = isExpandedContacts,
         ) {
-            Row(
-                modifier =
-                    Modifier
-                        .height(IntrinsicSize.Min),
-            ) {
-                Column(
-                    modifier =
-                    Modifier
-                        .fillMaxHeight()
-                        .width(line_thickness_medium)
-                        .background(color = AppTheme.colors.highLight),
-                ) {}
-                Column(
-                    modifier = Modifier.padding(start = padding_screen_small),
-                ) {
-                    // Basic information
-                    DescriptionWidget(response.description)
-                    // Links
-                    LinksWidget(response.description.links, onLinkTapped)
-                }
-            }
+            DescriptionWidget(response.description, onLinkTapped)
         }
 
         // [Banner] Skills--------------------------------------------------------------------------
@@ -193,6 +166,10 @@ fun VerticalScreen(
 @Composable
 fun VerticalScreenPreview() {
     AppThemeComposable {
-        VerticalScreen(getFakeResponse(), true)
+        VerticalScreen(
+            response = getFakeResponse(),
+            expandListOnStartUp = true,
+            scrollState = rememberScrollState()
+        )
     }
 }

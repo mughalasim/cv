@@ -67,9 +67,9 @@ fun ExperienceWidget(
                                 entity.endDate.toMonthYearString()
                             }
 
-                        TextRegularBold(text = entity.title)
-                        TextSmall(text = entity.location)
-                        TextSmall(text = entity.positionTitle)
+                        TextRegularBold(entity.title)
+                        TextSmall(entity.location)
+                        TextSmall(entity.positionTitle)
                         TextSmall(
                             modifier = Modifier.padding(bottom = padding_screen),
                             text = "${entity.startDate.toMonthYearString()} - $timeString ($timeSpentString)",

@@ -1,17 +1,15 @@
 package mughalasim.my.cv.ui.screens.list
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,65 +23,43 @@ import cv.domain.entities.ResponseEntity
 import cv.domain.entities.getFakeResponse
 import mughalasim.my.cv.BuildConfig
 import mughalasim.my.cv.R
-import mughalasim.my.cv.ui.theme.AppTheme
 import mughalasim.my.cv.ui.theme.AppThemeComposable
-import mughalasim.my.cv.ui.theme.line_thickness_medium
 import mughalasim.my.cv.ui.theme.padding_screen
-import mughalasim.my.cv.ui.theme.padding_screen_small
+import mughalasim.my.cv.ui.theme.padding_screen_large
 import mughalasim.my.cv.ui.utils.AppPreview
 import mughalasim.my.cv.ui.widgets.BannerWidget
 import mughalasim.my.cv.ui.widgets.ChipWidget
 import mughalasim.my.cv.ui.widgets.DescriptionWidget
 import mughalasim.my.cv.ui.widgets.ExperienceWidget
-import mughalasim.my.cv.ui.widgets.LinksWidget
+import mughalasim.my.cv.ui.widgets.ImageAndNameWidget
 import mughalasim.my.cv.ui.widgets.ReferenceWidget
 import mughalasim.my.cv.ui.widgets.SkillWidget
-import mughalasim.my.cv.ui.widgets.TextLarge
-import mughalasim.my.cv.ui.widgets.TextRegular
 
 @Composable
 fun HorizontalScreen(
     response: ResponseEntity,
+    scrollState: ScrollState,
     onLinkTapped: (String) -> Unit = {},
 ) {
-    Column(
-        modifier = Modifier.padding(padding_screen),
-    ) {
-        TextLarge(text = response.description.fullName)
-        TextRegular(text = response.description.positionTitle)
-
+    Column {
         val pagerState = rememberPagerState(pageCount = { pageList.size })
+
         HorizontalPager(
             verticalAlignment = Alignment.Top,
+            contentPadding = PaddingValues(padding_screen_large),
             state = pagerState,
             pageSize = PageSize.Fill,
-            pageSpacing = padding_screen
+            snapPosition = SnapPosition.Center
         ) { page ->
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .padding(start = padding_screen),
             ) {
                 when (page) {
                     PAGE_1 -> {
+                        ImageAndNameWidget(response.description, scrollState)
                         BannerWidget(title = stringResource(R.string.txt_contact_info))
-                        Row(
-                            modifier =
-                            Modifier
-                                .height(IntrinsicSize.Min),
-                        ) {
-                            Column(
-                                modifier =
-                                Modifier
-                                    .fillMaxHeight()
-                                    .width(line_thickness_medium)
-                                    .background(color = AppTheme.colors.highLight),
-                            ) {}
-                            Column(
-                                modifier = Modifier.padding(start = padding_screen_small),
-                            ) {
-                                DescriptionWidget(response.description)
-                                LinksWidget(response.description.links, onLinkTapped)
-                            }
-                        }
+                        DescriptionWidget(response.description, onLinkTapped)
                     }
 
                     PAGE_2 -> {
@@ -148,6 +124,6 @@ private val pageList = listOf(PAGE_1, PAGE_2, PAGE_3, PAGE_4, PAGE_5, PAGE_6)
 @Composable
 fun HorizontalScreenPreview() {
     AppThemeComposable {
-        HorizontalScreen(getFakeResponse())
+        HorizontalScreen(getFakeResponse(), rememberScrollState())
     }
 }

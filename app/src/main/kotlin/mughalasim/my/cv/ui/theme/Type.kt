@@ -31,7 +31,7 @@ data class AppTextStyles(
         TextStyle(
             fontFamily = localFontFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
+            fontSize = 24.sp,
         ),
 )
 

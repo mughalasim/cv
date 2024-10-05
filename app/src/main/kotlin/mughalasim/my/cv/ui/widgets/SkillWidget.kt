@@ -42,8 +42,8 @@ fun SkillWidget(skills: List<SkillEntity>) {
                             .background(color = AppTheme.colors.highLight),
                 ) {}
                 Column(modifier = Modifier.padding(start = padding_screen_small)) {
-                    TextSmall(text = skills[it].title)
-                    TextRegular(text = skills[it].description)
+                    TextSmall(skills[it].title)
+                    TextRegular(skills[it].description)
                 }
             }
         }

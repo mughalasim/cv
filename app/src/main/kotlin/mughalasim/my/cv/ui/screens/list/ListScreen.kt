@@ -29,6 +29,7 @@ fun ListScreen(viewModel: ListScreenViewModel = koinViewModel<ListScreenViewMode
     val connectionState =
         LocalContext.current.observeConnectivityAsFlow()
             .collectAsState(initial = LocalContext.current.currentConnectivityState)
+    val scrollState = rememberScrollState()
 
     PullToRefreshBox(
         modifier = Modifier
@@ -36,7 +37,7 @@ fun ListScreen(viewModel: ListScreenViewModel = koinViewModel<ListScreenViewMode
         isRefreshing = (uiState.value is UiState.Loading),
         onRefresh = { viewModel.getData() }
     ){
-        Column (modifier = Modifier.verticalScroll(rememberScrollState())) {
+        Column (modifier = Modifier.verticalScroll(scrollState)) {
             if (connectionState.value == ConnectionState.Unavailable) {
                 WarningWidget(title = stringResource(R.string.error_internet_connection))
             }
@@ -58,12 +59,14 @@ fun ListScreen(viewModel: ListScreenViewModel = koinViewModel<ListScreenViewMode
                         VerticalScreen(
                             response = response.responseEntity,
                             expandListOnStartUp = viewModel.getExpandListOnStartUp(),
+                            scrollState = scrollState,
                             onBannerTapped = viewModel::onBannerTapped,
                             onLinkTapped = viewModel::onLinkTapped,
                         )
                     } else {
                         HorizontalScreen(
                             response = response.responseEntity,
+                            scrollState = scrollState,
                             onLinkTapped = viewModel::onLinkTapped,
                         )
                     }

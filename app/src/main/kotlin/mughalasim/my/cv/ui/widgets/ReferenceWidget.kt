@@ -47,9 +47,9 @@ fun ReferenceWidget(references: List<ReferenceEntity>) {
                         Modifier
                             .padding(start = padding_screen_small),
                 ) {
-                    TextSmall(text = entity.name)
-                    TextRegular(text = entity.company)
-                    TextRegular(text = entity.contact)
+                    TextSmall(entity.name)
+                    TextRegular(entity.company)
+                    TextRegular(entity.contact)
                 }
             }
         }

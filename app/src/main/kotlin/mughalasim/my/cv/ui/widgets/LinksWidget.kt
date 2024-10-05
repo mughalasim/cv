@@ -22,7 +22,7 @@ fun LinksWidget(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         if (links.isNotEmpty()) {
-            TextSmall(text = stringResource(R.string.txt_links))
+            TextSmall(stringResource(R.string.txt_links))
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.horizontalScroll(rememberScrollState()),
